@@ -1,0 +1,12 @@
+- class_name: 友链
+  link_list:
+    - name: Lesnow-Ye
+      link: https://blog.lesnow.top
+      avatar: https://lesnow.top/avatar.jpg
+      descr: 一位极客
+
+    - name: 武霁澜
+      link: https://blog.adsr.me/
+      avatar: https://blog.adsr.me/medias/avatar.png
+      descr: 一位前辈
+
