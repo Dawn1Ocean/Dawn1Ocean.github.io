@@ -1,5 +1,5 @@
 nav:
-  logo: "https://pic.imgdb.cn/item/611240d35132923bf85dd065.jpg"
+  logo: /assets/img/avatar.jpg
   display_title: true
 
 subtitle:
@@ -20,7 +20,7 @@ subtitle:
   source: false
   # 如果關閉打字效果，subtitle 只會顯示 sub 的第一行文字
   sub:
-    - 无穷的远方&#44;无数的人们&#44;都和我有关。
+    - 无穷的远方&#44; 无数的人们&#44; 都和我有关。
     - Boundless outland and countless people, are all related to me.
 
 menu:
@@ -35,6 +35,8 @@ menu:
 avatar:
   img: /assets/img/avatar.jpg
   effect: false
+
+favicon: /assets/img/avatar.jpg
 
 post_meta:
   page:
@@ -233,7 +235,7 @@ prismjs:
 font:
   global-font-size:
   code-font-size:
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Lato, Roboto, "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Lato, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif
   code-font-family: consolas
 
 # 加載動畫 Loading Animation

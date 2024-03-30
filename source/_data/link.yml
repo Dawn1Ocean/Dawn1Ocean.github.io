@@ -1,9 +1,14 @@
-- class_name: 友链
+- class_name: 友情链接
   link_list:
     - name: Lesnow-Ye
       link: https://blog.lesnow.top
       avatar: https://lesnow.top/avatar.jpg
       descr: 一位极客
+
+    - name: iotang
+      link: https://iotang.github.io/notang/
+      avatar: https://avatars.githubusercontent.com/u/48554511
+      descr: 一位好友
 
     - name: 武霁澜
       link: https://blog.adsr.me/
