@@ -3,7 +3,7 @@ nav:
   display_title: true
 
 subtitle:
-  enable: false
+  enable: true
   # Typewriter Effect (打字效果)
   effect: true
   startDelay: 300 # time before typing starts in milliseconds
@@ -188,6 +188,29 @@ cover:
     - /assets/img/default_cover3.JPEG
     - /assets/img/default_cover4.JPG
     - /assets/img/default_cover5.png
+    - /assets/img/kirby_cover.JPG
+    - /assets/img/kirby_cover2.JPG
+    - /assets/img/kirby_cover3.JPG
+    - /assets/img/kirby_cover4.JPG
+    - /assets/img/kirby_cover5.JPG
+    - /assets/img/kirby_cover6.JPG
+    - /assets/img/kirby_cover7.JPG
+    - /assets/img/kirby_cover8.JPG
+    - /assets/img/kirby_cover9.JPG
+    - /assets/img/kirby_cover10.JPG
+    - /assets/img/kirby_cover11.JPG
+    - /assets/img/kirby_cover12.JPG
+    - /assets/img/kirby_cover13.JPG
+    - /assets/img/kirby_cover14.JPG
+    - /assets/img/kirby_cover15.JPG
+    - /assets/img/kirby_cover16.JPG
+    - /assets/img/kirby_cover17.JPG
+    - /assets/img/kirby_cover18.JPG
+    - /assets/img/kirby_cover19.JPG
+    - /assets/img/kirby_cover20.JPG
+    - /assets/img/kirby_cover21.JPG
+    - /assets/img/kirby_cover22.JPG
+
 
 highlight_theme: mac light
 
