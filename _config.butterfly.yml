@@ -163,6 +163,17 @@ footer:
 
 custom_text: 感谢你阅读我的博客！
 
+comments:
+  # Up to two comments system, the first will be shown as default
+  # Choose: Disqus/Disqusjs/Livere/Gitalk/Valine/Waline/Utterances/Facebook Comments/Twikoo/Giscus/Remark42/Artalk
+  use: Giscus # Valine,Disqus
+  text: true # Display the comment name next to the button
+  # lazyload: The comment system will be load when comment element enters the browser's viewport.
+  # If you set it to true, the comment count will be invalid
+  lazyload: true
+  count: false # Display comment count in post's top_img
+  card_post_count: false # Display comment count in Home Page
+
 # footer是否顯示圖片背景(與top_img一致)
 footer_bg: true
 
@@ -237,6 +248,15 @@ font:
   code-font-size:
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Lato, Roboto, "PingFang SC", "Microsoft YaHei", sans-serif
   code-font-family: consolas
+
+giscus:
+  repo: Dawn1Ocean/giscus
+  repo_id: R_kgDOLniK6Q
+  category: Announcements
+  category_id: DIC_kwDOLniK6c4CeVy2
+  theme:
+    light: light
+    dark: dark
 
 # 加載動畫 Loading Animation
 preloader:
