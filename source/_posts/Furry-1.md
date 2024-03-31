@@ -20,16 +20,16 @@ tags:
 
 ## 目录
 
-{% post_link 'Furry-杂谈-2-序言介绍' '序言介绍' %}
+{% post_link 'Furry-2' '序言介绍' %}
 <br/>
 <br/>
-{% post_link 'Furry-杂谈-3-相关名词介绍' '相关名词介绍' %}
+{% post_link 'Furry-3' '相关名词介绍' %}
 <br/>
 <br/>
-{% post_link 'Furry-杂谈-4-现状及问题' '现状及问题' %}
+{% post_link 'Furry-4' '现状及问题' %}
 <br/>
 <br/>
-{% post_link 'Furry-杂谈-5-总结及后话' '总结及后话' %}
+{% post_link 'Furry-5' '总结及后话' %}
 
 
 [^1]: 在英文语境中furry包含的范围较广，furry既可以指拟人化动物也可以指兽娘。

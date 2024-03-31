@@ -8,7 +8,7 @@ tags:
 - 杂谈
 ---
 
-{% post_link 'Furry-杂谈-1-亚文化' '回到目录' %}
+{% post_link 'Furry-1' '回到目录' %}
 <br/>
 
 ## 兽设（Fursona）
@@ -80,7 +80,7 @@ tags:
 另：传说之下（Undertale）、三角符文（Deltarune）中存在furry角色（Asgore，Asriel，Toriel，Alphys，Andyne等），但是其和兽圈并没有直接的联系。
 
 <br/>
-{% post_link 'Furry-杂谈-4-现状及问题' '下一章节：现状及问题' %}
+{% post_link 'Furry-4' '下一章节：现状及问题' %}
 
 
 [^1]: （兽装的）眼睛，一般有两种形式：
