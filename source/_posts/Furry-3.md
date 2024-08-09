@@ -1,5 +1,5 @@
 ---
-title: Furry 杂谈(3) - 相关名词介绍
+title: Furry 杂谈（3） - 相关名词介绍
 date: 2023-10-13 20:13:06
 categories:
 - Furry

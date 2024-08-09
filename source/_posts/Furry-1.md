@@ -1,5 +1,5 @@
 ---
-title: Furry 杂谈(1) - 亚文化
+title: Furry 杂谈（1） - 亚文化
 date: 2023-10-13 19:34:53
 categories:
 - Furry

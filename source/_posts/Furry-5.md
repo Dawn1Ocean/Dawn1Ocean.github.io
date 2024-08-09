@@ -1,5 +1,5 @@
 ---
-title: Furry 杂谈(5) - 总结及后话
+title: Furry 杂谈（5） - 总结及后话
 date: 2023-10-13 20:16:53
 categories:
 - Furry

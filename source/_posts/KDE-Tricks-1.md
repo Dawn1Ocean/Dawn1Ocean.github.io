@@ -1,5 +1,5 @@
 ---
-title: KDE Tricks(1) —— 快捷键切换下一张壁纸
+title: KDE Tricks (1) —— 快捷键切换下一张壁纸
 date: 2023-12-17 18:13:30
 categories:
 - Linux 配置

@@ -1,5 +1,5 @@
 ---
-title: Furry 杂谈(4) - 现状及问题
+title: Furry 杂谈（4） - 现状及问题
 date: 2023-10-13 20:13:27
 categories:
 - Furry

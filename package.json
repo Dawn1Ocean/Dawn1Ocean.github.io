@@ -9,13 +9,14 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": "7.0.0"
+    "version": "7.3.0"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "hexo": "^7.0.0",
     "hexo-deployer-git": "^4.0.0",
+    "hexo-fontawesome": "^2.4.0",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-index": "^3.0.0",
@@ -31,6 +32,7 @@
     "hexo-theme-landscape": "^1.0.0",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-expandable": "^1.0.2",
-    "markdown-it-imsize": "^2.0.1"
+    "markdown-it-imsize": "^2.0.1",
+    "punycode": "^2.3.1"
   }
 }

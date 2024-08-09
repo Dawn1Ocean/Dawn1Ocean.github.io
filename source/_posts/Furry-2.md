@@ -1,5 +1,5 @@
 ---
-title: Furry 杂谈(2) - 序言介绍
+title: Furry 杂谈（2） - 序言介绍
 date: 2023-10-13 20:05:56
 categories:
 - Furry
