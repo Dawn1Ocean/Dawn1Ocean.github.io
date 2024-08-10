@@ -42,3 +42,6 @@ NAS 除了可以完成它的名字中包含的网络存储功能，还能作为�
 <br/>
 {% post_link 'Router-3' '硬路由（4）—— Tailscale & 远程访问' %}
 <br/>
+<br/>
+{% post_link 'NAS-3' 'NAS（3）—— Cockpit & 系统调优' %}
+<br/>
