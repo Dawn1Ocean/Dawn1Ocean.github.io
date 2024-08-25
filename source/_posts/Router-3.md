@@ -1,5 +1,5 @@
 ---
-title: 硬路由（3）—— 校园网 & L2TP / 网页认证
+title: 硬路由（3）—— 校园网 & 认证方案
 date: 2024-08-09 22:10:50
 categories:
 - 硬路由
@@ -22,7 +22,6 @@ tags:
 
 ```bash
 ip rule add from all lookup main pref 0
-
 ```
 
 我们最好将这个配置保存起来以便每次开机自动执行。修改`/etc/rc.local`文件，在前面增加两行：
@@ -30,7 +29,6 @@ ip rule add from all lookup main pref 0
 ```text
 ip rule add from all lookup main pref 0
 ip -6 rule add from all lookup main pref 0
-
 ```
 
 每次无线网络重启时也需要执行这两句。
@@ -105,6 +103,18 @@ ip -6 rule add from all lookup main pref 0
 - [@n0sig 的纯 Bash 网页认证脚本](https://github.com/n0sig/ZJU-Web-Auth-Bash "@n0sig 的纯 Bash 网页认证脚本")
 - [@ADSR1042 的 Go 网页认证脚本](https://github.com/ADSR1042/zju-web-login-lite "@ADSR1042 的 Go 网页认证脚本")
 - [@443 的 Python 网页认证脚本（内网访问）](https://www.cc98.org/topic/4898875 "@443 的 Python 网页认证脚本（内网访问）")
+
+# 无线 Client（推荐）
+
+由于交换机的限制，玉泉部分宿舍通过有线网连接的带宽最高只能为百兆。但无线连接却并没有限制到百兆。因此，我们完全可以使用路由器的无线 Client 模式接入校园网。学校提供了 ZJUWLAN-Secure，通过 PEAP 方式进行认证，这使得我们无需担心网页认证保活的问题。
+
+我们先在`网络 - 无线 - 无线概况`中点击对应频段的扫描按钮，连接到 ZJUWLAN-Secure 后，回到无线配置界面的`接口配置 - 无线安全`部分，选择加密方式为 WPA2-EAP（若无此选项，请搜索教程安装对应的软件包即可），EAP 类型为 PEAP，认证选项为 EAP-MSCHAPV2。在鉴权处输入你的学号，密码处输入你的统一身份认证密码，点击`保存&应用`，稍等片刻即可成功连上网络。
+
+![](image_Z87k6sAzpc.png)
+
+经过简单测速，相比于 L2TP 方式（下行 60M，上行 80M），无线 Client 模式可达到下行 80M，上行 140M 的速度，观看 4K 视频也不会出现卡顿的情况了。
+
+![](c05564f1f397be10730ee36ce687cb11_mwAg9hHt5a.png)
 
 # 配置 IPv6
 

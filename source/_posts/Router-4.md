@@ -135,3 +135,259 @@ iptables -t nat -I POSTROUTING -o tailscale0 -j MASQUERADE
 sudo tailscale up --accept-routes
 ```
 
+# 进阶：自建 DERP 服务器
+
+建议阅读这篇[来自 Tailscale 官方的文章](https://tailscale.com/blog/how-nat-traversal-works/ "来自 Tailscale 官方的文章")，当中详细介绍了 Tailscale 是如何解决 NAT 穿透问题的。
+
+阅读这篇文章可知，当 STUN 不可用时，Tailscale 会采用 DERP（Detoured Encrypted Routing Protocol，由 Tailscale 创建的协议）来进行中继通信。
+
+DERP 同时也是 Tailscale 连接升级的基础设施。在进行局域网打洞时，Tailscale 会先通过 DERP 服务器来实现两台设备之间的连接，再继续寻找延迟更低的链路（直连方式）等。
+
+由于众所周知的原因，Tailscale 在中国大陆并没有官方的 DERP 服务器。为了解决国外 DERP 服务器高延迟以及被很多用户使用的安全性问题，我们可以采取自建 DERP 服务器的方式。
+
+以下部分参考[这篇文章](https://blog.baldcoder.top/articles/self-hosted-tailscale-derp-relay-server "这篇文章")。
+
+## 准备工作
+
+如果部署 DERP 服务的机器在国内（一般情况下），则需要有一个已备案的域名以及有效的 SSL 证书（无域名的方法请自行寻找）。
+
+根据后续脚本，先创建存放证书的文件夹：
+
+```bash
+mkdir /usr/local/cert
+```
+
+以阿里云为例，我们可以申请多达 20 张的免费 SSL 证书。确保有对应子域名指向你的云服务器。申请证书的过程在此略过，建议为此子域名单独申请证书，最好不要使用泛域名证书。
+
+**不要使用 CDN 加速。**
+
+在阿里云控制台下载 Nginx 格式的证书，将`.pem`公钥后缀改为`.crt`，再上传至刚才创建的`/usr/local/cert`路径中。
+
+![](image_qR1gQY58s-.png)
+
+## 安装 Tailscale
+
+通过 SSH 连接到云服务器后，运行如下命令：
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+## 安装 Golang
+
+打开 [https://go.dev/doc/install](https://go.dev/doc/install "https://go.dev/doc/install")，查看 Go 的最新版本号。
+
+![](image_ZI5ptpX84u.png)
+
+```bash
+wget https://go.dev/dl/go<最新版本号>.linux-amd64.tar.gz
+tar -C /usr/local -xzf $HOME/go<最新版本号>.linux-amd64.tar.gz
+```
+
+编辑`/etc/profile`文件：
+
+```bash
+vim /etc/profile
+```
+
+在文件末尾添加以下内容：
+
+```bash
+export GOROOT=/usr/local/go
+export GOPATH=/usr/local/gopath
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOPATH/bin
+```
+
+输入如下命令：
+
+```bash
+source /etc/profile
+```
+
+再输入以下命令检查 Go 是否安装成功：
+
+```bash
+go version
+```
+
+## 安装 derper 服务
+
+建立目录：
+
+```bash
+mkdir -p /usr/local/gopath/bin
+```
+
+输入以下命令来安装：
+
+```bash
+go env -w GOPROXY=https://goproxy.cn,direct
+go install tailscale.com/cmd/derper@main
+```
+
+建立启动脚本：
+
+```bash
+vim /usr/local/gopath/bin/runderper
+```
+
+输入以下内容：
+
+```bash
+#!/bin/sh
+cd /usr/local/gopath/bin
+nohup ./derper -hostname <你的域名> -c=derper.conf -a :<服务端口> -http-port -1 -certdir /usr/local/cert -certmode manual -verify-clients -stun > console.log 2>&1 &
+echo $! > app.pid
+```
+
+> 参数 `-verify-clients` 用来防止别人（知道你的域名后）白嫖你的中继节点，只认服务器上 Tailscale 客户端登录的账号。
+
+建立停止脚本：
+
+```bash
+vim /usr/local/gopath/bin/stopderper.sh
+```
+
+输入以下内容：
+
+```bash
+#!/bin/sh
+kill `cat app.pid`
+rm -rf app.pid
+```
+
+给脚本赋权：
+
+```bash
+chmod +x /usr/local/gopath/bin/runderper
+chmod +x /usr/local/gopath/bin/stopderper.sh
+```
+
+建立服务：
+
+```bash
+vim /etc/systemd/system/derper.service
+```
+
+输入以下内容：
+
+```text
+Description=derper服务
+After=network.target
+ 
+[Service]
+Type=forking
+ExecStart=/usr/local/gopath/bin/runderper
+ExecStop=/usr/local/gopath/bin/stopderper.sh
+ 
+[Install]
+WantedBy=multi-user.target
+```
+
+在云服务器控制台防火墙处，放行你刚刚设置的 derper 服务端口（TCP）与 `3478`端口（UDP，这是 STUN 服务的端口）。
+
+## 启动服务
+
+先启动 Tailscale：
+
+```bash
+tailscale up
+```
+
+访问提示的网址进行授权即可。
+
+接着启动 derper 服务：
+
+```bash
+systemctl enable derper
+systemctl start derper
+systemctl status derper
+```
+
+确认状态为 active(running) 后，访问网址 `https://<你的域名>:56473/`，出现以下页面就是部署成功。
+
+![](image_DcmAHiZT8P.png)
+
+## 添加中继节点
+
+在 Tailscale 网页控制台中的`Access controls`栏的文件中，`ssh`项的上方加入以下内容：
+
+```json
+  "derpMap": {
+    // OmitDefaultRegions 用来忽略官方的中继节点，一般自建后就看不上官方小水管了
+    "OmitDefaultRegions": true,
+    "Regions": {
+      // 这里的 901 从 900 开始随便取数字
+      "901": {
+        // RegionID 和上面的相等
+        "RegionID": 901,
+        // RegionCode 自己取个易于自己名字
+        "RegionCode": "阿里云-深圳",
+        "Nodes": [
+          {
+            // Name 保持 1 不动
+            "Name":     "1",
+            // 这个也和 RegionID 一样
+            "RegionID": 901,
+            // 域名
+            "HostName": "<你的域名>",
+            // 端口号
+            "DERPPort": 56473,
+          },
+        ],
+      },
+    },
+  },
+```
+
+## 测试延迟
+
+在加入了 Tailscale 的设备中输入：
+
+```bash
+tailscale netcheck
+```
+
+![](image_smQlaugW-o.png)
+
+显示了中继节点名称，DERP 中继已成功建立。
+
+## Extra：阿里云与 Tailscale
+
+具体说明可以查看[这篇文章](https://blog.baldcoder.top/articles/resolving-the-incompatibility-between-tailscale-and-alibaba-cloud-episode-1/ "这篇文章")。
+
+如果在阿里云服务器上根据上述步骤配置 DERP 服务器后，会发现服务器不能访问外网了。
+
+简单来说，阿里云使用的内网 DNS 服务器 IP 地址为 100.100.2.136 与 100.100.2.138，而 Tailscale 在启动时会设置一条 Drop 100.64.0.0/10 IP 段的防火墙规则，而阿里云内网的一些服务就位于这些 IP 段。
+
+查看 IPTables：
+
+```bash
+iptables -L --line-numbers
+```
+
+规则 ts-input 如下：
+
+```text
+Chain ts-input (1 references)
+num  target     prot opt source               destination         
+1    ACCEPT     all  --  100.117.68.82        anywhere            
+2    RETURN     all  --  100.115.92.0/23      anywhere            
+3    DROP       all  --  100.64.0.0/10        anywhere            
+4    ACCEPT     all  --  anywhere             anywhere            
+5    ACCEPT     udp  --  anywhere             anywhere             udp dpt:41641
+```
+
+删除这条 Drop 规则可以解决问题：
+
+```bash
+iptables -D ts-input 3 # 输入对应的 num
+```
+
+**但请注意：这条规则并不是可有可无的。大部分较新的 Linux 发行版存在**[**漏洞 CVE-2019-14899**](https://seclists.org/oss-sec/2019/q4/122 "漏洞 CVE-2019-14899")**，该漏洞可使攻击者劫持 VPN 链接。使用 iptables 过滤掉一些地址可以作为缓解措施之一。**
+
+**删除这条规则可能会将正在使用基于 WireGuard 的 VPN（例如 Tailscale）的 Linux 主机置于风险之中，请务必仔细权衡利弊。**
+
+如果要恢复，重启服务器或者 Tailscale 即可。
