@@ -14,7 +14,7 @@ tags:
 
 本篇文章主要来自于[这篇教程](https://docs.qq.com/doc/p/ac7a498302fca24ec7f0d002820ee32eceb03c13 "这篇教程")。
 
-# Debian初始化
+# Debian 初始化
 
 ## 安装初始软件
 
@@ -22,7 +22,7 @@ tags:
 apt install sudo curl git vim net-tools -y # 以 root 用户运行
 ```
 
-## 添加用户至sudo组
+## 添加用户至 sudo 组
 
 添加安装系统时创建的第一个用户至 sudo 组，以方便我们后续管理系统。
 
@@ -72,7 +72,7 @@ sudo apt update && sudo apt upgrade -y
 
 Cockpit 使 Linux 易于使用。可以将 Cockpit 理解为 Linux 的网页端图形化界面。在 Web 浏览器中借助 Cockpit 查看服务器，启动容器、管理存储、配置网络和检查日志都很容易。
 
-## 安装Cockpit
+## 安装 Cockpit
 
 Cockpit 从版本 10 （Buster） 开始在 Debian 中可用。要获取最新版本，建议启用向后移植存储库（以 root 身份）：
 
@@ -1229,3 +1229,6 @@ sudo crontab -e
 ```
 
 这将在每天的午夜（0点）执行全系统扫描，并将扫描结果保存在`/var/log/clamav/scan.log`文件中。
+
+<br/>
+{% post_link 'NAS-4' '下一章节：UPS 不断电系统' %}
