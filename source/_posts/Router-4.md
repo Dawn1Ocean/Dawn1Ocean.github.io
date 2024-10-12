@@ -31,6 +31,25 @@ Tailscale 是一个基于 WireGuard 的 VPN 配置工具，通过去中心化的
 
 # 安装与配置 Tailscale
 
+OpenWrt Tailscale [自动安装脚本](https://github.com/CH3NGYZ/tailscale-openwrt)，亲测有效。
+
+- 踩坑记录：如果要将 OpenWrt 装在 AX3000T 上，建议使用此安装脚本。其原理为：每次启动后都通过脚本获取最新版本，将 Tailscale 装入 /tmp（内存）中。对于闪存空间不够的机器较友好。但同时也需注意：Tailscaled 占用内存较大，请酌情调整其他服务，以免造成路由器 OOM（Out of Memory）。
+
+    有一个更优雅的解决办法：将 Tailscale 装在 NAS 上。Tailscale 局域网网关不必和物理网关一致，因此可以选用内存和存储更有余裕的 NAS。关于在 NAS 上安装 Tailscale，官网提供了安装脚本，运行一行命令即可。记得设置开机启动以及按下文配置子网路由。
+
+```Bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo systemctl enable tailscaled
+sudo systemctl start tailscaled
+sudo tailscale up
+```
+
+全新安装：
+
+```Bash
+wget -O- https://ghproxy.cc/https://raw.githubusercontent.com/CH3NGYZ/tailscale-openwrt/chinese_mainland/install.sh | sh
+```
+
 本部分文章主要来自于[这篇博客](https://www.cnblogs.com/lumia1998/p/18241680 "这篇博客")。
 
 ## 下载软件

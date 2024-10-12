@@ -18,8 +18,6 @@ Homepage 导航页的布局和背景等还能手动配置，自定义打造一�
 
 ![](image_KKxP68VtNq.png)
 
-![](image_3smttuHcd4.png)
-
 # 通过 Docker 部署
 
 使用 Docker Compose：
