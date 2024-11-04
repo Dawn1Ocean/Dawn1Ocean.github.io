@@ -25,12 +25,20 @@ subtitle:
 
 menu:
   首页: / || fas fa-home
-  归档: /archives/ || fas fa-archive
-  标签: /tags/ || fas fa-tags
-  分类: /categories/ || fas fa-folder-open
-  # 清单||fas fa-list:
+  页面 || fas fa-compass:
+    归档: /archives/ || fas fa-archive
+    标签: /tags/ || fas fa-tags
+    分类: /categories/ || fas fa-folder-open
+    说说: /shuoshuo/ || fas fa-comments
+  文章 || fas fa-book:
+    硬路由 / NAS: /2024/08/09/NAS-Router-0/ || fas fa-computer
+    Furry 杂谈: /2023/10/13/Furry-1/ || fas fa-paw
   #   音乐: /music/ || fas fa-music
-  友链: /link/ || fas fa-link 
+  友链: /link/ || fas fa-link
+
+social:
+  fab fa-github: https://github.com/Dawn1Ocean || Github || "#000000"
+  fas fa-envelope: mailto:dawn_ocean@qq.com || Email || "#000000"
 
 avatar:
   img: /assets/img/avatar.jpg
@@ -92,6 +100,23 @@ pangu:
 index_img: /assets/img/index.png
 default_top_img: /assets/img/default.png
 
+# https://instant.page/
+# prefetch (预加载)
+instantpage: true
+
+# 美化页面显示
+beautify:
+  enable: true
+  field: site # site/post
+  # title-prefix-icon: '\f0c1'
+  # title-prefix-icon-color: '#F47466'
+
+search:
+  # Choose: algolia_search / local_search / docsearch
+  # leave it empty if you don't need search
+  use:
+  placeholder:
+
 # Aside
 aside:
   enable: true
@@ -107,7 +132,7 @@ aside:
     enable: true
     description:
     button:
-      enable: true
+      enable: false
       icon: fab fa-github
       text: Follow Me
       link: https://github.com/Dawn1Ocean
@@ -267,3 +292,8 @@ preloader:
   source: 1
   # pace theme (see https://codebyzach.github.io/pace/)
   pace_css_url:
+
+nofollow:
+  enable: true
+  field: site
+  exclude:
