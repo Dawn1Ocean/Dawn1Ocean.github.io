@@ -234,5 +234,25 @@ ZFS 也存在一些问题：
 
 根据自己的需求选择 RAID 级别及对应磁盘即可。
 
+Cockpit 的 ZFS 界面会出现图标不显示的问题。45Drives 表示他们已知晓[此问题](https://github.com/45Drives/cockpit-zfs-manager/issues/15)并选择忽视，但提供了一个解决此问题的脚本。
+
+```Bash
+#!/usr/bin/env bash
+
+echo Fixing cockpit fonts
+
+mkdir -p /usr/share/cockpit/base1/fonts
+
+curl -sSL https://scripts.45drives.com/cockpit_font_fix/fonts/fontawesome.woff -o /usr/share/cockpit/base1/fonts/fontawesome.woff
+curl -sSL https://scripts.45drives.com/cockpit_font_fix/fonts/glyphicons.woff -o /usr/share/cockpit/base1/fonts/glyphicons.woff
+curl -sSL https://scripts.45drives.com/cockpit_font_fix/fonts/patternfly.woff -o /usr/share/cockpit/base1/fonts/patternfly.woff
+
+mkdir -p /usr/share/cockpit/static/fonts
+
+curl -sSL https://scripts.45drives.com/cockpit_font_fix/fonts/OpenSans-Semibold-webfont.woff -o /usr/share/cockpit/static/fonts/OpenSans-Semibold-webfont.woff
+
+echo Done
+```
+
 <br/>
 {% post_link 'NAS-6' '下一章节：SMB & WebDAV' %}

@@ -116,10 +116,6 @@ ip -6 rule add from all lookup main pref 0
 
 ![](c05564f1f397be10730ee36ce687cb11_mwAg9hHt5a.png)
 
-# 配置 IPv6
-
-施工中......
-
 <br/>
-{% post_link 'Router-4' '下一章节：Tailscale & 远程访问' %}
+{% post_link 'Router-4' '下一章节：Tailscale & 远程访问（IPv4）' %}
 

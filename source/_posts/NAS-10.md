@@ -146,5 +146,56 @@ proxy_set_header   X-Forwarded-For    $remote_addr;
 proxy_cookie_path  /                  "/; Secure";
 ```
 
+## 为什么我的“可连接”是“否”？
+
+根据 NexusHD 的常见问题板块，我们需要开启 UPnP 与端口映射 / 端口转发功能。
+
+![](image_J06DjyBiY7.png)
+
+在 OpenWrt 中开启 UPnP 的方法：在`服务 - UPnP`页面中勾选对应选项。
+
+![](image_ngO5ZOLM5U.png)
+
+接着在 qBitTorrent 当中勾选`使用我的路由器的 UPnP / NAT-PMP 端口转发`项。
+
+![](image_yxAJ2jHGMr.png)
+
+但是当我们查看路由器的 UPnP 转发情况，会发现并没有成功转发。
+
+查看 qBitTorrent 日志：
+
+![](f383da6db00ebc98e4c556c161afa29b_UMWxQ3kCWo.png)
+
+查询后得知，我们需要将容器的网络模式由 Bridge 更改为 Host。注意端口不要冲突。
+
+```bash 
+sudo docker network ls
+```
+
+
+![](image_8L-WeHDKZ0.png)
+
+我们进入 qBitTorrent 的部署文件夹，编辑`docker-compose.yaml`文件：
+
+```bash 
+sudo vim docker-compose.yaml
+```
+
+
+![](image_gX-8O940XW.png)
+
+加入一行`network_mode: host`即可。
+
+重新部署：
+
+```bash 
+sudo docker compose up -d
+```
+
+
+在路由器的 UPnP 管理界面可以看到已经成功转发了。
+
+![](image_xipLiOHALF.png)
+
 <br/>
 {% post_link 'NAS-11' '下一章节：HTPC' %}

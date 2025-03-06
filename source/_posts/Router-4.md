@@ -1,5 +1,5 @@
 ---
-title: 硬路由（4）—— Tailscale & 远程访问
+title: 硬路由（4）—— Tailscale & 远程访问（IPv4）
 date: 2024-08-09 22:21:04
 categories:
 - 硬路由
@@ -410,3 +410,6 @@ iptables -D ts-input 3 # 输入对应的 num
 **删除这条规则可能会将正在使用基于 WireGuard 的 VPN（例如 Tailscale）的 Linux 主机置于风险之中，请务必仔细权衡利弊。**
 
 如果要恢复，重启服务器或者 Tailscale 即可。
+
+<br/>
+{% post_link 'Router-5' '下一章节：校园网 & 远程访问（IPv6）' %}
