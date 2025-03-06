@@ -72,7 +72,7 @@ Scrutiny 是用于smartd 监控硬盘 S.M.A.R.T 信息的 WebUI。
 
 ### 通过Docker部署
 
-可以先阅读[NAS（七）—— Docker 服务](https://www.wolai.com/oGBJZpYGUcB6q1HTChEmSA "NAS（七）—— Docker 服务")部分，将 NAS 上的 Docker 环境配置完成。
+可以先阅读{% post_link 'NAS-7' 'Docker 服务' %}部分，将 NAS 上的 Docker 环境配置完成。
 
 使用 Docker Compose：
 
