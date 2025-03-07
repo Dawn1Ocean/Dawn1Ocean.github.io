@@ -127,3 +127,6 @@ sudo docker logs immich_machine_learning
 ![](c77e849951216e2d9c65f0ff0f5c8618_1jAwgdP7X0.png)
 
 剩下的功能，就留给各位去探索吧！
+
+<br/>
+{% post_link 'NAS-13' '下一章节：Navidrome + MusicTag 音乐管理' %}

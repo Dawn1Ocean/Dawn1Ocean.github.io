@@ -71,3 +71,5 @@ NAS 除了可以完成它的名字中包含的网络存储功能，还能作为�
 <br/>
 {% post_link 'NAS-12' 'NAS（12）—— Immich 照片管理' %}
 <br/>
+{% post_link 'NAS-13' 'NAS（13）—— Navidrome + MusicTag 音乐管理' %}
+<br/>
