@@ -6,7 +6,7 @@
 title: Dean's Blog
 subtitle: ''
 description: '晓洋的博客'
-keywords:
+keywords: dean,dawn_ocean,dawn1ocean,晓洋,博客,furry,NAS
 author: Dean Ma
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -14,7 +14,7 @@ timezone: 'Asia/Shanghai'
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://blog.deans.fun
-permalink: :year/:month/:day/:title/
+permalink: :title.html
 permalink_defaults:
 pretty_urls:
   trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
@@ -135,4 +135,7 @@ markdown:
 marked:
   prependRoot: true
   postAsset: true
+
+sitemap:
+  path: sitemap.xml
 
