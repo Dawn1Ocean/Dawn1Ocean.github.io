@@ -123,11 +123,11 @@ markdown:
     - markdown-it-sub
     - markdown-it-sup
   anchors:
-    level: 2
+    level: 1
     collisionSuffix: 'v'
     permalink: true
     permalinkClass: header-anchor
-    permalinkSymbol: ¶
+    permalinkSymbol: ''
 
 # plugins:
 #   - hexo-reference

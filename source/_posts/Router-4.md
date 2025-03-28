@@ -54,7 +54,7 @@ wget -O- https://ghproxy.cc/https://raw.githubusercontent.com/CH3NGYZ/tailscale-
 
 ## 下载软件
 
-进入`系统 - TTYD 终端`，将 Tailscale 软件包下载到指定目录。进入 Tailscale 的[Github Releases](https://github.com/adyanth/openwrt-tailscale-enabler/releases "Github Releases")地址，找到最新的软件包，使用 wget 下载到本地。
+进入`服务 - 终端`，将 Tailscale 软件包下载到指定目录。进入 Tailscale 的[Github Releases](https://github.com/adyanth/openwrt-tailscale-enabler/releases "Github Releases")地址，找到最新的软件包，使用 wget 下载到本地。
 
 ```bash
 wget https://github.com/adyanth/openwrt-tailscale-enabler/releases/download/v1.60.0-e428948-autoupdate/openwrt-tailscale-enabler-v1.60.0-e428948-autoupdate.tgz # 版本自行调整

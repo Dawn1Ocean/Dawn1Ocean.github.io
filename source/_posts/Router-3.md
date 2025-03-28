@@ -64,34 +64,6 @@ ip -6 rule add from all lookup main pref 0
 
 ![](image_gIYAFViAok.png)
 
-# L2TP
-
-## 安装xl2tpd包
-
-如果路由器中没有 xl2tpd 这个包，我们需要先安装它。因此路由器需要能够访问公网。通过有线和无线共享网络的方式已在{% post_link 'Router-2' '上一章节：系统调优 & 局域网组网' %}中写明，可以参考。
-
-进入路由器的后台页面，在`系统 – TTYD 终端`中输入如下命令：
-
-```bash
- opkg update && opkg install xl2tpd
-```
-
-如果提示错误，请考虑更换软件源。
-
-## 配置L2TP
-
-在 LuCi 中找到`网络 – 接口 - 添加新接口...`，添加一个接口，协议选择L2TP。
-
-![](image_okkB0etBpd.png)
-
-填入 L2TP 服务器地址（`lns.zju.edu.cn`），用户名，密码。
-
-![](image_WK4OdGBEom.png)
-
-在防火墙设置中选择防火墙区域为 Wan 区域（或者有专门的 VPN 区域则选择那个），最后连接，可能需要重启路由器。
-
-![](image_bEIFMqz35C.png)
-
 # Web 认证方案
 
 近期学校对网络架构进行了升级，有些宿舍楼的 L2TP 与 IPv6 出现了问题。有的同学猜测可能是信息中心想解决不登录上网账号就能使用 IPv6 的问题。因此，我们可以使用网页认证的方式进行联网。
@@ -115,6 +87,34 @@ ip -6 rule add from all lookup main pref 0
 经过简单测速，相比于 L2TP 方式（下行 60M，上行 80M），无线 Client 模式可达到下行 80M，上行 140M 的速度，观看 4K 视频也不会出现卡顿的情况了。
 
 ![](c05564f1f397be10730ee36ce687cb11_mwAg9hHt5a.png)
+
+# L2TP
+
+## 安装 xl2tpd 包
+
+如果路由器中没有 xl2tpd 这个包，我们需要先安装它。因此路由器需要能够访问公网。通过有线和无线共享网络的方式已在{% post_link 'Router-2' '上一章节：系统调优 & 局域网组网' %}中写明，可以参考。
+
+进入路由器的后台页面，在`服务 – 终端`中输入如下命令：
+
+```bash
+ opkg update && opkg install xl2tpd
+```
+
+如果提示错误，请考虑更换软件源。
+
+## 配置 L2TP
+
+在 LuCi 中找到`网络 – 接口 - 添加新接口...`，添加一个接口，协议选择 L2TP。
+
+![](image_okkB0etBpd.png)
+
+填入 L2TP 服务器地址（`lns.zju.edu.cn`），用户名，密码。
+
+![](image_WK4OdGBEom.png)
+
+在防火墙设置中选择防火墙区域为 Wan 区域（或者有专门的 VPN 区域则选择那个），最后连接，可能需要重启路由器。
+
+![](image_bEIFMqz35C.png)
 
 <br/>
 {% post_link 'Router-4' '下一章节：Tailscale & 远程访问（IPv4）' %}

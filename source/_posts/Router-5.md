@@ -300,8 +300,25 @@ fake_ipv6pd() {
 fake_ipv6pd "$@"
 ```
 
-
 保存后直接重启路由器，过一会儿路由器应该就能下发 IPv6 地址了。
+
+# IPv6 防火墙
+
+有时我们配置好后会出现如下情况：NAS 通过 IPv4 访问完全正常，IPv6 也能够 ping 通 NAS，但无法访问任何 NAS 上的服务。
+
+在 IPv4 部分，我们是通过局域网或是 Tailscale（虚拟局域网）来连接到 NAS 的。但在 IPv6，我们是通过直连方式连接到 NAS，因此需要考虑路由器防火墙的问题。
+
+我们可以在`网络 - 防火墙 - 通信规则`中添加对于 NAS 的 IPv6 支持：
+
+![](image_ffnTYZNAHz.png)
+
+源区域选择 wan，目标区域选择 lan，目标地址选择 NAS 的公网 IPv6 地址（不是本地链路地址）。
+
+![](image_zmthJUBTSG.png)
+
+在高级设置处，将地址族限制为 IPv6。
+
+![](image_68boCKJd-E.png)
 
 # 远程访问
 

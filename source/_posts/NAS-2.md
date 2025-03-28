@@ -102,6 +102,8 @@ categories:
 
 这里的选择依据具体情况而定，建议选择 All files in one partition 将所有文件放在同一个分区。
 
+文件系统也依据具体情况而定，笔者选择的是 btrfs 文件系统。
+
 ![](53sUfHM8sQnEPfrm9WFcXi_2PSs6pQQPp.png)
 
 ## 完成分区操作并将修改写入磁盘

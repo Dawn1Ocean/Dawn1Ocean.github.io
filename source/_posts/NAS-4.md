@@ -102,7 +102,7 @@ sudo systemctl enable apcupsd
 sudo systemctl start apcupsd
 ```
 
-### Web服务
+### Web 服务
 
 apcupsd 在运行时，默认设置会在本地的 3551 端口启动一个 CGI 程序，我们可以通过 Apache2 来建立一个服务器，在网页端查看 UPS 状态。
 

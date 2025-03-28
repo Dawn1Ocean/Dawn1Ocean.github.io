@@ -219,6 +219,8 @@ services:
 
 另外，Navidrome 对于多艺术家的支持不是很好。当多个艺术家通过半角逗号的方式连接时，Navidrome 只会选取第一个艺术家显示。如果某专辑主要由一位艺术家完成，在刮削完后需要将其排在歌曲艺术家的第一个，否则可能会被 Navidrome 错误地识别成多个不同的专辑。
 
+Navidrome 在[v0.55.0](https://github.com/navidrome/navidrome/releases/tag/v0.55.0)当中已支持多艺术家。这是一次较大重构的更新，在更新之前请做好迁移工作。
+
 MusicTag 还有很多非常强大的功能，请各位自行探索。
 
 # 其他客户端

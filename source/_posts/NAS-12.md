@@ -96,6 +96,8 @@ Im­mich 是支持使用描述文字搜索图片的，但默认的机器学习�
 
 ![](d823bc555cbf782927db1a63a9f64cac_Uo2RU3n_Hd.png)
 
+可以前往 Immich 的[官方文档](https://v1.130.0.archive.immich.app/docs/features/searching/#clip-models)查看各模型对于某语言的响应情况。
+
 如果 NAS 能够使用代理，我们直接前往 Immich 的`管理 - 设置 - 机器学习设置 - 智能搜索 - CLIP 模型`处修改 CLIP 模型名称。
 
 ![](image_oSvvt28mu-.png)
