@@ -279,13 +279,13 @@ iface enp3s0 inet dhcp
 
 如果要使用 Cockpit 接管网络配置，需注释掉`/etc/network/interfaces`文件当中的所有内容，进入`Cockpit - 网络 - 接口 - enp1s0（你网络接口名称）- IPV4 - 编辑 - 手动`，输入你要设置的IP地址及默认网关。
 
-![](image_C_ePvelo0G.png)
+![](NAS-3/image_C_ePvelo0G.png)
 
 ## 调整系统时区/时间
 
 Cockpit - 概览 - 系统时间 - 点击时间进行校准，时区选择 Asia/Shanghai，设置时间选择自动使用 NTP，然后点击变更，系统会自动联网进行校准。
 
-![](image_wmNmd2RDfn.png)
+![](NAS-3/image_wmNmd2RDfn.png)
 
 ## 交换空间优化
 
@@ -344,11 +344,11 @@ tuned-adm recommend # 根据系统的硬件配置和工作负载推荐一个最�
 
 在 Cockpit Web 管理面板上配置 Tuned：
 
-![](image_56w_aoOkTn.png)
+![](NAS-3/image_56w_aoOkTn.png)
 
 选择你需要的模式激活使用。
 
-![](image_gZCqrol2kV.png)
+![](NAS-3/image_gZCqrol2kV.png)
 
 常用 Tuned 配置集
 
@@ -407,31 +407,31 @@ General type of mail configuration:
 
 选择第三项：用 smarthost 发信；无本地信件。
 
-![](dWnCdFnzGEu5LY9YYM1DMU_bXJZewecNZ.png)
+![](NAS-3/dWnCdFnzGEu5LY9YYM1DMU_bXJZewecNZ.png)
 
 ### 系统邮件名称
 
 填写发邮件的邮件域名，如你的发件邮件地址是 <mymail@qq.com>，则这里填写 qq.com。
 
-![](7tD2yX5k6Vfo3dVeUeVMvw_oN-pIbHyGt.png)
+![](NAS-3/7tD2yX5k6Vfo3dVeUeVMvw_oN-pIbHyGt.png)
 
 ### 监听入站 SMTP 连接
 
 监听的 IP 地址填写 127.0.0.1 ; ::1，这里表示只监听本地 IPv4 / IPv6 端口，也就是只有本机能发信，外部不能访问。
 
-![](cBdjnTyjG9uGQLtZDAbFDk_bINDhUMgav.png)
+![](NAS-3/cBdjnTyjG9uGQLtZDAbFDk_bINDhUMgav.png)
 
 ### 其他可接收邮件的目的地址
 
 这里留空。
 
-![](kVdinz3iu2Hr9pNT9PqDGp_A1uuKNlS86.png)
+![](NAS-3/kVdinz3iu2Hr9pNT9PqDGp_A1uuKNlS86.png)
 
 ### 本地用户的可见域名
 
 同样填写你的发件邮箱域名，如 qq.com。
 
-![](mCkGbuiKazHjzxs4HqptoD_NUPvNeDjjl.png)
+![](NAS-3/mCkGbuiKazHjzxs4HqptoD_NUPvNeDjjl.png)
 
 ### 发邮件使用的 smarthost
 
@@ -441,19 +441,19 @@ General type of mail configuration:
 
 不保持最小 DNS 查询量，选择 No。
 
-![](m6DuzQZgWg4uBNh36i5aV1_nXW5nFQWuy.png)
+![](NAS-3/m6DuzQZgWg4uBNh36i5aV1_nXW5nFQWuy.png)
 
 ### 分拆设置文件
 
 如不搭建复杂的邮件服务器，这里保持默认选择 No 即可。
 
-![](mpQXLJkiiThkszXUYni2z9_SIyDkhvf11.png)
+![](NAS-3/mpQXLJkiiThkszXUYni2z9_SIyDkhvf11.png)
 
 ### Root 和 postmaster 邮件接收者
 
 这里留空。
 
-![](vBbp2V11wak98KzkR4e2Zj_SZBQPXP_8X.png)
+![](NAS-3/vBbp2V11wak98KzkR4e2Zj_SZBQPXP_8X.png)
 
 ### 后续设置
 
@@ -722,7 +722,7 @@ sudo faillock --reset
 
 通过`Cockpit Web 管理面板 - 用户账户 - root 用户 - 选项 - 禁用交互式密码`，打上勾表示禁止 root 用户使用密码登陆。
 
-![](image__gJDJrTSRw.png)
+![](NAS-3/image__gJDJrTSRw.png)
 
 ## 限制用户 su
 
@@ -861,7 +861,7 @@ sudo bash -c "source /etc/profile"
 
 为了系统的安全起见，建议 SSH 服务在有需要用的时候通过 Cockpit Web 面板开启，平常则处于关闭状态。开启路径：`Cockpit - 服务 - ssh.service - 启动`
 
-![](image_xy30JbgUPv.png)
+![](NAS-3/image_xy30JbgUPv.png)
 
 关闭ssh服务开机自动启动，命令：
 
@@ -911,7 +911,7 @@ sudo systemctl status firewalld
 Active: active (running)
 ```
 
-![](image_wOT0G3ctSr.png)
+![](NAS-3/image_wOT0G3ctSr.png)
 
 ## 安装自动封锁软件
 

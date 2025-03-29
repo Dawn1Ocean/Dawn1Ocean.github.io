@@ -37,7 +37,7 @@ ip -6 rule add from all lookup main pref 0
 
 在`网络 - 静态路由`处进行设置，注意接口应选择 wan。网关填写路由器 LAN 地址。
 
-![](image_5U2ItAVWxY.png)
+![](Router-3/image_5U2ItAVWxY.png)
 
 完整的路由表：
 
@@ -62,7 +62,7 @@ ip -6 rule add from all lookup main pref 0
 
 解决办法：在`网络 - DHCP/DNS`处取消勾选“重绑定保护”。
 
-![](image_gIYAFViAok.png)
+![](Router-3/image_gIYAFViAok.png)
 
 # Web 认证方案
 
@@ -82,11 +82,11 @@ ip -6 rule add from all lookup main pref 0
 
 我们先在`网络 - 无线 - 无线概况`中点击对应频段的扫描按钮，连接到 ZJUWLAN-Secure 后，回到无线配置界面的`接口配置 - 无线安全`部分，选择加密方式为 WPA2-EAP（若无此选项，请搜索教程安装对应的软件包即可），EAP 类型为 PEAP，认证选项为 EAP-MSCHAPV2。在鉴权处输入你的学号，密码处输入你的统一身份认证密码，点击`保存&应用`，稍等片刻即可成功连上网络。
 
-![](image_Z87k6sAzpc.png)
+![](Router-3/image_Z87k6sAzpc.png)
 
 经过简单测速，相比于 L2TP 方式（下行 60M，上行 80M），无线 Client 模式可达到下行 80M，上行 140M 的速度，观看 4K 视频也不会出现卡顿的情况了。
 
-![](c05564f1f397be10730ee36ce687cb11_mwAg9hHt5a.png)
+![](Router-3/c05564f1f397be10730ee36ce687cb11_mwAg9hHt5a.png)
 
 # L2TP
 
@@ -106,15 +106,15 @@ ip -6 rule add from all lookup main pref 0
 
 在 LuCi 中找到`网络 – 接口 - 添加新接口...`，添加一个接口，协议选择 L2TP。
 
-![](image_okkB0etBpd.png)
+![](Router-3/image_okkB0etBpd.png)
 
 填入 L2TP 服务器地址（`lns.zju.edu.cn`），用户名，密码。
 
-![](image_WK4OdGBEom.png)
+![](Router-3/image_WK4OdGBEom.png)
 
 在防火墙设置中选择防火墙区域为 Wan 区域（或者有专门的 VPN 区域则选择那个），最后连接，可能需要重启路由器。
 
-![](image_bEIFMqz35C.png)
+![](Router-3/image_bEIFMqz35C.png)
 
 <br/>
 {% post_link 'Router-4' '下一章节：Tailscale & 远程访问（IPv4）' %}

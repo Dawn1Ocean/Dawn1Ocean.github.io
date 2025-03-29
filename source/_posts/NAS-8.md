@@ -17,7 +17,7 @@ Nginx 是 lgor Sysoev 为俄罗斯访问量第二的 rambler.ru 站点设计开�
 
 Nginx 功能丰富，可作为 HTTP 服务器，也可作为反向代理服务器，邮件服务器。支持 FastCGI、SSL、Virtual Host、URL Rewrite、Gzip 等功能。并且支持很多第三方的模块扩展。
 
-![](image_723xGBuc8B.png)
+![](NAS-8/image_723xGBuc8B.png)
 
 ## 反向代理
 
@@ -27,7 +27,7 @@ Nginx 功能丰富，可作为 HTTP 服务器，也可作为反向代理服务�
 
 通过反向代理功能，我们可以隐藏内部服务器的地址（暴露的是代理服务器），对于客户端而言，此代理是无感知的。通过 Nginx，我们可以将发送给不同子域名的请求转发到同一台机器的各个端口；我们还可以更进一步，将客户端的请求转发到不同的内部服务器，这样就实现了负载均衡。
 
-![](image_XGn5XU8be0.png)
+![](NAS-8/image_XGn5XU8be0.png)
 
 ## SSL 证书
 
@@ -35,7 +35,7 @@ Nginx 功能丰富，可作为 HTTP 服务器，也可作为反向代理服务�
 
 HTTPS 在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。TLS/SSL 协议不仅仅是一套加密传输的协议，更是一件经过艺术家精心设计的艺术品，TLS/SSL 中使用了非对称加密，对称加密以及 HASH 算法。握手过程的具体描述如下：
 
-![](image_8A5Ssr-fYl.png)
+![](NAS-8/image_8A5Ssr-fYl.png)
 
 1. 浏览器将自己支持的一套加密规则发送给网站。
 2. 网站从中选出一组加密算法与 HASH 算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。
@@ -52,7 +52,7 @@ HTTPS 在传输数据之前需要客户端（浏览器）与服务端（网站�
 
 CA（Certificate Authority，证书授权）机构是负责发放和管理数字证书的权威机构。CA 机构在网络安全领域扮演着重要的角色，它们通过验证和颁发数字证书，为网络通信提供身份认证的有效凭据，确保数据的安全性和可信度。
 
-![](image_ikOKfaYjER.png)
+![](NAS-8/image_ikOKfaYjER.png)
 
 在申请 CA 证书时，服务器端会生成一对有效的公私钥，并将公钥、申请者信息、域名等内容发送到 CA。CA 接收后，通过 HASH 算法生成证书摘要，再用 CA 的私钥对其进行加密，生成签名，最后返回证书。
 
@@ -166,11 +166,11 @@ The certificate is at "./localhost+2.pem" and the key at "./localhost+2-key.pem"
 
 双击这个证书文件，在常规选项卡，点击安装证书证书，在导入向导中将证书导入 `受信任的根证书颁发机构`:
 
-![](image_ovVeUpRqIN.png)
+![](NAS-8/image_ovVeUpRqIN.png)
 
-![](image_2kWD-I5COb.png)
+![](NAS-8/image_2kWD-I5COb.png)
 
-![](image_nUjQg9Qgb5.png)
+![](NAS-8/image_nUjQg9Qgb5.png)
 
 Windows 命令行执行：
 

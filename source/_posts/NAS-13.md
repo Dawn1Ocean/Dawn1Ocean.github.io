@@ -17,7 +17,7 @@ tags:
 
 Navidrome 是一款全功能、开源且支持多平台的音乐服务器应用程序，可以在 MacOS、Linux、Windows 以及 Docker 等平台上运行。它支持常见的音频格式如 MP3、FLAC 和 WAV，并提供了丰富的管理工具和服务。通过 Web 界面或 API，你可以轻松管理和访问你的音乐库。
 
-![](image_JpkaKEAA96.png)
+![](NAS-13/image_JpkaKEAA96.png)
 
 ## 通过 Docker 部署
 
@@ -64,19 +64,19 @@ services:
 
 可以用于显示歌手头像（Last.fm 在 v0.54.1 后已支持）。你需要先创建一个 Spo­tify 账户，随后在[https://developer.spotify.com/dashboard/applications](https://developer.spotify.com/dashboard/applications "https://developer.spotify.com/dashboard/applications")中 Cre­ate app 创建一个应用。
 
-![](image_-iudo7G07r.png)
+![](NAS-13/image_-iudo7G07r.png)
 
 需填写 **App name**、**App description** 以及 **Redirect URI** 这三处，Redi­rect URI 填入`http://localhost/`。
 
 随后返回控制台，点击应用，进入应用设置，即可获取**Client ID**和**Client secret**。对应填入环境变量中的`ND_SPOTIFY_ID`和`ND_SPOTIFY_SECRET`。
 
-![](image_XJiZfgsIPo.png)
+![](NAS-13/image_XJiZfgsIPo.png)
 
 ### Last.fm
 
 可以用于显示歌手简介、歌手头像、热门歌曲等相关信息。同样先创建一个[Last.fm](https://www.last.fm/zh "Last.fm")帐户，前往[https://www.last.fm/zh/api/account/create](https://www.last.fm/zh/api/account/create "https://www.last.fm/zh/api/account/create")创建 API 帐户，只用填写应用名称。提交后在[API 应用程序](https://www.last.fm/zh/api/accounts "API 应用程序")页面复制粘贴 Key 和 Se­cret 到环境变量即可。
 
-![](image_CtKHfF7hQC.png)
+![](NAS-13/image_CtKHfF7hQC.png)
 
 # 音乐刮削
 
@@ -94,9 +94,9 @@ services:
 - 总光盘数：用于标识专辑中共有多少光盘
 - 播放信息：包括时长、比特率、采样率、位深度、声道等
 
-![](image_Ftmo0dGH7K.png)
+![](NAS-13/image_Ftmo0dGH7K.png)
 
-![](image_JnQSLz0SGY.png)
+![](NAS-13/image_JnQSLz0SGY.png)
 
 音乐刮削一直是一个很麻烦的问题，包括但不限于以下几点：
 
@@ -119,7 +119,7 @@ MusicTag Web 版是一款可以编辑歌曲的标题，专辑，艺术家，歌�
 
 目前 v2 版本需要付费，v1 版本可以免费使用。（v2 和 v1 是同一个镜像，只是端口不同，好神奇的操作）
 
-![](image_Pe_GkPU-91.png)
+![](NAS-13/image_Pe_GkPU-91.png)
 
 ## 通过 Docker 部署（v2）
 
@@ -171,11 +171,11 @@ services:
 
 进入 MusicTag 页面，我们可以看到：左侧是待处理的文件 / 文件夹，中间是支持的部分操作。
 
-![](image_VJuOcJ_Qe_.png)
+![](NAS-13/image_VJuOcJ_Qe_.png)
 
 第一次使用，我们推荐先勾选左侧全部文件夹，进行“自动刮削”：
 
-![](image_Nj9P7Lzjdf.png)
+![](NAS-13/image_Nj9P7Lzjdf.png)
 
 - 宽松模式：至少存在一个完全一致和一个包含，但也优先选完全一致
 - 标准模式：三个指标必须为包含或完全一致，但也优先选完全一致
@@ -183,7 +183,7 @@ services:
 
 这里推荐选择标准模式或宽松模式进行第一次自动刮削。对于之后新入库的文件，我们也可以先勾选以进行自动刮削。刮削过程中可以在后台查看刮削报告。
 
-![](image_1Uhrp1yIs3.png)
+![](NAS-13/image_1Uhrp1yIs3.png)
 
 ### 手动刮削
 
@@ -194,11 +194,11 @@ services:
 - 专辑封面一致
 - 尽量选择同一个来源（如均为 netease）
 
-![](image_63prR1qRV7.png)
+![](NAS-13/image_63prR1qRV7.png)
 
 我们还可以在主界面的左侧直接打开某个文件夹。未完全刮削的歌曲会显示**红色**。
 
-![](image_Xi8x9oYmS_.png)
+![](NAS-13/image_Xi8x9oYmS_.png)
 
 打开元数据详情，点击标题旁的“搜索”按钮，在右侧选择相匹配的元数据。搜索的技巧：
 
@@ -209,11 +209,11 @@ services:
   - 仅搜索标题 / 艺术家 / 专辑（其他两个留空）
 - 最好仅保留一个主要的标签来源（避免混淆）
 
-![](image_IvAkar-7Mw.png)
+![](NAS-13/image_IvAkar-7Mw.png)
 
 在歌词一栏，我们还可以点击“翻译”按钮，这样会添加同一时间轴的翻译歌词，在 Navidrome 当中可以显示出来。
 
-![](image_nbL8U4eZBe.png)
+![](NAS-13/image_nbL8U4eZBe.png)
 
 ### 其他提示
 
@@ -229,4 +229,4 @@ MusicTag 还有很多非常强大的功能，请各位自行探索。
 
 「音流」是一款国人开发的音乐播放器，支持 Subsonic / Navidrome / Jellyfin / Emby / AudioStation，现已登录 Android、iOS、Windows、MacOS 平台。音流采用 Flutter 开发，界面简洁美观，整体以透明和高斯模糊为主，布局类似于网易云音乐，**支持主线路和备用线路**连接，上手基本没有门槛。你可以在[音流官网](https://music.aqzscn.cn/ "音流官网")获取 Android / Windows / MacOS 安装包，或直接在 iOS AppStore 搜索「音流」下载。
 
-![](image_GEjIvOkMlq.png)
+![](NAS-13/image_GEjIvOkMlq.png)

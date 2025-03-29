@@ -1,5 +1,5 @@
 ---
-title: NAS（5）—— 硬盘 & 软 RAID
+title: NAS（5）—— 数据冗余保障
 date: 2024-08-26 02:43:31
 categories:
 - NAS
@@ -68,7 +68,7 @@ SMART overall-health self-assessment test result: PASSED
 
 Scrutiny 是用于smartd 监控硬盘 S.M.A.R.T 信息的 WebUI。
 
-![](image_v5JOICGCKw.png)
+![](NAS-5/image_v5JOICGCKw.png)
 
 ### 通过 Docker 部署
 
@@ -105,7 +105,7 @@ services:
 
 服务启动后访问对应端口即可查看硬盘详细信息。记得开放防火墙对应端口。
 
-![](image_38Or3UI6Wm.png)
+![](NAS-5/image_38Or3UI6Wm.png)
 
 # 系统备份
 
@@ -247,7 +247,7 @@ Timeshift 可帮助定期创建文件系统的增量快照，然后在以后恢�
 
 Timeshift 还附带便于使用的 GUI，使得用户可以通过图形化界面直接进行备份操作。
 
-![](image_m9y338N_7w.png)
+![](NAS-5/image_m9y338N_7w.png)
 
 ### 安装
 
@@ -334,7 +334,7 @@ RAID 0 技术把多块物理硬盘设备（至少两块）通过硬件或软件�
 
 如下图所示，数据被分别写入到不同的硬盘设备中，两块硬盘会分别保存数据资料，最终实现提升读取、写入速度的效果。
 
-![](image_z7GasqjUZW.png)
+![](NAS-5/image_z7GasqjUZW.png)
 
 - 最少需要的硬盘数：2
 - 优点：更快的数据访问
@@ -344,7 +344,7 @@ RAID 0 技术把多块物理硬盘设备（至少两块）通过硬件或软件�
 
 RAID1模式的磁盘阵列的模式为“N+1”，无论有多少个磁盘，它只用其中一个来存储数据，其它每个磁盘都是它的镜像，举个例子：有两个磁盘，那磁盘利用率就是 50%，有 N 个磁盘，那磁盘利用率就是 1/N。
 
-![](image_VtXfS8z50u.png)
+![](NAS-5/image_VtXfS8z50u.png)
 
 - 最少需要的硬盘数：2
 - 优点：N 个硬盘冗余
@@ -356,7 +356,7 @@ RAID 5 技术是把硬盘设备的数据奇偶校验信息保存到其他硬盘�
 
 RAID 5 需要使用至少 3 个驱动器，像 RAID 0 一样跨多个驱动器条带化数据，但也有跨驱动器分布的“奇偶校验”。在单个驱动器发生故障的情况下，使用存储在其他驱动器上的奇偶校验信息将数据拼凑在一起。停机时间为零。读取速度非常快，但由于必须计算奇偶校验，写入速度稍慢。它非常适合数据驱动器数量有限的文件和应用程序服务器。
 
-![](image_cJcs4zH-qf.png)
+![](NAS-5/image_cJcs4zH-qf.png)
 
 - 需要的硬盘数：3
 - 优点：1 个硬盘的容错机制并将存储空间配置优化
@@ -368,7 +368,7 @@ RAID 5 需要使用至少 3 个驱动器，像 RAID 0 一样跨多个驱动器�
 
 RAID 6 使用双奇偶校验块来实现比 RAID 5 更好的数据冗余，这增加了阵列中最多两个驱动器故障的容错能力。每个磁盘都有两个奇偶校验块，它们存储在阵列中的不同磁盘上，RAID 6 是用于维护高可用性系统的非常实用的基础架构。
 
-![](image_RCHIYlrrPJ.png)
+![](NAS-5/image_RCHIYlrrPJ.png)
 
 - 至少需要 4 个驱动器
 - 优点：2 个硬盘冗余
@@ -382,7 +382,7 @@ RAID 10 技术需要至少 4 块硬盘来组建，其中先分别两两制作成
 
 这样从理论上来讲，只要坏的不是同一阵列中的所有硬盘，那么最多可以损坏 50%的硬盘设备而不丢失数据。由于 RAID 10 技术继承了 RAID 0 的高读写速度和 RAID 1 的数据安全性，在不考虑成本的情况下 RAID 10 的性能也超过了 RAID 5，因此当前成为广泛使用的一种存储技术。
 
-![](image_BfXDKEHJ4_.png)
+![](NAS-5/image_BfXDKEHJ4_.png)
 
 ## 通过 Cockpit 创建软 RAID
 
@@ -390,11 +390,11 @@ RAID 10 技术需要至少 4 块硬盘来组建，其中先分别两两制作成
 
 通过 Cockpit 创建软 RAID 的过程非常简单，在`存储`栏找到`创建 MDRAID 设备`：
 
-![](image_rXjQ4U5lca.png)
+![](NAS-5/image_rXjQ4U5lca.png)
 
 根据自己的需求选择 RAID 级别及对应磁盘即可。
 
-![](image_sHTpZSTZAA.png)
+![](NAS-5/image_sHTpZSTZAA.png)
 
 # ZFS
 
@@ -402,7 +402,7 @@ ZFS 被描述为“终极文件系统”，稳定、快速、安全并面向未�
 
 ZFS 的特点包括：存储池（被称为 "zpool" 的集成卷管理系统）、写时复制、快照、数据完整性校验和自动修复（擦除）、RAID-Z、最大 16 Exabyte 文件大小，以及最大 256×10¹⁵ Zettabyte 存储，且对文件系统（数据集）或文件的数量没有限制 。
 
-![](image_poj7G05kCN.png)
+![](NAS-5/image_poj7G05kCN.png)
 
 - 存储池：与大多数文件系统不同，ZFS 结合了文件系统和卷管理器的特性。这意味着，它与其他文件系统不同，ZFS 可以创建跨越一系列硬盘或池的文件系统。不仅如此，你还可以通过添加硬盘来增大池的存储容量。ZFS 可以进行[分区和格式化](https://www.howtogeek.com/175159/an-introduction-to-the-z-file-system-zfs-for-linux/ "分区和格式化")。
 - 写时复制：在大多数文件系统上，当数据被重写时，它将永久丢失。而在 ZFS 中，新数据会写到不同的块。写完成之后，更新文件系统元数据信息，使之指向新的数据块。这确保了如果在写新数据的时候系统崩溃（或者发生其它事，比如突然断电），那么原数据将会保存下来。这也意味着，在系统发生崩溃之后，不需要运行 [fsck](https://en.wikipedia.org/wiki/Fsck "fsck") 来检查和修复文件系统。
@@ -421,11 +421,11 @@ ZFS 也存在一些问题：
 
 在`ZFS`栏找到`Create Storage Pool`：
 
-![](image_9rbj6ZwyQg.png)
+![](NAS-5/image_9rbj6ZwyQg.png)
 
 关于 Virtual Device 选项，Disk 代表直接使用这块硬盘，Mirror 代表 RAID 1 级别。
 
-![](image_8jVVkcub76.png)
+![](NAS-5/image_8jVVkcub76.png)
 
 根据自己的需求选择 RAID 级别及对应磁盘即可。
 
@@ -487,7 +487,7 @@ zfs list -t snapshots POOL/DATASET
 
 在 Cockpit 当中创建快照更为快捷：
 
-![](image_-r4gMDsU2Y.png)
+![](NAS-5/image_-r4gMDsU2Y.png)
 
 #### 访问快照中的个别文件
 
@@ -509,7 +509,7 @@ zfs rollback -r POOL/DATASET@SNAPSHOT
 
 在 Cockpit 当中回滚快照：
 
-![](image_pypxDDbmkh.png)
+![](NAS-5/image_pypxDDbmkh.png)
 
 #### 自动快照管理
 

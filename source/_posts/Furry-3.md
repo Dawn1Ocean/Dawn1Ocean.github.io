@@ -15,7 +15,7 @@ tags:
 
 从构词法可以看出，兽设类似于人设（persona），是兽迷们构建的一类拟人化动物形象，用于代表自己，具有理想化的特点（可以看作是自己在虚拟世界中的化身）。设定可以很粗略，也可以很详细（种族、毛色等形象特征、性格特征等），分为文设（主要描绘性格等内在特征）和图设（主要描绘形象等外在特征）。由于不是每个兽迷都有能力绘出自己心目中的兽设，有些兽迷会请画师帮忙绘制，并支付相应的稿费。
 
-![笔者的设定之一](双视图_8TOEe1vlHR.jpg "笔者的设定之一")
+![笔者的设定之一](Furry-3/双视图_8TOEe1vlHR.jpg "笔者的设定之一")
 
 ***
 
@@ -27,7 +27,7 @@ tags:
 
 因此，兽装的获取/制作过程便如下图所示：
 
-![兽装流程图](fursuit_chart.png "兽装流程图")
+![兽装流程图](Furry-3/fursuit_chart.png "兽装流程图")
 
 ***
 
@@ -37,15 +37,15 @@ tags:
 
 世界上规模最大的兽聚举行在日本（JMoF[^5]，一年一度），是兽迷的盛宴。国内最大规模的兽聚为极兽聚[^6]，兽夏祭已关停。此外还有冬兽聚、OUFC（有一个兽聚）等。
 
-![来自极兽聚的一张合照](image_XYkRmYxFQE.png "来自极兽聚的一张合照")
+![来自极兽聚的一张合照](Furry-3/image_XYkRmYxFQE.png "来自极兽聚的一张合照")
 
 ***
 
 ### 兽化（Transfur,TF）
 
-顾名思义，TF指的是人变成兽人这一个过程，而圈子中有一部分兽迷也很喜爱兽化，于是同样地诞生了许多作品（多为手书、漫画、小说等）。国内知名作品有游戏Changed（兽屋之龙制作，目前在Steam上发售），国内有一部分兽迷因此进入兽圈。
+顾名思义，TF 指的是人变成兽人这一个过程，而圈子中有一部分兽迷也很喜爱兽化，于是同样地诞生了许多作品（多为手书、漫画、小说等）。国内知名作品有游戏 Changed（兽屋之龙制作，目前在 Steam 上发售），国内有一部分兽迷因此进入兽圈。
 
-![Changed 在Steam库中的背景](image_Knbeyw9OMT.png "Changed 在Steam库中的背景")
+![Changed 在 Steam 库中的背景](Furry-3/image_Knbeyw9OMT.png "Changed 在 Steam 库中的背景")
 
 ***
 
@@ -54,30 +54,30 @@ tags:
 现存的furry游戏一般由兽迷们自行制作。
 
 1.  **AVG（文字冒险类）/ Visual-novel（视觉小说）**
-    类似于Galgame，多含r18内容，代表作如下：
+    类似于 Galgame，多含 r18 内容，代表作如下：
     苦黏寒毒（四部曲）骑士学院（Knights College）
     家有大猫（Nekojishi） 漏夏（咱的夏天）
     矛之酒馆（Tavern of Spear）
-![Knights College  游戏封面图](image_3-JOnr8JHa.png "Knights College  游戏封面图")
+![Knights College  游戏封面图](Furry-3/image_3-JOnr8JHa.png "Knights College  游戏封面图")
 
 2.  **RPG（角色扮演类）**
     以兽人角色为主，代表作如下：
-    Changed - 兽屋之龙制作，Steam在售
+    Changed - 兽屋之龙制作，Steam 在售
     东京放课后召唤师（含抽卡养成元素）
-    魂Collection（魂これ）- 大地巧太主创（含抽卡养成元素）
-![魂これ  预约宣传图](image_D8X-cyYBg_.png "魂これ  预约宣传图")
+    魂 Collection（魂これ）- 大地巧太主创（含抽卡养成元素）
+![魂これ  预约宣传图](Furry-3/image_D8X-cyYBg_.png "魂これ  预约宣传图")
 
 
 3.  **Roguelite（类Rogue）**
     极为少见，国内目前只有一部作品：
     形骸骑士（Kelipot）- Steam在售
-![Kelipot  游戏封面图](image_gSA41iewUc.png "Kelipot  游戏封面图")
+![Kelipot  游戏封面图](Furry-3/image_gSA41iewUc.png "Kelipot  游戏封面图")
 
-想访问以上游戏的官方页面，或是想了解更多的furry游戏，请访问[兽人控游戏索引 (furrygames.top)](https://furrygames.top/zh-cn/list.html "兽人控游戏索引 (furrygames.top)") 。
+想访问以上游戏的官方页面，或是想了解更多的 furry 游戏，请访问[兽人控游戏索引 (furrygames.top)](https://furrygames.top/zh-cn/list.html "兽人控游戏索引 (furrygames.top)") 。
 
 
 
-另：传说之下（Undertale）、三角符文（Deltarune）中存在furry角色（Asgore，Asriel，Toriel，Alphys，Andyne等），但是其和兽圈并没有直接的联系。
+另：传说之下（Undertale）、三角符文（Deltarune）中存在 furry 角色（Asgore，Asriel，Toriel，Alphys，Andyne等），但是其和兽圈并没有直接的联系。
 
 <br/>
 {% post_link 'Furry-4' '下一章节：现状及问题' %}

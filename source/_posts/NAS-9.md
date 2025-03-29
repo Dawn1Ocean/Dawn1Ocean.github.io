@@ -16,7 +16,7 @@ categories:
 
 Homepage 导航页的布局和背景等还能手动配置，自定义打造一个自己喜欢的主页。
 
-![](image_KKxP68VtNq.png)
+![](NAS-9/image_KKxP68VtNq.png)
 
 # 通过 Docker 部署
 
@@ -126,7 +126,7 @@ logpath: /
 
 在Home­page 中，`widgets.yaml` 文件主要是用来修改页面顶部的一些小部件，比如系统状况、搜索框、天气、时间、欢迎词等等。
 
-![](image_vW7WXC9HMF.png)
+![](NAS-9/image_vW7WXC9HMF.png)
 
 ```yaml
 ---
@@ -178,7 +178,7 @@ logpath: /
 
 另对于如 qBittorrent 等服务，其账户密码要求以明文形式填写进配置文件中，须注意安全。
 
-![](image_bGMW5JMV22.png)
+![](NAS-9/image_bGMW5JMV22.png)
 
 ```yaml
 ---

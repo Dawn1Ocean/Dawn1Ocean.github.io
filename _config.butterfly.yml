@@ -302,3 +302,7 @@ nofollow:
   enable: true
   field: site
   exclude:
+
+site_verification:
+  - name: baidu-site-verification
+    content: codeva-J32KtkKwHM

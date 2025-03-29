@@ -22,7 +22,7 @@ HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就�
 
 Jellyfin 是一个自由软件媒体系统，可让您控制管理和流式传输媒体。它是专有的 Emby 和 Plex 的替代方案（如：这二者的硬解功能都需付费，而 Jellyfin 是免费的），通过多个应用程序将媒体从专用服务器提供给终端用户设备。Jellyfin 衍生于 Emby 的 3.5.2 版本，并移植到 .NET Core 框架以实现完整的跨平台支持。没有附加条件，没有高级许可证或功能。
 
-![](image_SCf2GtWfhf.png)
+![](NAS-11/image_SCf2GtWfhf.png)
 
 ## 通过 Docker 部署
 
@@ -53,7 +53,7 @@ services:
 
 在`控制台 - 常规 - 品牌 - 自定义 CSS 代码`处放入自己喜欢的主题。
 
-![](image_-y3bwSKmRM.png)
+![](NAS-11/image_-y3bwSKmRM.png)
 
 ### 媒体库
 
@@ -93,7 +93,7 @@ PT 下载时，将文件分别设置在对应目录下：
 
 我们先来看看视频播放的基本流程：
 
-![](image_piPNqjTCXG.png)
+![](NAS-11/image_piPNqjTCXG.png)
 
 - 解封装：将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。如上图，将 MP4 和 FLV 格式解封装成视频数据 H264、MPEG2 和音频数据 AAC、MP3 格式。
 - 解码：将视频 / 音频压缩编码数据，解码为非压缩的视频 / 音频原始数据。如上图，将视频数据解码成 YUV 格式和音频数据解码成 PCM 格式。
@@ -114,11 +114,11 @@ PT 下载时，将文件分别设置在对应目录下：
 
 在`控制台 - 播放 - 转码`处配置硬件解码：
 
-![](image_BO3QuVhL8A.png)
+![](NAS-11/image_BO3QuVhL8A.png)
 
 笔者使用的 CPU 为 G4600，可以在[这个网站](www.cpu-monkey.com "这个网站")查看 CPU 编解码支持情况。以笔者的 CPU 为例：
 
-![](1891a774665180d3fce49eca998c74d0_yVYMyxXuoj.png)
+![](NAS-11/1891a774665180d3fce49eca998c74d0_yVYMyxXuoj.png)
 
 这说明 G4600 的核显 HD 630 不支持 AV1 的编解码与 VC-1 的编码。
 
@@ -157,11 +157,11 @@ options i915 enable_guc=2
 
 最后在配置页面勾选处理器支持的功能即可。
 
-![](image_kam_3Q9WI1.png)
+![](NAS-11/image_kam_3Q9WI1.png)
 
 实际观看体验，HEVC 10 bit 4K 硬解帧率也能达到 50 fps，非常满意。
 
-![](image_UTwL-owV4Z.png)
+![](NAS-11/image_UTwL-owV4Z.png)
 
 ### 中文字幕
 
@@ -169,7 +169,7 @@ options i915 enable_guc=2
 
 点击`右上角 - 字幕`，将字幕语言偏好修改为 Chinese，烧录字幕选择所有复杂格式字幕，保存即可。
 
-![](86cc96f171f37f53b924921f380fa451_NWsBzKWoFu.png)
+![](NAS-11/86cc96f171f37f53b924921f380fa451_NWsBzKWoFu.png)
 
 如果媒体源没有附带的中文字幕，我们可以使用 Open Subtitles 插件获取。
 
@@ -177,25 +177,25 @@ options i915 enable_guc=2
 
 此时 Open Subtitles 插件应出现在`控制台 - 插件 - 我的插件`处，进入插件设置页面：
 
-![](image_ebmD9jxPmh.png)
+![](NAS-11/image_ebmD9jxPmh.png)
 
 这里需要先在 [opensubtitles.org](opensubtitles.org "opensubtitles.org") 上注册一个账号，在这个页面填写用户名与密码，点击保存即可。免费用户每天可以下载 20 个字幕。
 
 为了不影响 PT 下载，我们需要打开`控制台 - 媒体库 - 管理媒体库`，将“保存字幕到媒体所在文件夹”选项取消勾选。这样就不会在媒体源文件夹中产生新的文件。
 
-![](image_VRItnHkMqE.png)
+![](NAS-11/image_VRItnHkMqE.png)
 
 打开要安装字幕的媒体源的菜单，点击“修改字幕”：
 
-![](image_SX2agPJpln.png)
+![](NAS-11/image_SX2agPJpln.png)
 
 语言选择 Chinese，点击搜索：
 
-![](image_f6S03gGaEj.png)
+![](NAS-11/image_f6S03gGaEj.png)
 
 下载自己需要的字幕即可。在播放时点击“CC”字样的图标即可更换字幕。
 
-![](2736756674013c2aee791e412eed9adf_G22wb8nic1.png)
+![](NAS-11/2736756674013c2aee791e412eed9adf_G22wb8nic1.png)
 
 ### IPTV
 
@@ -207,29 +207,29 @@ IPTV（Internet Protocol Television）是基于互联网协议传输的电视服
 
 进入 Jellyfin 控制台，选择`电视直播`栏，点击新建调谐器设备：
 
-![](5fcb516b142c3300ececb31b497b286a_z9V9K5DSZI.png)
+![](NAS-11/5fcb516b142c3300ececb31b497b286a_z9V9K5DSZI.png)
 
 调谐器类型我们选择 M3U Tuner，再在文件或网址处填写 m3u 源的地址。请自行寻找可用的地址。
 
 接下来我们需要配置电子节目单 EPG。新建电视指南数据提供方，选择 XMLTV，填写地址（如：[epg.51zmt.top:8000/e.xml](http://epg.51zmt.top:8000/e.xml "epg.51zmt.top:8000/e.xml")），点击保存，等待节目单更新完成即可。
 
-![](b67c2307c5ce2dc8c542953c5e4f4ddd_5M9S1FQSYG.png)
+![](NAS-11/b67c2307c5ce2dc8c542953c5e4f4ddd_5M9S1FQSYG.png)
 
 更新完成后我们回到主页，已经出现了电视直播。我们点击`指南`一栏，可以看到节目单。
 
-![](5edee0dc37c1b5ae664f9aa0950396fe_1C0Wr-wkXZ.png)
+![](NAS-11/5edee0dc37c1b5ae664f9aa0950396fe_1C0Wr-wkXZ.png)
 
 点击某个节目，能够正常播放。
 
-![](image_Ytw13iN4RL.png)
+![](NAS-11/image_Ytw13iN4RL.png)
 
 通过 Jellyfin，我们还可以录制电视节目。我们在指南中点击一个节目，就会跳出来节目录制，录制电视剧则是根据名称进行一系列录制，录制则是单独录制某一集。
 
-![](image_rWr7OisoK-.png)
+![](NAS-11/image_rWr7OisoK-.png)
 
 回到控制面板，选择`数字录像机`，设置录制节目的保存路径（可以在`compose.yaml`当中挂载出来），录制前后时差选择 20 分钟可以确保录制成功。
 
-![](image_G-qgNUzcuA.png)
+![](NAS-11/image_G-qgNUzcuA.png)
 
 # 刮削
 
@@ -245,7 +245,7 @@ tinyMediaManager是使用 Java / Swing 编写的媒体管理工具，能够为 K
 
 - 界面较为古早，Web 端分辨率很低（下图未经过压缩）。
 
-  ![](7976f2f2180cdec9de4775d0629b35f2_o4Nt887VIb.png)
+  ![](NAS-11/7976f2f2180cdec9de4775d0629b35f2_o4Nt887VIb.png)
 - 由于 PT 下载的限制，不能对文件夹名以及文件名进行修改，因此 tMM 非常重要的功能——重命名、归档媒体无法使用。
 - 如果能够访问 TMDb，tMM 能刮削到的信息，通过 Jellyfin 也能够直接刮削到。
 
@@ -253,17 +253,17 @@ tinyMediaManager是使用 Java / Swing 编写的媒体管理工具，能够为 K
 
 Jellyfin 在创建媒体库时即可进行刮削：
 
-![](image_FGSt3ON59A.png)
+![](NAS-11/image_FGSt3ON59A.png)
 
 这里建议取消勾选 TOMD，因为它和 TMDb 之间会出现不兼容的问题。如果网络产生波动，可能会优先使用 TOMD 刮削到的内容，从而产生错误。
 
 媒体库添加完成后，等待媒体库扫描完成，回到主页即可看到新添加的媒体库。由于下载器的原因，Jellyfin 对电影的刮削效果较好，而对于电视剧、番剧等内容可能会出错。此时我们可以打开需要修改刮削内容的媒体源的菜单，点击`识别`。
 
-![](image_nccwfAidxW.png)
+![](NAS-11/image_nccwfAidxW.png)
 
 在此处输入名字、TMDb ID 等，再点击搜索，从结果当中选择相符的内容，耐心等待刮削完成即可。
 
-![](image_TUP03hfbQE.png)
+![](NAS-11/image_TUP03hfbQE.png)
 
 国内访问 TMDb 可能会出现问题，建议修改 Host 或者使用代理，这里就不详述了。
 
@@ -281,7 +281,7 @@ Jellyfin 在创建媒体库时即可进行刮削：
 https://jellyfin-plugin-bangumi.pages.dev/repository.json
 ```
 
-![](image_ORLqr0-49y.png)
+![](NAS-11/image_ORLqr0-49y.png)
 
 保存后，就可以在`控制台 - 插件 - 目录`处的元数据分类中找到 Bangumi 插件，点击 Install。安装完成后重启 Jellyfin。
 
@@ -289,11 +289,11 @@ https://jellyfin-plugin-bangumi.pages.dev/repository.json
 
 手动进行识别时，我们可以先在 [Bangumi 网站](https://bgm.tv/ "Bangumi 网站")上找到番剧 ID，直接输入即可刮削到对应番剧信息。
 
-![](image_qY-BLHBynr.png)
+![](NAS-11/image_qY-BLHBynr.png)
 
 我们还可以通过 [AutoBangumi](https://github.com/EstrellaXD/Auto_Bangumi "AutoBangumi") 这样的工具来通过 RSS 订阅实时追番。具体步骤在此就不详述了，可以参考[这篇文章](https://cloud.tencent.com/developer/article/2446514 "这篇文章")。
 
-![](image_mKQtExYuL4.png)
+![](NAS-11/image_mKQtExYuL4.png)
 
 <br/>
 {% post_link 'NAS-12' '下一章节：Immich 照片管理' %}

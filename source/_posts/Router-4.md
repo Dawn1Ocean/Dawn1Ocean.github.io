@@ -27,7 +27,7 @@ tags:
 
 Tailscale 是一个基于 WireGuard 的 VPN 配置工具，通过去中心化的方式实现各个节点之间点对点的连接。配置简单友好，跨平台支持。
 
-![](image_N6QaMRZ5dn.png)
+![](Router-4/image_N6QaMRZ5dn.png)
 
 # 安装与配置 Tailscale
 
@@ -92,7 +92,7 @@ ls /etc/rc.d/S*tailscale*
 tailscale up
 ```
 
-![](image_WGytgUptja.png)
+![](Router-4/image_WGytgUptja.png)
 
 复制显示的地址，并在浏览器中打开，使用谷歌 / 微软 / GitHub 等帐号登录 Tailscale 的管理主页进行验证。
 
@@ -108,9 +108,9 @@ tailscale up --accept-routes --accept-dns=false --advertise-routes=192.168.31.0/
 
 在 Tailscale 的管理页面上，单击设备列表右侧的更多图标，禁用密钥过期，并打开子网路由。
 
-![](image_1Gxvc0B53P.png)
+![](Router-4/image_1Gxvc0B53P.png)
 
-![](image_kosUa1zK-o.png)
+![](Router-4/image_kosUa1zK-o.png)
 
 现在在 OpenWrt 上已经可以 ping 通其他 Tailscale 节点了，但其他节点还无法连接 OpenWrt 节点，还需要在 OpenWrt 上添加 Tailscale 接口。
 
@@ -118,15 +118,15 @@ tailscale up --accept-routes --accept-dns=false --advertise-routes=192.168.31.0/
 
 在`网络 - 接口`处新建一个接口，协议选静态地址，设备选`tailscale0`，地址为 Taliscale 管理页面上分配的地址，掩码`255.0.0.0`。防火墙区域选 lan 区域。
 
-![](image_WxmKBO8jVc.png)
+![](Router-4/image_WxmKBO8jVc.png)
 
-![](image_Jp1n2jCHEL.png)
+![](Router-4/image_Jp1n2jCHEL.png)
 
 ## 添加防火墙规则
 
 在`网络 - 防火墙 - 自定义规则`处添加以下规则：
 
-![](image_a716NxxW20.png)
+![](Router-4/image_a716NxxW20.png)
 
 ```text
 iptables -I FORWARD -i tailscale0 -j ACCEPT
@@ -142,7 +142,7 @@ iptables -t nat -I POSTROUTING -o tailscale0 -j MASQUERADE
 
 原因：访问路由器，在路由表中属于访问设备所在的局域网。启动 Tailscale 服务后，对于此局域网，设备会存在两个接口：一个是由 Tailscale 分配的地址，另一个是实际上的局域网地址。如果由 Tailscale 分配地址的跃点数比实际上局域网地址的跃点数小，设备就不会使用物理接口来发送到下一跳设备，而是使用 Tailscale 分配的地址，因此数据包无法送达。
 
-![](image_RngM9JHYDq.png)
+![](Router-4/image_RngM9JHYDq.png)
 
 # 远程访问局域网
 
@@ -182,7 +182,7 @@ mkdir /usr/local/cert
 
 在阿里云控制台下载 Nginx 格式的证书，将`.pem`公钥后缀改为`.crt`，再上传至刚才创建的`/usr/local/cert`路径中。
 
-![](image_qR1gQY58s-.png)
+![](Router-4/image_qR1gQY58s-.png)
 
 ## 安装 Tailscale
 
@@ -196,7 +196,7 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 打开 [https://go.dev/doc/install](https://go.dev/doc/install "https://go.dev/doc/install")，查看 Go 的最新版本号。
 
-![](image_ZI5ptpX84u.png)
+![](Router-4/image_ZI5ptpX84u.png)
 
 ```bash
 wget https://go.dev/dl/go<最新版本号>.linux-amd64.tar.gz
@@ -327,7 +327,7 @@ systemctl status derper
 
 确认状态为 active(running) 后，访问网址 `https://<你的域名>:56473/`，出现以下页面就是部署成功。
 
-![](image_DcmAHiZT8P.png)
+![](Router-4/image_DcmAHiZT8P.png)
 
 ## 添加中继节点
 
@@ -369,7 +369,7 @@ systemctl status derper
 tailscale netcheck
 ```
 
-![](image_smQlaugW-o.png)
+![](Router-4/image_smQlaugW-o.png)
 
 显示了中继节点名称，DERP 中继已成功建立。
 

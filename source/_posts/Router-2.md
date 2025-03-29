@@ -30,15 +30,15 @@ reboot
 
 为了安全起见，建议在`系统 - 管理权`处重新设置管理员密码。
 
-![](image_LtMFIDYShS.png)
+![](Router-2/image_LtMFIDYShS.png)
 
 由于`192.168.1.1`地址可能会与运营商设备产生冲突，建议在`网络 - 接口 - LAN`处设置协议为静态协议，IPv4 地址为其他地址。
 
-![](image_5P_A5b9_qq.png)
+![](Router-2/image_5P_A5b9_qq.png)
 
 同时在`系统 - Web 管理`处将 HTTP 监听地址更改为新的 LAN 口地址。
 
-![](image_1IqvUBng0N.png)
+![](Router-2/image_1IqvUBng0N.png)
 
 OpenWrt 采用的包管理器为 opkg。在执行后续操作时，请先根据 WAN 接口配置以及{% post_link 'Router-3' '下一章节：校园网 & L2TP / 网页认证' %}部分，确保路由器能够访问公网。在`服务 - 终端`处登录`root`，输入：
 
@@ -86,13 +86,13 @@ opkg update
 
 在`网络 - 接口 - 设备 - br-lan - 配置`处确认网桥端口是否包括了所有有线端口。
 
-![](image_ge3Y3IbZ2j.png)
+![](Router-2/image_ge3Y3IbZ2j.png)
 
-![](image_Db8KpFrqKu.png)
+![](Router-2/image_Db8KpFrqKu.png)
 
 在无线 Master 模式配置中确认网络是否被指派到 lan 接口。
 
-![](image_JA8EOfs-dE.png)
+![](Router-2/image_JA8EOfs-dE.png)
 
 # WAN 接口配置
 
@@ -100,7 +100,7 @@ opkg update
 
 如果没有给路由器预先分配好的静态 IP，一般采用 DHCP 客户端协议。本文不涉及 PPPoE 拨号上网。
 
-![](image_85gXepEvM8.png)
+![](Router-2/image_85gXepEvM8.png)
 
 # 无线配置
 
@@ -111,7 +111,7 @@ opkg update
 
 在`网络 - 无线 - 对应无线网络`处配置。在`无线安全`处设置认证方式。
 
-![](image_RJoHFs5B1F.png)
+![](Router-2/image_RJoHFs5B1F.png)
 
 # 临时给路由器共享网络
 
@@ -125,18 +125,18 @@ opkg update
 2. 电脑的有线口连接路由器的 Wan 口，电脑的无线连接其它可以上网的 Wi-Fi（不能是一会要使用的手机的热点，否则还需要一个设备）。
 3. 进入`控制面板 - 网络和共享中心 - 更改适配器设置`，在弹出的窗口中右击`WLAN – 属性`，在上面点击`共享`，首先在下面的下拉框中选择你的有线网卡（一般是`以太网`），再勾选`允许其他网络用户通过此计算机的 Internet 连接`来连接。如果弹出任何对话框请确定。
 
-   ![](image_Ueqw5TL7o1.png)
+   ![](Router-2/image_Ueqw5TL7o1.png)
 4. 在网络连接的窗口右击`以太网–属性`，往下找到 Internet 协议版本 4，双击，点击“使用下面的 IP 地址”，修改地址为192.168.3.1，子网掩码 255.255.255.0，确定即可。
 
-   ![](image_3_NUJh-mf0.png)
+   ![](Router-2/image_3_NUJh-mf0.png)
 
 ## 无线方式
 
 在`网络 - 无线 - 无线概况`中点击对应频段的扫描按钮，并连接对应无线网络即可。对于路由器连接校内 WiFi，请参照{% post_link 'Router-3' '硬路由（3）—— 校园网 & 认证方案' %}对应部分。
 
-![](image_-rSiwThd70.png)
+![](Router-2/image_-rSiwThd70.png)
 
-![](cad0e47b12bc1e9dbfd8435b8d3aa5db_fTvpoCs0-_.png)
+![](Router-2/cad0e47b12bc1e9dbfd8435b8d3aa5db_fTvpoCs0-_.png)
 
 # 静态地址分配
 
@@ -144,7 +144,7 @@ opkg update
 
 在`网络 - DHCP/DNS - 静态地址分配`处添加静态租约，填写主机名，MAC 地址，IPv4 地址，租期。
 
-![](image_busw032GsT.png)
+![](Router-2/image_busw032GsT.png)
 
 如果设备已经被 DHCP 分配地址，可以重新连接路由器以获得永久（或自定义时长）租约。
 
@@ -156,7 +156,7 @@ opkg update
 
 TTYD 是一个简单的命令行工具，用于在网络上共享终端。
 
-![](image_1WE8erJ2t2.png)
+![](Router-2/image_1WE8erJ2t2.png)
 
 安装`luci-app-ttyd`（汉化包为`luci-i18n-ttyd-zh-cn`）。
 
@@ -188,7 +188,7 @@ config ttyd
 
 UPnP 为 NAT（网络地址转换）穿透带来了一个解决方案：互联网网关设备协议（IGD）。NAT 穿透允许 UPnP 数据包在没有用户交互的情况下，无障碍的通过路由器或者防火墙（假如那个路由器或者防火墙支持 NAT）。后来还发展出了 NAT-PMP（NAT Port Mapping Protocol，NAT 端口映射协议）以及 PCP（Port Control Protocol，端口控制协议）。现在我们统称为 UPnP IGD & PCP/NAT-PMP。
 
-![](image_LmdD6Uv122.png)
+![](Router-2/image_LmdD6Uv122.png)
 
 安装`luci-app-upnp`（汉化包为`luci-i18n-upnp-zh-cn`）。如果出现内核依赖不满足，请在编译时加入缺失的内核模块。
 
@@ -224,7 +224,7 @@ Hotplug 脚本的执行顺序基于文件名，因此使用**05-miniupnpd-extern
 
 以上 Hotplug 脚本在刷写固件后会被删除。如要保留，请打开`系统 - 备份与升级 - 配置`，把`/etc/hotplug.d/iface/05-miniupnpd-external-ip`添加至列表中。
 
-![](image_0hTdbZs5Kb.png)
+![](Router-2/image_0hTdbZs5Kb.png)
 
 <br/>
 {% post_link 'Router-3' '下一章节：校园网 & 认证方案' %}

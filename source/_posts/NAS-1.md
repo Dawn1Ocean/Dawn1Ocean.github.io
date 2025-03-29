@@ -55,7 +55,7 @@ DIY NAS 的缺点：
 
 ### 准系统
 
-笔者的 NAS 主要是参考了@LeSnow-Ye的[机器](https://blog.lesnow.top/2023/08/22/first-nas/ "机器")，配置如下：
+笔者的 NAS 主要是参考了 @LeSnow-Ye 的[机器](https://blog.lesnow.top/2023/08/22/first-nas/ "机器")，配置如下：
 
 |         | **型号**                                                                        | **价格**  | **来源** | **备注**                   |
 | ------- | ----------------------------------------------------------------------------- | ------- | ------ | ------------------------ |
@@ -90,21 +90,21 @@ DIY NAS 的缺点：
 
 ### 组装
 
-![](a0c8c3725b4aea9229eabdb3a3733ba5_XThfB2wEEb.jpg)
+![](NAS-1/a0c8c3725b4aea9229eabdb3a3733ba5_XThfB2wEEb.jpg)
 
 这台机器组装还是需要在理线上花些功夫，毕竟大多数空间都让给了 4 个 HDD 盘位。特别注意，走线时最好要绕过内存，否则盖上主板后可能会导致内存松动无法开机。
 
-![](7076a880f0f8351f4ee946dda1487e8d_y_Xpj8BuBa.jpg)
+![](NAS-1/7076a880f0f8351f4ee946dda1487e8d_y_Xpj8BuBa.jpg)
 
-![](7640cecb24ab31127f9e00e8be0ba145_SfBvpHaHJk.jpg)
+![](NAS-1/7640cecb24ab31127f9e00e8be0ba145_SfBvpHaHJk.jpg)
 
-![](2ddc23fe2d7ff2ae8b37da66a76c694d_635WXaFIis.jpg)
+![](NAS-1/2ddc23fe2d7ff2ae8b37da66a76c694d_635WXaFIis.jpg)
 
-![](450f1f8286f97fdfa36962802a1e782d_gGumD2x8fS.jpg)
+![](NAS-1/450f1f8286f97fdfa36962802a1e782d_gGumD2x8fS.jpg)
 
 装好之后体积还是挺小巧的。
 
-![](c39807438515212820367b37c6bb2769_HnC2yzo-qq.jpg)
+![](NAS-1/c39807438515212820367b37c6bb2769_HnC2yzo-qq.jpg)
 
 <br/>
 {% post_link 'NAS-2' '下一章节：基于原生 Debian 搭建系统' %}

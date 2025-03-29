@@ -59,11 +59,11 @@ tags:
 
 打开`计算机配置 > 管理模板 > 网络 > Windows 连接管理器 > 最小化到 Internet 或 Windows 域的同时连接数`：
 
-![](image_NL2NT3p6UD.png)
+![](Router-6/image_NL2NT3p6UD.png)
 
 勾选“已启用”，最小化策略选择`0 = 允许同时连接`即可。
 
-![](image_2hVyxn_3PP.png)
+![](Router-6/image_2hVyxn_3PP.png)
 
 #### 配置网卡跃点数
 
@@ -71,19 +71,19 @@ tags:
 
 进入`控制面板 - 网络和共享中心 - 更改适配器设置`，在弹出的窗口中右击`WLAN – 属性`，打开`Internet 协议版本 4 (TCP/IPv4) - 高级`：
 
-![](image_U3aU7y-CAD.png)
+![](Router-6/image_U3aU7y-CAD.png)
 
-![](image_dgmVw4kbaA.png)
+![](Router-6/image_dgmVw4kbaA.png)
 
 取消勾选“自动跃点”，填入一个较小的数值（建议为 10）。
 
-![](image_c1-ZV1tJVR.png)
+![](Router-6/image_c1-ZV1tJVR.png)
 
 对于有线网卡的设置类似，将跃点数设置为比无线网卡跃点数稍大的一个值（建议为 20）。
 
 打开`终端（管理员）`，输入`route print`查看路由表：
 
-![](image_Axinf_PPW6.png)
+![](Router-6/image_Axinf_PPW6.png)
 
 我们可以看到无线网卡的跃点数已经低于有线网卡的跃点数。
 
@@ -105,7 +105,7 @@ route delete <你的内网网段>
 
 输入`route print`查看路由表：
 
-![](image_8ttdNkdgfY.png)
+![](Router-6/image_8ttdNkdgfY.png)
 
 我们可以看到永久路由已经被添加到路由表中。
 
@@ -115,7 +115,7 @@ route delete <你的内网网段>
 
 进入`控制面板 - 网络和共享中心 - 更改适配器设置`，在弹出的窗口中右击`以太网 – 属性`，取消勾选`Internet 协议版本 6 (TCP/IPv6)`。至此配置结束。
 
-![](image__EqpLK0cvk.png)
+![](Router-6/image__EqpLK0cvk.png)
 
 
 
@@ -143,21 +143,21 @@ route delete <你的内网网段>
 
 选择`计算机配置 > Windows 设置 > 安全设置 > 本地策略 > 安全选项`，在右侧窗口中找到`Microsoft网络客户端：对通信进行数字签名(始终) `选项。
 
-![](image_-TUE3QZRoO.png)
+![](Router-6/image_-TUE3QZRoO.png)
 
 在弹出的窗口中，选择`已禁用 > 确定`。
 
-![](image_y02tkKL1RI.png)
+![](Router-6/image_y02tkKL1RI.png)
 
 ### 启用不安全的来宾登录
 
 在本地组策略编辑器中，选择`计算机配置 > 管理模板 > 网络 > Lanman 工作站`，双击`启用不安全的来宾登录`。
 
-![](image_fnZRWz0cdH.png)
+![](Router-6/image_fnZRWz0cdH.png)
 
 在弹出的窗口中，选择`已启用 > 确定`。
 
-![](image_GzBNiHrBHf.png)
+![](Router-6/image_GzBNiHrBHf.png)
 
 ## Q：24H2 更新后，RDP 无法连接 / 登录过程中卡死怎么办？
 
@@ -168,7 +168,7 @@ route delete <你的内网网段>
 1. 在被控电脑上使用“运行”打开`gpedit.msc`，转到`本地计算机策略 > 计算机配置 > 管理模板 > Windows 组件 > 远程桌面服务 > 远程桌面会话主机 > 连接 > 在服务器上选择网络检测`。
 2. 将此策略设置为已启用，然后选择关闭“连接时间检测”和“连续网络检测”。
 
-![](image_B88SwG3wV8.png)
+![](Router-6/image_B88SwG3wV8.png)
 
 很多用户报告在经过以上设置后能够解决问题。但此方法对于笔者的设备不适用。因此更好的方法是暂缓更新 24H2。
 
@@ -182,9 +182,9 @@ route delete <你的内网网段>
 
 ## 设备配置
 
-![](image_jliDoy7RL2.png)
+![](Router-6/image_jliDoy7RL2.png)
 
-![](image_RY62eMzHz-.png)
+![](Router-6/image_RY62eMzHz-.png)
 
 ### 路由器
 

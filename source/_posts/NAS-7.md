@@ -24,7 +24,7 @@ Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级�
 
 ## Docker 架构
 
-![](image_q6wHIJcNdX.png)
+![](NAS-7/image_q6wHIJcNdX.png)
 
 - 守护进程 (Docker daemon)：负责管理镜像、容器、容器网络、数据卷等。
 - Client：负责发送 Docker 操作指令，日常主要通过 Client 完成镜像和容器的管理。
@@ -128,7 +128,7 @@ environment:
 
 这里仅列出日常配置涉及到的命令，不涉及容器的迁移等操作。
 
-![](image_0EM-PZ4nvg.png)
+![](NAS-7/image_0EM-PZ4nvg.png)
 
 ```bash
 sudo systemctl start docker # 启动 docker
@@ -219,7 +219,7 @@ sudo docker compose ps # 列出所有服务及其当前状态
 
 Portainer是一款**开源的容器管理工具**，旨在简化 Docker 容器和 Kubernetes 集群的管理。通过提供一个直观的 Web 界面，Portainer 可以帮助用户轻松地创建、管理和维护容器，而无需使用复杂的命令行工具。
 
-![](image_SNJ8Vc3Lg8.png)
+![](NAS-7/image_SNJ8Vc3Lg8.png)
 
 通过`docker run`命令安装：
 
@@ -240,7 +240,7 @@ Dockge 是 Uptime Kuma 作者的新作品，因此 UI 风格与 Uptime Kuma 基�
 - 无法直接接管现有正在运行的容器
 - 只支持通过 `Docker Compose` 来完成所有操作，无法直接管理单个容器
 
-![](image_GhvrfIn2hy.png)
+![](NAS-7/image_GhvrfIn2hy.png)
 
 通过 Docker Compose 部署：
 

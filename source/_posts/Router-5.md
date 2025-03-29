@@ -35,7 +35,7 @@ IPv6 是 Internet 协议的最新版本，旨在替换 IPv4 地址。IPv6 地址
 
 全球单播地址由全球路由前缀、子网ID和接口标识组成，其格式如下所示：
 
-![](image_q0ITYFp3Ts.png)
+![](Router-5/image_q0ITYFp3Ts.png)
 
 全球单播地址的范围为`2xxx::/3`，其中前 3 位固定，第 4 位至第 48 位为公共拓扑（一般由运营商分配），第 49 位至第 64 位为站点拓扑（路由器可以利用这 16 位来分配子网）。后 64 位为主机部分，与 IPv4 类似。因此，当被分配 /128 位地址时，意味着该网络中仅有一个主机，无法继续向下分配子网。
 
@@ -53,7 +53,7 @@ NAT66（Network Address Translation for IPv6 to IPv6）是一种用于 IPv6 网�
 
 SLAAC（Stateless Address Autoconfiguration，无状态地址自动配置）是一种可以在**没有 DHCPv6 服务器**的情况下获取 IPv6 地址的方法。
 
-![](image_PbheBK8e2R.png)
+![](Router-5/image_PbheBK8e2R.png)
 
 主要过程如下：
 
@@ -69,7 +69,7 @@ DHCPv6 PD（Prefix Delegation，前缀代理）是一种 DHCPv6 的扩展，它�
 
 DHCPv6 PD 扩展了 DHCPv6 协议，允许 DHCPv6 服务器分配 IPv6 前缀给路由器，以便路由器可以通过 SLAAC 或其他方式为网络内的设备生成 IPv6 地址。举个例子，PD 服务器可以将`2022:da8::/60`前缀通过某个 IPv6 接口下发给 PD 客户端，同时一般会在 PD 客户端的上联设备上生成相应的路由。PD 客户端收到该前缀后，就可以在本地 IPv6 接口上动态使用该前缀的 /64 子网地址。
 
-![](image_jxvjTZ_6Qm.png)
+![](Router-5/image_jxvjTZ_6Qm.png)
 
 工作流程通常如下：
 
@@ -144,7 +144,7 @@ NDP 是 IPv6 中类似 ARP 的协议，用于网络层和链路层的节点发�
 
 在 LuCi 界面的 DHCPv6 接口设置中，“请求指定长度的 IPv6 前缀”选择“禁用”，再点击“保存&应用”，此时应该可以让 DHCPv6 接口获取到 IPv6 地址，而且是一个 /128 位的 IPv6 地址。
 
-![](image_ke9T9omGm_.png)
+![](Router-5/image_ke9T9omGm_.png)
 
 ### 方法一：Terminal 配置（版本 ≥ 22.03 且启用了 nftables 防火墙）
 
@@ -170,7 +170,7 @@ service network restart
 
 IPv6设置：RA服务选择“服务器模式”，DHCPv6服务选择“服务器模式”，禁用NDP代理。IPv6 RA设置，默认路由器选择“强制的”。
 
-![](image_de0acPgHlh.png)
+![](Router-5/image_de0acPgHlh.png)
 
 在完成以上步骤后，下游设备应该能够通过IPv6上网了，尽管在各个设备相关的网络接口并不会显示公网IPv6地址。
 
@@ -188,7 +188,7 @@ IPv6设置：RA服务选择“服务器模式”，DHCPv6服务选择“服务�
 
 我们在{% post_link 'Router-3' '校园网 & 认证方案' %}当中讲述了使用无线 Client 方式连接 ZJUWLAN-Secure 的办法。接下来，我们需要创建 WWAN6 接口：
 
-![](image_f221Ju8Ews.png)
+![](Router-5/image_f221Ju8Ews.png)
 
 注意分配与 WAN 和 WAN6 相同的防火墙区域。创建好 WWAN6 口后，该接口应该能直接获取到 /64 的 IPv6 地址。如果常规的中继模式可以让下游设备获取到IPv6地址，那么配置到这里就完成了。
 
@@ -204,7 +204,7 @@ WAN6 / WWAN6 + LAN：
 
 在 WAN6口 / WWAN6 口的 IPv6 的 DHCP 服务中勾选“指定的主接口”。
 
-![](image_vFUY_jrL4u.png)
+![](Router-5/image_vFUY_jrL4u.png)
 
 实际上，上游节点直接绑定端口和上游直接分配了一个 /64 的 PD 效果是一样的。对于浙江大学这样无法通过直接中继来获取 IPv6 地址的情况，我们也可以伪造成获取了一个 PD 前缀来让`netifd`进行后续的配置。该方法的优点是 LAN 接口也可以获得一个全局路由地址，并且可以配合 LAN 侧的 DHCPv6 Server 进行更自由的内网配置。
 
@@ -214,7 +214,7 @@ WAN6 / WWAN6 + LAN：
 - DHCPv6 服务：**服务器模式**
 - NDP 代理：**中继模式**
 
-![](image_vXBMU9r_bl.png)
+![](Router-5/image_vXBMU9r_bl.png)
 
 其中 NDP 代理选项一定要设置为中继模式，以下说明原因。
 
@@ -227,7 +227,7 @@ ip -6 neigh show proxy
 ```
 
 
-![](790165773adb6459a3e907c8b64a076c_J-35RJwI8-.png)
+![](Router-5/790165773adb6459a3e907c8b64a076c_J-35RJwI8-.png)
 
 可以看到 NAS 已经被成功代理。
 
@@ -310,15 +310,15 @@ fake_ipv6pd "$@"
 
 我们可以在`网络 - 防火墙 - 通信规则`中添加对于 NAS 的 IPv6 支持：
 
-![](image_ffnTYZNAHz.png)
+![](Router-5/image_ffnTYZNAHz.png)
 
 源区域选择 wan，目标区域选择 lan，目标地址选择 NAS 的公网 IPv6 地址（不是本地链路地址）。
 
-![](image_zmthJUBTSG.png)
+![](Router-5/image_zmthJUBTSG.png)
 
 在高级设置处，将地址族限制为 IPv6。
 
-![](image_68boCKJd-E.png)
+![](Router-5/image_68boCKJd-E.png)
 
 # 远程访问
 
@@ -359,7 +359,7 @@ ipconfig /renew6
 
 打开`C:\Windows\System32\drivers\etc\hosts`文件：
 
-![](image_jJeNFi8Hwt.png)
+![](Router-5/image_jJeNFi8Hwt.png)
 
 在最下方添加与注释格式一致的 DNS 解析记录即可。
 
@@ -369,11 +369,11 @@ ipconfig /renew6
 
 在 Windows 系统，我们可以在终端输入`ipconfig`来查看本机是否获取到了 IPv6 地址。
 
-![](image_xGXKfrgoMy.png)
+![](Router-5/image_xGXKfrgoMy.png)
 
 在 Linux 系统，我们可以在终端输入`ip a`来查看本机是否获取到了 IPv6 地址。
 
-![](image_dlSWH90xYG.png)
+![](Router-5/image_dlSWH90xYG.png)
 
 ## 为 IPv6 地址分配域名
 
@@ -511,7 +511,7 @@ TG频道：https://t.me/ShellClash
 
 以 Clash for Windows 为例，我们手动添加对应的域名即可。
 
-![](image_blQtZjF8io.png)
+![](Router-5/image_blQtZjF8io.png)
 
 ### 更换 RDP 端口
 
@@ -527,23 +527,23 @@ TG频道：https://t.me/ShellClash
 
 修改第一处，进入`\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp`，右击 PortNumber，选择修改，基数设置为十进制新的端口按自己需求设置（建议大于 10000）。
 
-![](image_46DeWzzbWR.png)
+![](Router-5/image_46DeWzzbWR.png)
 
 修改第二处，进入`\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp`，同上，设置为同样的端口。
 
-![](image_1AyebEvrlj.png)
+![](Router-5/image_1AyebEvrlj.png)
 
 #### 修改防火墙准入规则
 
 进入
 `\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Defaults\FirewallPolicy\FirewallRules`，找到`RemoteDesktop-UserMode-In-TCP`和`RemoteDesktop-UserMode-In-UDP`，右键修改，将包含原端口 3389 的数字修改为同样的端口
 
-![](image_KXu-hNX8yu.png)
+![](Router-5/image_KXu-hNX8yu.png)
 
 进入
 `\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\FirewallRules`，同上，替换旧的端口
 
-![](image_VIVFHR7xAa.png)
+![](Router-5/image_VIVFHR7xAa.png)
 
 重启电脑以使新的端口生效。（重启后记得查看新的 IPv6 地址并更改解析记录）
 

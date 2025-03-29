@@ -11,7 +11,7 @@ tags:
 
 # 需求
 KDE 自带的环境可以实现桌面定时切换下一张壁纸，但是想要手动切换，就只能右击桌面 -> 点击 `Next Wallpaper Image`。
-![自带的 SlideShow 模式](wall.png "自带的 SlideShow 模式")
+![自带的 SlideShow 模式](KDE-Tricks-1/wall.png "自带的 SlideShow 模式")
 
 经过查询，并无命令负责此动作，因此打算通过脚本实现，并绑定快捷键。
 
@@ -95,4 +95,4 @@ for (i=0;i<Desktops.length;i++) {
 可以使用 `alias` 将脚本变为便于输入的命令。
 
 再进入 KDE 设置中的 `Custom Shortcuts` 部分，设置自己喜欢的快捷键即可。
-![设置快捷键](shortcut.png "设置快捷键")
+![设置快捷键](KDE-Tricks-1/shortcut.png "设置快捷键")

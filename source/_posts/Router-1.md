@@ -40,7 +40,7 @@ tags:
 
 TTL 刷机的方法较为复杂，主要是需要拆开路由器，通过焊接的方式引出 RX（接收）、TX（发送）以及 GND（接地）线，再通过编程器与电脑上的软件进行通信，刷入 Uboot。
 
-![](image_BZ-l7jczTx.png)
+![](Router-1/image_BZ-l7jczTx.png)
 
 ## （解锁）SSH
 
@@ -54,7 +54,7 @@ TTL 刷机的方法较为复杂，主要是需要拆开路由器，通过焊接�
 
 SSH 连接成功后输入`cat /proc/mtd`查看固件分区信息。
 
-![](image_3eZIe0yBan.png)
+![](Router-1/image_3eZIe0yBan.png)
 
 备份所有分区。
 
@@ -64,7 +64,7 @@ SSH 连接成功后输入`cat /proc/mtd`查看固件分区信息。
 dd if=/dev/mtdx of=/tmp/mtdx_xxx.bin
 ```
 
-![](image_LDjYONB-on.png)
+![](Router-1/image_LDjYONB-on.png)
 
 出现 in 与 out 提示则说明备份成功。将备份文件从`/tmp`目录拷贝出来后删除。
 
@@ -105,7 +105,7 @@ IP 地址：192.168.1.254
 
 浏览器打开`http://192.168.1.1/uboot.html`进入 Uboot 上传界面：
 
-![](image_rtSPMrftg0.png)
+![](Router-1/image_rtSPMrftg0.png)
 
 在这里上传`...uboot.fip`文件即可
 
@@ -131,7 +131,7 @@ IP 地址：192.168.1.254
 
 在 LuCI 界面，选择`系统 - 备份与升级 - 刷写固件`：
 
-![](image_O7QzZarS5D.png)
+![](Router-1/image_O7QzZarS5D.png)
 
 在这里上传`...squashfs-sysupgrade.itb`文件即可。
 

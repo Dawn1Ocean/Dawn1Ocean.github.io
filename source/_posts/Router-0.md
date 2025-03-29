@@ -63,7 +63,7 @@ OpenWrt 的当前稳定版本系列是 24.10，其中 “v24.10.0” 是该系�
 
 为了全面了解如何添加新设备支持，我们建议您查看一台新设备相关的最新的 commit，摸清楚哪些文件发生了修改和如何修改它们。我们只需要去 GitHub 仓库找到某设备对应的 PR 查看就能理解。
 
-![](image_mG_0-GHHgK.png)
+![](Router-0/image_mG_0-GHHgK.png)
 
 ## 重要文件
 
@@ -431,7 +431,7 @@ Linux 内核从 V2.6 开始引入设备树的概念，其起源于`OF:OpenFirmwa
 
 因此，可以将 Uboot 程序类比成 PC 中的 BIOS，引导系统启动。对于这一类程序，更通用的描述是 BootLoader，Uboot 只是其中一种。
 
-![](image_Z6RF3dWvZC.png)
+![](Router-0/image_Z6RF3dWvZC.png)
 
 不死 Uboot（Breed）是路由器刷机常见的 Uboot 之一，由国内个人[hackpascal](https://github.com/hackpascal "hackpascal") 开发。
 
@@ -456,7 +456,7 @@ LuCI 建立于 2008 年 3 月，最初名为“FFLuCI”，作为将 OpenWrt 分
 
 同时，LuCI 从 MVC 框架发展成为一个包含多个库、应用程序和用户界面的集合，适用于 Lua 程序员，同时仍然专注于 Web 用户界面，这也成为了 OpenWrt Kamikaze 8.09 以来的 OpenWrt 官方发布的一部分。
 
-![](image_bgRESdsw-U.png)
+![](Router-0/image_bgRESdsw-U.png)
 
 # SquashFS
 
@@ -470,7 +470,7 @@ Squashfs 常被用于各 Linux 发行版的 LiveCD 中，也用于 OpenWrt 和 D
 
 OverlayFS，顾名思义是一种堆叠文件系统，可以将多个目录的内容叠加到另一个目录上。OverlayFS 并不直接涉及磁盘空间结构，看起来像是将多个目录的文件按照规则合并到同一个目录。且对多个源目录具体使用文件系统类型没有要求，即使各个源目录的文件系统类型不同也不影响使用。
 
-![](image_jeOjki7-LG.png)
+![](Router-0/image_jeOjki7-LG.png)
 
 在使用如上 mount 进行 OverlayFS 合并之后，遵循如下规则：
 
@@ -528,13 +528,13 @@ make menuconfig
 
 在出现的菜单中按照目标设备依次选择`Target System`，`Subtarget`与`Target Profile`。
 
-![](image_ChdlOfNh3P.png)
+![](Router-0/image_ChdlOfNh3P.png)
 
 ## 挑选内核模块与软件包
 
 这是 OpenWrt 编译过程中最激动人心的时刻。你可以随意挑选自己所需的软件包与内核模块。
 
-![](image_XXJpUFMaYV.png)
+![](Router-0/image_XXJpUFMaYV.png)
 
 我们可能会加入如下类别的软件包：
 
@@ -549,11 +549,11 @@ make menuconfig
 
 别忘了选择对应的内核模块（在 **Kernel modules** 中）：
 
-![](image_8Ct4UpPfQE.png)
+![](Router-0/image_8Ct4UpPfQE.png)
 
 我们还可以在界面中键入`/`（和 Vim 一样）以查询软件包。
 
-![](image_dypskqiPqm.png)
+![](Router-0/image_dypskqiPqm.png)
 
 ### 可能会安装的内核模块 / 软件包
 
@@ -594,7 +594,7 @@ make -jN V=s
 
 编译完成后，我们可以在`bin/targets/xxx`目录下找到我们最终需要的文件。
 
-![](image_jVfU8o9sW_.png)
+![](Router-0/image_jVfU8o9sW_.png)
 
 其中，
 

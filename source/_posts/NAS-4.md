@@ -141,9 +141,9 @@ sudo systemctl start apache2
 
 访问这个地址：`http://<NAS IP 地址>:<Apache2 端口>/cgi-bin/apcupsd/multimon.cgi`，成功看到 UPS 管理页面。
 
-![](b32da0a7280dd130c0f708d8171de59d_EMwyvDpxCq.png)
+![](NAS-4/b32da0a7280dd130c0f708d8171de59d_EMwyvDpxCq.png)
 
-![](2d2d2912fc065ad607641471caf30562_yd1ZkAPMh4.png)
+![](NAS-4/2d2d2912fc065ad607641471caf30562_yd1ZkAPMh4.png)
 
 ### 断电时休眠而不是直接关机
 
@@ -234,4 +234,4 @@ esac
 使用`chmod +x`将其变为可执行的。
 
 <br/>
-{% post_link 'NAS-5' '下一章节：硬盘 & 软 RAID' %}
+{% post_link 'NAS-5' '下一章节：数据冗余保障' %}

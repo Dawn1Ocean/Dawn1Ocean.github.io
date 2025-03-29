@@ -41,11 +41,11 @@ Samba 也是 SMB 协议的实现，它允许 Windows 客户访问 Linux 系统�
 
 在 Cockpit 控制台中`File Sharing - Shares`处添加 SMB 共享：
 
-![](image_pW-C22fE2_.png)
+![](NAS-6/image_pW-C22fE2_.png)
 
 按照下图进行配置即可。
 
-![](image1.png)
+![](NAS-6/image1.png)
 
 需要共享多个文件夹，就在 Shares 处创建多个共享配置。
 
@@ -77,19 +77,19 @@ sudo chown <你正在使用的用户名>:<所在用户组> -R /dir
 
 对于 Windows 系统，确认其已连接到 NAS 的局域网中。打开运行，输入`\\<NAS IP>`，回车：
 
-![](image_pkBmWbVj-b.png)
+![](NAS-6/image_pkBmWbVj-b.png)
 
 访问对应文件夹，确认能够正常读写其中的文件。
 
-![](image_Zucjtsg4JD.png)
+![](NAS-6/image_Zucjtsg4JD.png)
 
 可以将文件夹映射到驱动器，便于访问。右键文件夹，选择映射网络驱动器：
 
-![](image_oA0kP8OPt4.png)
+![](NAS-6/image_oA0kP8OPt4.png)
 
 指定驱动器号，即可在此电脑中看到对应文件夹。
 
-![](image_uca3CXn-Gf.png)
+![](NAS-6/image_uca3CXn-Gf.png)
 
 # WebDAV
 
@@ -105,7 +105,7 @@ sudo chown <你正在使用的用户名>:<所在用户组> -R /dir
 
 打开 [https://go.dev/doc/install](https://go.dev/doc/install "https://go.dev/doc/install")，查看 Go 的最新版本号。
 
-![](image_K3ubkRc5GT.png)
+![](NAS-6/image_K3ubkRc5GT.png)
 
 ```bash
 wget https://go.dev/dl/go<最新版本号>.linux-amd64.tar.gz
@@ -227,7 +227,7 @@ systemctl start webdav
 
 坚果云对于免费用户每月提供 1GB 的上传流量以及 3GB 的下载流量。可以在第三方应用管理处创建应用密码。
 
-![](image_pFn_muetp9.png)
+![](NAS-6/image_pFn_muetp9.png)
 
 ## 挂载 WebDAV 为本地磁盘
 
@@ -255,7 +255,7 @@ mount -t davfs http(s)://<服务器地址/域名>:<端口>/ /Aliyun # 请根据�
 
 回车后输入自己的用户名和密码，完成。可以输入`df -h`指令来查看是否成功。
 
-![](image_QBMxoN8z84.png)
+![](NAS-6/image_QBMxoN8z84.png)
 
 ### 挂载坚果云 WebDAV
 

@@ -12,7 +12,7 @@ categories:
 
 Immich 是一个直接从 iPhone、Android 手机上备份照片与视频的开源解决方案，通过部署在自己的电脑、NAS、服务器中，使用 App 进行备份。界面酷似 Google Photos，支持多用户、照片和相册分享、好友上传、地理位置、机器学习识别事件等功能。是居家备份照片的好帮手。
 
-![](image_MnJL4-IsHE.png)
+![](NAS-12/image_MnJL4-IsHE.png)
 
 # 通过 Docker 部署
 
@@ -90,21 +90,21 @@ sudo docker compose pull && sudo docker compose up -d
 
 Im­mich 是支持使用描述文字搜索图片的，但默认的机器学习模型是 `ViT-B-32__openai`，这个模型并不支持中文。好在官方提供的[模型](https://huggingface.co/immich-app "模型")中，有一个 [XLM-Roberta-Large-Vit-B-16Plus](https://huggingface.co/immich-app/XLM-Roberta-Large-Vit-B-16Plus "XLM-Roberta-Large-Vit-B-16Plus") 可以使用中文搜索。
 
-![](image_DPdSNcC-E7.png)
+![](NAS-12/image_DPdSNcC-E7.png)
 
 当然也可以使用 XLM-Roberta-Large-Vit-B-32，但空间占用与处理时的 CPU 占用都会更高。
 
-![](d823bc555cbf782927db1a63a9f64cac_Uo2RU3n_Hd.png)
+![](NAS-12/d823bc555cbf782927db1a63a9f64cac_Uo2RU3n_Hd.png)
 
 可以前往 Immich 的[官方文档](https://v1.130.0.archive.immich.app/docs/features/searching/#clip-models)查看各模型对于某语言的响应情况。
 
 如果 NAS 能够使用代理，我们直接前往 Immich 的`管理 - 设置 - 机器学习设置 - 智能搜索 - CLIP 模型`处修改 CLIP 模型名称。
 
-![](image_oSvvt28mu-.png)
+![](NAS-12/image_oSvvt28mu-.png)
 
 修改完成后，点击左侧`任务`一栏，找到`智能搜索`一项，点击`全部`。Immich 会先下载对应的模型，再对所有的图片进行机器学习处理。
 
-![](image_jvGDWNbSi6.png)
+![](NAS-12/image_jvGDWNbSi6.png)
 
 我们可以在 Cockpit 的终端处查看 Docker 日志，确认模型下载与运行情况：
 
@@ -112,7 +112,7 @@ Im­mich 是支持使用描述文字搜索图片的，但默认的机器学习�
 sudo docker logs immich_machine_learning
 ```
 
-![](image_pTOftXM_P9.png)
+![](NAS-12/image_pTOftXM_P9.png)
 
 可以看到，我们已经成功下载了对应的 CLIP 模型。
 
@@ -120,13 +120,13 @@ sudo docker logs immich_machine_learning
 
 处理完成后，我们尝试使用中文进行语义搜索，结果非常完美。
 
-![](image_RMZlFLME53.png)
+![](NAS-12/image_RMZlFLME53.png)
 
 ## 客户端
 
 手机端应用的配置非常简洁明了，这里就不详述了，主要用到的功能为备份功能。
 
-![](c77e849951216e2d9c65f0ff0f5c8618_1jAwgdP7X0.png)
+![](NAS-12/c77e849951216e2d9c65f0ff0f5c8618_1jAwgdP7X0.png)
 
 剩下的功能，就留给各位去探索吧！
 

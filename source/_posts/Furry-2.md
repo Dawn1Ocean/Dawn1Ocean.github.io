@@ -24,12 +24,12 @@ tags:
 -   以**萌**作为主要特点，大眼睛、小鼻子，体型较小，吻部不突出（与人更相符）
     （例：宝可梦、动物新世代中的某些角色等）
 
-![BNA 中影森满和棒球队成员](image_EfHjn8RI1r.png "BNA 中影森满和棒球队成员")
+![BNA 中影森满和棒球队成员](Furry-2/image_EfHjn8RI1r.png "BNA 中影森满和棒球队成员")
 
 -   以**强壮**作为主要特点（筋肉），体型较大，吻部较突出，日系画风特点
     （例：从零开始的魔法书中的佣兵）
 
-![右一为佣兵](image_zpLD4cgNJ4.png "右一为佣兵")
+![右一为佣兵](Furry-2/image_zpLD4cgNJ4.png "右一为佣兵")
 
 -   **欧美系兽人（Toony）**：
 
@@ -39,7 +39,7 @@ tags:
     欧美动漫（cartoon）风格，给人以俏皮活泼之感，有时也会更加突出动物的真实、野性等特点
     （例：迪士尼出品的疯狂动物城，坏蛋联盟等电影）
 
-![Zootopia 宣传海报](image_EBMRVQoMaj.png "Zootopia 宣传海报")
+![Zootopia 宣传海报](Furry-2/image_EBMRVQoMaj.png "Zootopia 宣传海报")
 
 -   **写实风兽人（Realistic）**：
     如果现实中真正存在兽人，那么应与此类型十分接近（画手运用生物学知识进行合理的描绘）
