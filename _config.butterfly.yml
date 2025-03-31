@@ -31,8 +31,8 @@ menu:
     分类: /categories/ || fas fa-folder-open
     说说: /shuoshuo/ || fas fa-comments
   文章 || fas fa-book:
-    硬路由 / NAS: /NAS-Router-0/ || fas fa-computer
-    Furry 杂谈: /Furry-1/ || fas fa-paw
+    硬路由 / NAS: /NAS-Router-0 || fas fa-computer
+    Furry 杂谈: /Furry-1 || fas fa-paw
   #   音乐: /music/ || fas fa-music
   友链: /link/ || fas fa-link
 
@@ -300,9 +300,9 @@ preloader:
 
 nofollow:
   enable: true
-  field: site
+  field: post
   exclude:
 
 site_verification:
   - name: baidu-site-verification
-    content: codeva-J32KtkKwHM
+    content: codeva-GQcRECGqLJ
