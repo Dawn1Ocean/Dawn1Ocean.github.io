@@ -124,7 +124,7 @@ markdown:
     - markdown-it-sup
   anchors:
     level: 1
-    collisionSuffix: 'v'
+    collisionSuffix: ''
     permalink: true
     permalinkClass: header-anchor
     permalinkSymbol: ''
