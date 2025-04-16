@@ -102,7 +102,7 @@ $$
 
 ### 视野与视球面
 
-经验与理论可以告诉我们，我们所处的空间可以看成平直的、具有三个维度的空间，也就是三维 Euclid 空间 $\R^3$。假设我们作为一个观测者，处于 $\R^3$ 中的 0 点不动，转动我们的头颅与眼球，我们可以接收来自不同方向的光，并且在脑中构成一幅图像，我们不严谨地将其称之为「**视野**」。现在的问题是，我们的视野究竟具有怎样的拓扑结构呢？
+经验与理论可以告诉我们，我们所处的空间可以看成平直的、具有三个维度的空间，也就是三维 Euclid 空间 $\R^3$。假设我们作为一个观测者，处于 $\R^3$ 中的 $0$ 点不动，转动我们的头颅与眼球，我们可以接收来自不同方向的光，并且在脑中构成一幅图像，我们不严谨地将其称之为「**视野**」。现在的问题是，我们的视野究竟具有怎样的拓扑结构呢？
 
 不考虑光的衍射与介质不均匀等问题，那么我们可以大致认为，光是沿着直线传播的。如果以观测点为顶点在空间作一条射线，那么射线上的所有点在我们的眼球中只能响应为一个单一的信号，这其实是一种等价关系 $∼$，它把以原点为端点的一条射线上（除去端点）上的所有点构造一个等价类，而所有等价类构成的商拓扑空间就是视野的拓扑空间。实际上，由于二维球面 $S^2$：
 
@@ -118,7 +118,7 @@ $$
 
 ### 球面上的几何基础
 
-在涉及球的问题中，与其在空间中使用直角坐标 $(x,y,z)$，更自然的是使用球坐标系 $(r,θ,φ)$：
+在涉及球的问题中，与其在空间中使用直角坐标 $(x,y,z)$，更自然的是使用球坐标系 $(r,\theta,\varphi)$：
 
 $$
 \begin{cases}
@@ -134,8 +134,10 @@ $$
 有了空间的球坐标系之后，我们可以直接方便地把 $S^2$ 等同于 $\R^3$ 中 $r=1$ 所有点的集合，所以也可以用球面坐标 $(\theta,\varphi)$ 标注 $S^2$ 上的点。在这种定义下，我们就可以把 $\R^3-\{0\}$ 自然投影到 $S^2$ 上：
 
 $$
+\begin{gathered}
 \sigma:(\R^3-\{0\})\rightarrow S^2\\
-(r,θ,φ)\mapsto(θ,φ)
+(r,\theta,\varphi)\mapsto(\theta,\varphi)
+\end{gathered}
 $$
 
 这个投影映射也被称为**视球面投影**。
@@ -177,7 +179,7 @@ $$
 
 其中 $z_0$ 的物理意义是平面交极轴的截距。
 
-不妨假设 $z_0<0$，那么当 $r$ 从 $|z_0|$ 增长到 $+\infin$ 时，$θ$ 可以取满 $(π/2,π]$，并且在无穷远处的投影满足
+不妨假设 $z_0<0$，那么当 $r$ 从 $|z_0|$ 增长到 $+\infin$ 时，$\theta$ 可以取满 $(π/2,π]$，并且在无穷远处的投影满足
 
 $$
 \lim_{r\rightarrow\infin}⁡\theta=\pi/2
@@ -318,7 +320,7 @@ $$
 建立 $\R^3$ 中部分开集到 $\R^2$ 的映射：
 
 $$
-\exist\ a_1,a_2,a_3,a_4,\ b_1,b_2,b_3,b_4,\ l^{'}_1,l^{'}_2,l^{'}_3,l^{'}_4\subseteq\R^3, \\a_1\mapsto P_1P,a_2\mapsto P_4P_3,a_3\mapsto Q_1Q,a_4\mapsto Q_4Q_3,\\
+\exists\ a_1,a_2,a_3,a_4,\ b_1,b_2,b_3,b_4,\ l^{'}_1,l^{'}_2,l^{'}_3,l^{'}_4\subseteq\R^3, \\a_1\mapsto P_1P,a_2\mapsto P_4P_3,a_3\mapsto Q_1Q,a_4\mapsto Q_4Q_3,\\
  b_1\mapsto P_4P_1,b_2\mapsto P_3P_1,b_3\mapsto Q_4Q_1,b_4\mapsto Q_3Q,\\
  l^{'}_1\mapsto l_1,l^{'}_2\mapsto l_2,l^{'}_3\mapsto l_3,l^{'}_4\mapsto P_4Q_4
 $$
@@ -328,26 +330,32 @@ $$
 为了便于证明和理解，我们假设原 $\R^3$ 中的直线构成一个六面体（必然能找到这样的映射）：
 
 $$
-\exist\ P^{'}_1,P^{'},P^{'}_3,P^{'}_4,\ Q^{'}_1,Q^{'},Q^{'}_3,Q^{'}_4\in\R^3,\\
+\begin{gathered}
+\exists\ P^{'}_1,P^{'},P^{'}_3,P^{'}_4,\ Q^{'}_1,Q^{'},Q^{'}_3,Q^{'}_4\in\R^3,\\
 a_1\cap b_1\cap l^{'}_1=P^{'}_1\mapsto P_1,\ a_1\cap b_1\cap l^{'}_1=Q^{'}_1\mapsto Q_1,\ \\
 a_1\cap b_2\cap l^{'}_2=P^{'}\mapsto P,\ a_3\cap b_4\cap l^{'}_2=Q^{'}\mapsto Q,\ \\
 a_2\cap b_2\cap l^{'}_3=P^{'}_3\mapsto P_3,\ a_4\cap b_4\cap l^{'}_3=Q^{'}_3\mapsto Q_3,\ \\
-a_2\cap b_1\cap l^{'}_4=P^{'}_4\mapsto P_4,\ a_4\cap b_3\cap l^{'}_4=Q^{'}_4\mapsto Q_4\ \\ 
+a_2\cap b_1\cap l^{'}_4=P^{'}_4\mapsto P_4,\ a_4\cap b_3\cap l^{'}_4=Q^{'}_4\mapsto Q_4\ \\
+\end{gathered}
 $$
 
 在画布中，有
 
 $$
+\begin{gathered}
 P_1P\cap P_4P_3\cap Q_1Q\cap Q_4Q_3=O_2\\
 P_3P\cap P_4P_1\cap Q_3Q\cap Q_4Q_1=O_1\\
 l_1\parallel l_2 \parallel l_3
+\end{gathered}
 $$
 
 根据“**在射影几何意义上，空间中的直线在画布中必消失于一点，并且空间中的直线平行当且仅当它们在画布中消失于同一点**”，我们得到
 
 $$
+\begin{gathered}
 a_1\parallel a_2\parallel a_3\parallel a_4,\ b_1\parallel b_2\parallel b_3\parallel b_4,\\
 l_1\cap l_2\cap l_3=\infin\Rightarrow l'_{1}\parallel l'_{2}\parallel l'_{3}
+\end{gathered}
 $$
 
 于是我们成功将**二维平面**上的问题转移到了**三维空间**中：
@@ -355,8 +363,10 @@ $$
 **叙述三：** $\forall a_1,a_2,a_3,a_4,\ b_1,b_2,b_3,b_4,\ l_1,l_2,l_3,l_4\subseteq \R^3$，12 条线段构成空间中具有 8 个顶点，3 组每组 4 条棱（ $a_1,a_2,a_3,a_4$、$b_1,b_2,b_3,b_4$、$l_1,l_2,l_3,l_4$ 各一组）的六面体，其中 $a_1\parallel a_2\parallel a_3\parallel a_4,\ b_1\parallel b_2\parallel b_3\parallel b_4$：
 
 $$
+\begin{gathered}
 \text{If}\quad l_1\parallel l_2\parallel l_3\\
 \text{Then}\quad l_1\parallel l_2\parallel l_3\parallel l_4
+\end{gathered}
 $$
 
 ![](Math-1/efb0b1b1e986bdeb7b41a7c81f0cc1c1_720_WT30j9WZ_T.png)
@@ -393,14 +403,14 @@ $PQ$ 沿着它所在直线方向运动时，相当于它所在的六面体沿着
 接下来该研究灭线的性质了。我们知道空间平面上的点与央点连线再和画布的交点就是投影点。将平面无限延伸，相当于央点过投影点的射线与平面相交在无限远处。此时我们可以看作其平行于空间平面。于是有：
 
 $$
-\forall\ \alpha,\beta\subseteq\R^3,\ \alpha\parallel\beta,\ \exist\ \gamma\subseteq\R^3,\ \gamma\cap\alpha=l_1,\ \gamma\cap\beta=l_2\Rightarrow l_1\parallel l_2 
+\forall\ \alpha,\beta\subseteq\R^3,\ \alpha\parallel\beta,\ \exists\ \gamma\subseteq\R^3,\ \gamma\cap\alpha=l_1,\ \gamma\cap\beta=l_2\Rightarrow l_1\parallel l_2 
 $$
 
 ![](Math-1/image_IN_23_E0Fj.png)
 
 我们得到了另一个结论：**与画布相交的平面，其灭线与交线平行**。（2）
 
-**结论（1）与（2）**可以导出：**过平行于画布直线的平面，其灭线与该直线平行**。问题就这么解决了！
+**结论（1）与（2）** 可以导出：**过平行于画布直线的平面，其灭线与该直线平行**。问题就这么解决了！
 
 同样地，我们也可以证明平面 $PQQ_3P_3,P_1Q_1Q_4P_4$ 的灭线就是 $l_4$。
 
@@ -480,10 +490,10 @@ $$
 令 $t\rightarrow+\infin$，得到
 
 $$
-\begin{array}
+\begin{cases}
 x' \rightarrow \lambda \tan \alpha \cos \beta \\
 y' \rightarrow \lambda \tan \alpha \sin \beta
-\end{array}
+\end{cases}
 , (x', y') \rightarrow \lambda \pi_0 [(\theta = \alpha, \varphi = \beta)]
 $$
 
