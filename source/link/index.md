@@ -8,6 +8,6 @@ type: "link"
 
 ``` YML
 name: Dawn_Ocean
-link: https://blog.deans.fun
-avatar: https://blog.deans.fun/assets/img/avatar.jpg
+link: https://blog.dawnocean.site
+avatar: https://blog.dawnocean.site/assets/img/avatar.jpg
 ```
