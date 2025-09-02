@@ -117,7 +117,55 @@ route delete <你的内网网段>
 
 ![](Router-6/image__EqpLK0cvk.png)
 
+### Mac 双网卡分流
 
+#### 调整网卡优先级
+
+由于我们的需求是使用无线网卡访问外网，使用以太网卡访问内网，因此需要将无线网卡作为默认的网络接口。
+
+在 `网络 - 设定服务顺序` 中改变顺序，确保 Wi-Fi 接口的排序在以太网之上。
+
+![](Router-6/Pasted_image_20250901012813.png)
+
+#### 添加路由表
+
+如果使用 `route add` 命令，在重启之后设置会重置。因此我们需要采取其他的永久配置方法。
+
+先查询可用的路由出口：
+
+```bash
+networksetup -listallnetworkservices
+```
+
+可能会出现以下结果：
+
+```
+An asterisk (*) denotes that a network service is disabled.
+Wi-Fi
+Ethernet
+Thunderbolt Bridge
+Tailscale
+```
+
+接着查询指定路由出口的路由表配置，我们要修改以太网接口，就查询它的路由表：
+
+```bash
+networksetup -getadditionalroutes Ethernet
+```
+
+默认情况下我们没有添加路由表，此处应不会有显示。最后添加新的路由表：
+
+```bash
+networksetup -setadditionalroutes Ethernet <目标 IP> <子网掩码> <网关 IP>
+```
+
+例如我们要实现通往 `192.168.1.0/24` 的网络全部走 `192.168.1.1`，可以这样配置：
+
+```bash
+networksetup -setadditionalroutes Ethernet 192.168.1.0 255.255.255.0 192.168.1.1
+```
+
+### 后续
 
 即便如此，在仅 NAS 连接到路由器后，还是会出现时常断流（表现为网速极慢，< 1MB/s）的情况。于是我没有办法了。我把不必要的启动项全部关闭，依然如此。我开始怀疑是不是固件问题，但当我正准备重刷 ImmortalWrt 时，我想明白了：
 

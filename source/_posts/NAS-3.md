@@ -245,6 +245,25 @@ sudo systemctl daemon-reload
 sudo systemctl restart cockpit.socket
 ```
 
+### 上传 SSL 证书
+
+关于 SSL 证书的介绍，详见 {% post_link 'NAS-8' '反向代理 & HTTPS' %}。
+
+Cockpit 的证书路径为 `/etc/cockpit/ws-certs.d`。在此目录下有两个文件，`0-self-signed.cert` 和 `0-self-signed.key`，分别为 Cockpit 自签名的证书文件与密钥文件。
+
+我们直接使用自己申请的证书内容替换这两个文件的内容即可。注意：如果证书文件为 `xxx_bundle.crt` 证书链，只保留第一个证书（即终端实体证书），删除其他证书。
+
+```bash
+cat /path/to/your/cert > 0-self-signed.cert
+cat /path/to/your/key > 0-self-signed.key
+```
+
+最后重启 Cockpit 服务即可：
+
+```bash
+sudo systemctl restart cockpit
+```
+
 # 系统调优
 
 ## 网络配置

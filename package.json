@@ -12,10 +12,11 @@
     "version": "7.3.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@vscode/markdown-it-katex": "^1.1.1",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@vscode/markdown-it-katex": "^1.1.2",
     "hexo": "^7.3.0",
+    "hexo-cli": "^4.3.2",
     "hexo-deployer-git": "^4.0.0",
     "hexo-filter-nofollow": "^2.0.2",
     "hexo-fontawesome": "^2.4.0",
@@ -32,13 +33,15 @@
     "hexo-renderer-pug": "^3.0.0",
     "hexo-renderer-stylus": "^3.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-theme-butterfly": "^5.3.5",
+    "hexo-theme-butterfly": "^5.4.3",
     "hexo-theme-landscape": "^1.1.0",
+    "hexo-util": "^3.3.0",
     "katex": "^0.16.22",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-expandable": "^1.0.2",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-latex": "^0.2.0",
+    "moment-timezone": "^0.6.0",
     "punycode": "^2.3.1"
   }
 }

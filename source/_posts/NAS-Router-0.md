@@ -12,13 +12,44 @@ tags:
 - Linux & 系统终端的使用
 - 计算机网络
 - Docker
-- Nginx
+
+2025/3/29 第三次更新内容：
+
+- OpenWrt 编译
+    - 关于 Lean's LEDE 的问题
+    - 适配 OpenWrt 主线配置
+    - 替换 AX3000T 部分为通用刷机步骤
+
+- LuCI 配置
+    - IPv6 防火墙通信规则
+    - 新版 UPnP 无法转发问题
+
+- ZFS 维护与灾难恢复
+- 系统备份
+- SMB 配置更新
+
+2025/3/6 第二次更新内容：
+
+- IPv6 配置
+- Windows 有线 / 无线网卡分流
+    - Windows 连有线网络后无线网卡断连问题
+
+- 组网图景综述
+    - 对 AX3000T 的个人意见
+
+- Cockpit ZFS 界面图标不显示问题
+- 24H2 的一系列问题
+    - SMB 无法访问
+    - RDP 连接失败
+
+- qBitTorrent UPnP 无法转发问题
+- Navidrome + MusicTag 音乐管理
 
 # 引言
 
 众所周知，一台服务器能实现的事情有很多。如果你有以下需求：
 
-- 大量数据存储需求（比如电影、番剧、小姐姐
+- 大量数据存储需求（比如电影、番剧等）
 - 多个设备间的数据同步、储存与访问
 - 自己的（家庭）影音系统
 - PT（Private Tracker）下载
@@ -51,6 +82,8 @@ NAS 除了可以完成它的名字中包含的网络存储功能，还能作为�
 <br/>
 {% post_link 'NAS-1' 'NAS（1）—— 概述 & 硬件' %}
 <br/>
+{% post_link 'NAS-1-1' 'NAS（1-1）—— 成品 NAS 配置（QNAP）' %}
+<br/>
 {% post_link 'NAS-2' 'NAS（2）—— 基于原生 Debian 搭建系统' %}
 <br/>
 {% post_link 'NAS-3' 'NAS（3）—— Cockpit & 系统调优' %}
@@ -63,7 +96,7 @@ NAS 除了可以完成它的名字中包含的网络存储功能，还能作为�
 <br/>
 {% post_link 'NAS-7' 'NAS（7）—— Docker 服务' %}
 <br/>
-{% post_link 'NAS-8' 'NAS（8）—— Nginx & HTTPS' %}
+{% post_link 'NAS-8' 'NAS（8）—— 反向代理 & HTTPS' %}
 <br/>
 {% post_link 'NAS-9' 'NAS（9）—— Homepage 导航页' %}
 <br/>
