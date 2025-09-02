@@ -200,7 +200,7 @@ comments:
   card_post_count: false # Display comment count in Home Page
 
 # footer是否顯示圖片背景(與top_img一致)
-footer_bg: true
+footer_img: true
 
 canvas_ribbon:
   enable: true
