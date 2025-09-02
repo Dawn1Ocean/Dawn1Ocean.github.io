@@ -1,0 +1,687 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NAS（3）—— Cockpit &amp; 系统调优 | Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回到目录   本篇文章主要来自于这篇教程。 Debian 初始化 安装初始软件 1apt install sudo curl git vim net-tools -y # 以 root 用户运行 添加用户至 sudo 组 添加安装系统时创建的第一个用户至 sudo 组，以方便我们后续管理系统。 1usermod -aG sudo &lt;user_name&gt; # 请将 &lt;user_na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS（3）—— Cockpit &amp; 系统调优">
+<meta property="og:url" content="https://blog.dawnocean.site/NAS-3">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="回到目录   本篇文章主要来自于这篇教程。 Debian 初始化 安装初始软件 1apt install sudo curl git vim net-tools -y # 以 root 用户运行 添加用户至 sudo 组 添加安装系统时创建的第一个用户至 sudo 组，以方便我们后续管理系统。 1usermod -aG sudo &lt;user_name&gt; # 请将 &lt;user_na">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/kirby_cover17.JPG">
+<meta property="article:published_time" content="2024-08-09T15:23:09.000Z">
+<meta property="article:modified_time" content="2025-09-02T17:50:57.339Z">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="Cockpit">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/kirby_cover17.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NAS（3）—— Cockpit & 系统调优",
+  "url": "https://blog.dawnocean.site/NAS-3",
+  "image": "https://blog.dawnocean.site/assets/img/kirby_cover17.JPG",
+  "datePublished": "2024-08-09T15:23:09.000Z",
+  "dateModified": "2025-09-02T17:50:57.339Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Dean Ma",
+      "url": "https://blog.dawnocean.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/NAS-3"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NAS（3）—— Cockpit & 系统调优',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/assets/img/kirby_cover17.JPG);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">NAS（3）—— Cockpit &amp; 系统调优</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">NAS（3）—— Cockpit &amp; 系统调优</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-09T15:23:09.000Z" title="发表于 2024-08-09 23:23:09">2024-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:50:57.339Z" title="更新于 2025-09-03 01:50:57">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NAS/">NAS</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NAS/Debian/">Debian</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><a href="/NAS-Router-0" title="NAS &#x2F; 硬路由：从入门到入门">回到目录</a>
+<br/>
+<br/>
+<p>本篇文章主要来自于<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.qq.com/doc/p/ac7a498302fca24ec7f0d002820ee32eceb03c13" title="这篇教程">这篇教程</a>。</p>
+<h1 id="debian-初始化"><a class="header-anchor" href="#debian-初始化"></a>Debian 初始化</h1>
+<h2 id="安装初始软件"><a class="header-anchor" href="#安装初始软件"></a>安装初始软件</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install <span class="built_in">sudo</span> curl git vim net-tools -y <span class="comment"># 以 root 用户运行</span></span><br></pre></td></tr></table></figure>
+<h2 id="添加用户至-sudo-组"><a class="header-anchor" href="#添加用户至-sudo-组"></a>添加用户至 sudo 组</h2>
+<p>添加安装系统时创建的第一个用户至 sudo 组，以方便我们后续管理系统。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -aG <span class="built_in">sudo</span> &lt;user_name&gt; <span class="comment"># 请将 &lt;user_name&gt; 替换为要添加的用户名</span></span><br></pre></td></tr></table></figure>
+<h2 id="更换国内镜像源"><a class="header-anchor" href="#更换国内镜像源"></a>更换国内镜像源</h2>
+<p>Debian 的软件源配置文件是<code>/etc/apt/sources.list</code>。将系统自带的该文件做个备份，将该文件替换为下面内容，即可使用 TUNA 的软件源镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/apt/sources.list /etc/apt/sources.list.bak <span class="comment"># 备份 /etc/apt/sources.list</span></span><br><span class="line"><span class="built_in">sudo</span> vim /etc/apt/sources.list <span class="comment"># 修改 sources.list 文件</span></span><br></pre></td></tr></table></figure>
+<p>替换为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware</span><br><span class="line"></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware</span><br><span class="line"></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware</span><br><span class="line"></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span><br><span class="line"># deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span><br></pre></td></tr></table></figure>
+<p>Debian Buster 以上版本默认支持 HTTPS 源。如果遇到无法拉取 HTTPS 源的情况，请先使用 HTTP 源并安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install apt-transport-https ca-certificates -y</span><br></pre></td></tr></table></figure>
+<h2 id="更新系统"><a class="header-anchor" href="#更新系统"></a>更新系统</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br></pre></td></tr></table></figure>
+<h1 id="cockpit-web"><a class="header-anchor" href="#cockpit-web"></a>Cockpit Web</h1>
+<p>Cockpit 使 Linux 易于使用。可以将 Cockpit 理解为 Linux 的网页端图形化界面。在 Web 浏览器中借助 Cockpit 查看服务器，启动容器、管理存储、配置网络和检查日志都很容易。</p>
+<h2 id="安装-cockpit"><a class="header-anchor" href="#安装-cockpit"></a>安装 Cockpit</h2>
+<p>Cockpit 从版本 10 （Buster） 开始在 Debian 中可用。要获取最新版本，建议启用向后移植存储库（以 root 身份）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">. /etc/os-release</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://deb.debian.org/debian <span class="variable">$&#123;VERSION_CODENAME&#125;</span>-backports main&quot;</span> &gt; \</span><br><span class="line">    /etc/apt/sources.list.d/backports.list</span><br><span class="line">apt update</span><br></pre></td></tr></table></figure>
+<p>安装或更新软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -t <span class="variable">$&#123;VERSION_CODENAME&#125;</span>-backports cockpit -y</span><br></pre></td></tr></table></figure>
+<h2 id="安装附属组件"><a class="header-anchor" href="#安装附属组件"></a>安装附属组件</h2>
+<h3 id="虚拟机"><a class="header-anchor" href="#虚拟机"></a>虚拟机</h3>
+<p>在浏览器中创建、运行和管理虚拟机。（按需安装，非必要插件）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">. /etc/os-release</span><br><span class="line">apt install -t <span class="variable">$&#123;VERSION_CODENAME&#125;</span>-backports cockpit-machines -y</span><br></pre></td></tr></table></figure>
+<h3 id="podman-容器"><a class="header-anchor" href="#podman-容器"></a>Podman 容器</h3>
+<p>在浏览器中下载、使用和管理容器。（按需安装，非必要插件）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">. /etc/os-release</span><br><span class="line">apt install -t <span class="variable">$&#123;VERSION_CODENAME&#125;</span>-backports cockpit-podman -y</span><br></pre></td></tr></table></figure>
+<h3 id="cockpit-pcp"><a class="header-anchor" href="#cockpit-pcp"></a>Cockpit-pcp</h3>
+<p>Cockpit 面板的历史数据插件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">. /etc/os-release</span><br><span class="line">apt install -t <span class="variable">$&#123;VERSION_CODENAME&#125;</span>-backports cockpit-pcp -y</span><br></pre></td></tr></table></figure>
+<h3 id="45drives-第三方组件"><a class="header-anchor" href="#45drives-第三方组件"></a>45Drives（第三方组件）</h3>
+<p>45Drives Repo 包含 Navigator、File Sharing、Identities、ZFS 管理器等，推荐拉取并按需安装。</p>
+<p>下载并运行 45Drives 脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://repo.45drives.com/setup | <span class="built_in">sudo</span> bash</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Navigator 文件浏览器<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install cockpit-navigator -y</span><br></pre></td></tr></table></figure>
+</li>
+<li>File Sharing 管理 Samba 与 NFS 文件共享<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install cockpit-file-sharing -y</span><br></pre></td></tr></table></figure>
+</li>
+<li>Identities 用户和组管理插件<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install cockpit-identities -y</span><br></pre></td></tr></table></figure>
+</li>
+<li>ZFS 管理器<br>
+先安装 ZFS：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y zfs-dkms zfsutils-linux</span><br></pre></td></tr></table></figure>
+安装管理器：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/optimans/cockpit-zfs-manager.git</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r cockpit-zfs-manager/zfs /usr/share/cockpit</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="cockpit-调优"><a class="header-anchor" href="#cockpit-调优"></a>Cockpit 调优</h2>
+<h3 id="自动注销闲置用户"><a class="header-anchor" href="#自动注销闲置用户"></a>自动注销闲置用户</h3>
+<p>在<code>/etc/cockpit/</code> 目录中创建 <code>cockpit.conf</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/cockpit/cockpit.conf</span><br></pre></td></tr></table></figure>
+<p>在文件中添加以下文本，以分钟为单位，这里表示为 15 分钟后自动退出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Session]</span><br><span class="line">IdleTimeout=15</span><br></pre></td></tr></table></figure>
+<p>保存文件，重启 Cockpit Web 控制台以使更改生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl try-restart cockpit</span><br></pre></td></tr></table></figure>
+<h3 id="在登录页面中添加标题"><a class="header-anchor" href="#在登录页面中添加标题"></a>在登录页面中添加标题</h3>
+<p>在您首选的文本编辑器中创建 <code>/etc/issue.cockpit</code> 文件。添加要显示的内容作为文件的横幅。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/cockpit/issue.cockpit</span><br></pre></td></tr></table></figure>
+<p>在文件中添加需要展示的内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HomeNAS Based on Debian 12.</span><br></pre></td></tr></table></figure>
+<p>内容添加完成后，保存这个文件。</p>
+<p>在您首选的文本编辑器中创建 <code>/etc/cockpit/cockpit.conf</code> 文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/cockpit/cockpit.conf</span><br></pre></td></tr></table></figure>
+<p>在文件中添加以下文本：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Session]</span><br><span class="line">Banner=/etc/cockpit/issue.cockpit</span><br></pre></td></tr></table></figure>
+<p>保存文件，重启 Cockpit Web 控制台以使更改生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl try-restart cockpit</span><br></pre></td></tr></table></figure>
+<h3 id="cockpit-面板登陆后首页展示信息"><a class="header-anchor" href="#cockpit-面板登陆后首页展示信息"></a>Cockpit 面板登陆后首页展示信息</h3>
+<p>配置文件路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/motd</span><br></pre></td></tr></table></figure>
+<p>原文：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The programs included with the Debian GNU/Linux system are free software;</span><br><span class="line">the exact distribution terms for each program are described in the individual files in /usr/share/doc/*/copyright.</span><br><span class="line"></span><br><span class="line">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law.</span><br></pre></td></tr></table></figure>
+<h3 id="修改-web-登陆端口"><a class="header-anchor" href="#修改-web-登陆端口"></a>修改 Web 登陆端口</h3>
+<p>创建<code>/etc/systemd/system/cockpit.socket.d/listen.conf</code>文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Socket]</span><br><span class="line">ListenStream=    # 若第一行留空，则会禁用 Cockpit 的默认端口 9090</span><br><span class="line">ListenStream=443</span><br></pre></td></tr></table></figure>
+<p>为了使更改生效，请运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload </span><br><span class="line"><span class="built_in">sudo</span> systemctl restart cockpit.socket</span><br></pre></td></tr></table></figure>
+<h3 id="上传-ssl-证书"><a class="header-anchor" href="#上传-ssl-证书"></a>上传 SSL 证书</h3>
+<p>关于 SSL 证书的介绍，详见 <a href="/NAS-8" title="NAS（8）—— 反向代理 &amp; HTTPS">反向代理 &amp; HTTPS</a>。</p>
+<p>Cockpit 的证书路径为 <code>/etc/cockpit/ws-certs.d</code>。在此目录下有两个文件，<code>0-self-signed.cert</code> 和 <code>0-self-signed.key</code>，分别为 Cockpit 自签名的证书文件与密钥文件。</p>
+<p>我们直接使用自己申请的证书内容替换这两个文件的内容即可。注意：如果证书文件为 <code>xxx_bundle.crt</code> 证书链，只保留第一个证书（即终端实体证书），删除其他证书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /path/to/your/cert &gt; 0-self-signed.cert</span><br><span class="line"><span class="built_in">cat</span> /path/to/your/key &gt; 0-self-signed.key</span><br></pre></td></tr></table></figure>
+<p>最后重启 Cockpit 服务即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart cockpit</span><br></pre></td></tr></table></figure>
+<h1 id="系统调优"><a class="header-anchor" href="#系统调优"></a>系统调优</h1>
+<h2 id="网络配置"><a class="header-anchor" href="#网络配置"></a>网络配置</h2>
+<p>编辑文件网络配置文件，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+<p>部分配置如下。我们在第一部分硬路由的局域网配置中，选择使用路由器来进行静态路由分配，因此对于设备网卡我们设置为 dhcp 即可。如果需要在本地机器上配置静态地址，参照下面注释部分。</p>
+<ul>
+<li>踩坑记录：对于多网卡设备，不能给两块网卡同时配置网关，否则会导致路由表中出现两个默认路由。<br>
+解决办法：只有连接外网的网卡需要配置网关以及 nameserver。</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># The loopback network interface</span><br><span class="line">auto lo</span><br><span class="line">auto enp2s0 # enp2s0 是设备网卡名，可以通过 ifconfig 命令查看</span><br><span class="line">auto enp3s0</span><br><span class="line"></span><br><span class="line">iface lo inet loopback</span><br><span class="line">iface enp2s0 inet dhcp</span><br><span class="line">iface enp3s0 inet dhcp</span><br><span class="line"></span><br><span class="line"># 静态地址配置</span><br><span class="line"># iface enp2s0 inet static</span><br><span class="line"># address 192.168.xx.xx</span><br><span class="line"># netmask 255.255.0.0</span><br><span class="line"># gateway 192.168.xx.xx</span><br></pre></td></tr></table></figure>
+<p>如果要使用 Cockpit 接管网络配置，需注释掉<code>/etc/network/interfaces</code>文件当中的所有内容，进入<code>Cockpit - 网络 - 接口 - enp1s0（你网络接口名称）- IPV4 - 编辑 - 手动</code>，输入你要设置的IP地址及默认网关。</p>
+<p><img src="NAS-3/image_C_ePvelo0G.png" alt=""></p>
+<h2 id="调整系统时区-时间"><a class="header-anchor" href="#调整系统时区-时间"></a>调整系统时区/时间</h2>
+<p>Cockpit - 概览 - 系统时间 - 点击时间进行校准，时区选择 Asia/Shanghai，设置时间选择自动使用 NTP，然后点击变更，系统会自动联网进行校准。</p>
+<p><img src="NAS-3/image_wmNmd2RDfn.png" alt=""></p>
+<h2 id="交换空间优化"><a class="header-anchor" href="#交换空间优化"></a>交换空间优化</h2>
+<p>Debian 默认是当内存使用达到 40% 时就向交换空间写入数据，这样会大大地降低电脑运行效率，我们将它改为达到 90% 再向交换空间写入数据</p>
+<p>打开 <code>/etc/sysctl.conf</code> 文件，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+<p>在文件的末尾添加下面两行配置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vm.swappiness=10</span><br><span class="line">vm.vfs_cache_pressure=50</span><br></pre></td></tr></table></figure>
+<p><code>vm.swappiness</code>是用来控制内核在什么时候开始使用交换空间的参数，默认值是 60。将该值调整为 10 表示让内存使用率达到 90% 时才开始使用交换空间。</p>
+<p><code>vm.vfs_cache_pressure</code> 是用来控制内核清理缓存的频率的参数，默认值是 100。将该值调整为 50 表示内核会更倾向于清理文件系统缓存以回收内存。</p>
+<p>保存修改并退出编辑器，执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> sysctl -p</span><br></pre></td></tr></table></figure>
+<p>以重新加载配置。</p>
+<p><strong>修改内核参数可能会影响系统性能和稳定性，请根据自身需要调整，谨慎操作。</strong></p>
+<h2 id="安装-tuned-系统调优工具"><a class="header-anchor" href="#安装-tuned-系统调优工具"></a>安装 Tuned 系统调优工具</h2>
+<p>Tuned（又称为 tuned-adm）是一个系统调优工具，旨在帮助优化系统的性能和功耗。它允许管理员根据系统的需求选择不同的预定义配置文件或自定义配置文件，以提供最佳的性能和功耗平衡。</p>
+<p>安装 Tuned 软件包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt install tuned</span><br></pre></td></tr></table></figure>
+<p>以下是Tuned的一些常用命令和其功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start tuned <span class="comment"># 启动 Tuned 服务。</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop tuned <span class="comment"># 停止 Tuned 服务。</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart tuned <span class="comment"># 重启 Tuned 服务。</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status tuned <span class="comment"># 查看 Tuned 服务的运行状态。</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop tuned <span class="comment"># 停止 Tuned 服务。</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> tuned <span class="comment"># 禁止 Tuned 服务开机启动。</span></span><br><span class="line">tuned-adm list <span class="comment"># 列出所有可用的 Tuned 配置文件。</span></span><br><span class="line">tuned-adm active <span class="comment"># 查看当前活动的 Tuned 配置文件。</span></span><br><span class="line">tuned-adm recommend <span class="comment"># 根据系统的硬件配置和工作负载推荐一个最佳的 Tuned 配置文件。</span></span><br></pre></td></tr></table></figure>
+<p>在 Cockpit Web 管理面板上配置 Tuned：</p>
+<p><img src="NAS-3/image_56w_aoOkTn.png" alt=""></p>
+<p>选择你需要的模式激活使用。</p>
+<p><img src="NAS-3/image_gZCqrol2kV.png" alt=""></p>
+<p>常用 Tuned 配置集</p>
+<ul>
+<li>
+<p>throughput-performance</p>
+<p>针对高吞吐量优化的服务器配置文件。它禁用节能机制并启用 sysctl 设置，以提高磁盘和网络 IO 的吞吐量性能。CPU 调控器设置为 performance。它将 <code>energy_performance_preference</code> 和 <code>scaling_governor</code> 属性设置为 performance 配置集。</p>
+</li>
+<li>
+<p>accelerator-performance</p>
+<p>包含与 throughput-performance 配置集相同的调整。另外，它会将 CPU 锁定为低 C 状态，以便使延迟小于 100us。这提高了某些加速器的性能，如 GPU。</p>
+</li>
+<li>
+<p>network-throughput</p>
+<p>用于吞吐量网络调优的配置集。它基于 throughput-performance 配置集。此外，它还增加了内核网络缓冲区。它继承 latency-performance 或 throughput-performance 配置集，并将<code>energy_performance_preference</code> 和 <code>scaling_governor</code> 属性改为 performance 配置集。</p>
+</li>
+<li>
+<p>Balanced</p>
+<p>默认的节能配置文件。它在性能和功耗之间具有折衷。在可能的情况下尽可能使用自动扩展和自动调整。唯一缺陷是增加延迟。在当前的 Tuned 版本中，它启用了 CPU、磁盘、音频和视频插件，并激活了 conservative CPU 调控器。如果支持，<code>radeon_powersave</code> 选项使用 dpm-balanced 值，否则被设置为 auto。它将 <code>energy_performance_preference</code> 属性改为 normal 能源设置。它还将 <code>scaling_governor</code> 策略属性改为 conservative 或 powersave CPU 调控器。</p>
+</li>
+<li>
+<p>powersave</p>
+<p>用于最大节能性能的配置集。它可以对性能进行调整，从而最大程度降低实际功耗。在当前的 Tuned 发行版本中，它为 SATA 主机适配器启用 USB 自动挂起、WiFi 节能和 Aggresive Link Power Management (ALPM) 节能。它还为使用低折率的系统调度多核功耗，并激活 ondemand 监管器。它启用了 AC97 音频节能，或根据您的系统，HDA-Intel 节能时间为 10 秒。如果您的系统包含启用了 KMS 支持的 Radeon 图形卡，配置集会将其配置为自动节能。在 ASUS Eee PC 上，启用了动态超级混合引擎。它将 <code>energy_performance_preference</code> 属性改为 powersave 或 power energy 设置。它还会将 <code>scaling_governor</code> 策略属性更改为 ondemand 或 powersave CPU 调控器。</p>
+</li>
+</ul>
+<h2 id="配置邮件发送服务"><a class="header-anchor" href="#配置邮件发送服务"></a>配置邮件发送服务</h2>
+<p>安装 Exim4，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install exim4 -y</span><br></pre></td></tr></table></figure>
+<p>配置 Exim4 服务，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dpkg-reconfigure exim4-config</span><br></pre></td></tr></table></figure>
+<p>终端输出配置内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Please select the mail server configuration type that best meets your needs.</span><br><span class="line"></span><br><span class="line">Systems with dynamic IP addresses, including dialup systems, should generally be</span><br><span class="line">configured to send outgoing mail to another machine, called a &#x27;smarthost&#x27; for</span><br><span class="line">delivery because many receiving systems on the Internet block incoming mail from</span><br><span class="line">dynamic IP addresses as spam protection.</span><br><span class="line"></span><br><span class="line">A system with a dynamic IP address can receive its own mail, or local delivery</span><br><span class="line">can be disabled entirely (except mail for root and postmaster).</span><br><span class="line"></span><br><span class="line">  1. internet site; mail is sent and received directly using SMTP</span><br><span class="line">  2. mail sent by smarthost; received via SMTP or fetchmail</span><br><span class="line">  3. mail sent by smarthost; no local mail</span><br><span class="line">  4. local delivery only; not on a network</span><br><span class="line">  5. no configuration at this time</span><br><span class="line">General type of mail configuration:</span><br></pre></td></tr></table></figure>
+<h3 id="邮件系统类型"><a class="header-anchor" href="#邮件系统类型"></a>邮件系统类型</h3>
+<p>选择第三项：用 smarthost 发信；无本地信件。</p>
+<p><img src="NAS-3/dWnCdFnzGEu5LY9YYM1DMU_bXJZewecNZ.png" alt=""></p>
+<h3 id="系统邮件名称"><a class="header-anchor" href="#系统邮件名称"></a>系统邮件名称</h3>
+<p>填写发邮件的邮件域名，如你的发件邮件地址是 <a href="mailto:mymail@qq.com" rel="external nofollow noreferrer">mymail@qq.com</a>，则这里填写 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://qq.com">qq.com</a>。</p>
+<p><img src="NAS-3/7tD2yX5k6Vfo3dVeUeVMvw_oN-pIbHyGt.png" alt=""></p>
+<h3 id="监听入站-smtp-连接"><a class="header-anchor" href="#监听入站-smtp-连接"></a>监听入站 SMTP 连接</h3>
+<p>监听的 IP 地址填写 127.0.0.1 ; ::1，这里表示只监听本地 IPv4 / IPv6 端口，也就是只有本机能发信，外部不能访问。</p>
+<p><img src="NAS-3/cBdjnTyjG9uGQLtZDAbFDk_bINDhUMgav.png" alt=""></p>
+<h3 id="其他可接收邮件的目的地址"><a class="header-anchor" href="#其他可接收邮件的目的地址"></a>其他可接收邮件的目的地址</h3>
+<p>这里留空。</p>
+<p><img src="NAS-3/kVdinz3iu2Hr9pNT9PqDGp_A1uuKNlS86.png" alt=""></p>
+<h3 id="本地用户的可见域名"><a class="header-anchor" href="#本地用户的可见域名"></a>本地用户的可见域名</h3>
+<p>同样填写你的发件邮箱域名，如 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://qq.com">qq.com</a>。</p>
+<p><img src="NAS-3/mCkGbuiKazHjzxs4HqptoD_NUPvNeDjjl.png" alt=""></p>
+<h3 id="发邮件使用的-smarthost"><a class="header-anchor" href="#发邮件使用的-smarthost"></a>发邮件使用的 smarthost</h3>
+<p>填写外部 SMTP 地址。对于 QQ 邮箱，这里填写 QQ 的 SMTP 地址<code>smtp.qq.com:587</code>。</p>
+<h3 id="按需拨号"><a class="header-anchor" href="#按需拨号"></a>按需拨号</h3>
+<p>不保持最小 DNS 查询量，选择 No。</p>
+<p><img src="NAS-3/m6DuzQZgWg4uBNh36i5aV1_nXW5nFQWuy.png" alt=""></p>
+<h3 id="分拆设置文件"><a class="header-anchor" href="#分拆设置文件"></a>分拆设置文件</h3>
+<p>如不搭建复杂的邮件服务器，这里保持默认选择 No 即可。</p>
+<p><img src="NAS-3/mpQXLJkiiThkszXUYni2z9_SIyDkhvf11.png" alt=""></p>
+<h3 id="root-和-postmaster-邮件接收者"><a class="header-anchor" href="#root-和-postmaster-邮件接收者"></a>Root 和 postmaster 邮件接收者</h3>
+<p>这里留空。</p>
+<p><img src="NAS-3/vBbp2V11wak98KzkR4e2Zj_SZBQPXP_8X.png" alt=""></p>
+<h3 id="后续设置"><a class="header-anchor" href="#后续设置"></a>后续设置</h3>
+<p>输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/exim4/passwd.client</span><br></pre></td></tr></table></figure>
+<p>在末尾加入（注意修改用户名和密码，密码为邮箱授权码，非登录密码）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">qq-smtp.l.qq.com:yourAccountName@qq.com:y0uRpaSsw0RD</span><br><span class="line">*.qq.com:yourAccountName@qq.com:y0uRpaSsw0RD</span><br><span class="line">smtp.qq.com:yourAccountName@qq.com:y0uRpaSsw0RD</span><br></pre></td></tr></table></figure>
+<p>格式为：<code>&lt;发件邮箱 SMTP 服务器&gt;:&lt;发件邮箱账号&gt;:&lt;发件邮箱授权码&gt;</code>，因为上面我们已经设置过 SMTP 服务器地址，所以这里可以填写通配符，当然也可以填 SMTP 地址。</p>
+<p>输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/email-addresses</span><br></pre></td></tr></table></figure>
+<p>在末尾加入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root: mymail@qq.com</span><br></pre></td></tr></table></figure>
+<p>格式：<code>&lt;系统用户名&gt;: &lt;发件邮箱地址&gt;</code></p>
+<p>如设置防火墙，请开放 587 端口，然后重启 exim4：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/exim4 restart</span><br></pre></td></tr></table></figure>
+<p>发送邮件测试，首先切换到 root 用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su -</span><br></pre></td></tr></table></figure>
+<p>输入发送邮件测试命令（修改为你要接收邮件的邮箱地址）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;test&quot;</span> | mail -s <span class="string">&quot;test&quot;</span> user@example.com</span><br></pre></td></tr></table></figure>
+<p>如果你的邮箱收到邮件，就说明安装成功了。</p>
+<h1 id="安全防护"><a class="header-anchor" href="#安全防护"></a>安全防护</h1>
+<p>安全的概念：</p>
+<ol>
+<li>收紧安全措施有可能达到使系统无法使用的程度。安全性与便利性需要得到平衡。诀窍在于建立一个安全且有用的系统。</li>
+<li>最大的威胁是（并且一直都会是）用户。</li>
+<li>最小权限原则：系统的每一部分应该只能访问到它确实需要的东西，除此之外的则不可以。</li>
+<li>纵深防御：多个独立的层次能带来更好的安全性。当一层防护被攻破时，另一层应该能够阻止攻击。</li>
+<li>保持一点点的偏执和多疑。如果有件事看起来太好了，不像是真的，那可能确实如此。</li>
+<li>永远无法令系统 100% 安全，除非把机器从网络上断开，关掉电源，锁进保险柜，用混凝土封住并不再使用它。</li>
+<li>为失败做好准备。预先为安全措施被攻破的情况制定可供执行的计划。</li>
+</ol>
+<p>本章节主要内容参考自 Debian 安全指南和 Arch Linux 安全。</p>
+<p>Debian 安全指南：</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.debian.org/doc/manuals/securing-debian-manual/ch04s11.zh-cn.html" title="https://www.debian.org/doc/manuals/securing-debian-manual/ch04s11.zh-cn.html">https://www.debian.org/doc/manuals/securing-debian-manual/ch04s11.zh-cn.html</a></p>
+<p>Arch Linux 安全：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://wiki.archlinuxcn.org/wiki/%E5%AE%89%E5%85%A8" title="https://wiki.archlinuxcn.org/wiki/安全">https://wiki.archlinuxcn.org/wiki/安全</a></p>
+<p>执行下列操作前，先给系统用户做个检查。检查是否存在空口令和 root 权限的账号，确认是否存在异常账号，确认 UID 为零的账号只有 root 账号。</p>
+<p>操作步骤：</p>
+<p>查看 root 权限账号，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F: <span class="string">&#x27;($3==0)&#x27;</span> /etc/passwd <span class="comment"># 查看UID为零的账号</span></span><br></pre></td></tr></table></figure>
+<p>查看空口令账号，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F: <span class="string">&#x27;($2==&quot;&quot;)&#x27;</span> /etc/shadow <span class="comment"># 查看空口令账号</span></span><br></pre></td></tr></table></figure>
+<p>加固空口令账号，使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd &lt;username&gt; <span class="comment"># 为空口令账号设定密码</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置高强度密码策略"><a class="header-anchor" href="#配置高强度密码策略"></a>配置高强度密码策略</h2>
+<p>为了确保系统的安全性，建议设置的口令复杂度策略为：口令最小长度不小于8，至少包含大写字母、小写字母、数字和特殊字符中的三种。</p>
+<p>安装 PAM 的 pwquality 模块，cracklib 模块在 Debian 12 中被 pwquality 替代，pwquality 能提供额外的密码检查能力。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install libpam-pwquality</span><br></pre></td></tr></table></figure>
+<p>修改文件<code>/etc/pam.d/common-password</code>。 一旦修改，策略会马上生效。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/pam.d/common-password</span><br></pre></td></tr></table></figure>
+<p>找到文件中的以下内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password requisite pam_pwquality.so retry=3 minlen=8 difok=3</span><br></pre></td></tr></table></figure>
+<p>添加参数<code>minlen</code>、<code>dcredit</code>、<code>ucredit</code>、<code>lcredit</code>、<code>ocredit</code>。如果文件中已有这些参数，直接修改参数值即可，参数说明如表1所示。</p>
+<p>示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">password requisite pam_pwquality.so retry=3 minlen=9 dcredit=-1 ucredit=-1 lcredit=-1 ocredit=-1 difok=3</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>minlen</td>
+<td>口令最小长度配置项。PAM 默认使用了“credits”，因此最小口令长度需要加 1，若需要设置最小口令长度为 8，则 minlen 的值应该设置为 9。&quot;</td>
+<td>minlen=9</td>
+</tr>
+<tr>
+<td>dcredit</td>
+<td>口令数字要求的配置项。值为负数 N 时表示至少有 N 个数字，值为正数时对数字个数没有限制。</td>
+<td>dcredit=-1</td>
+</tr>
+<tr>
+<td>ucredit</td>
+<td>口令大写字母要求的配置项。值为负数 N 时表示至少有 N 个大写字母，值为正数时对大写字母个数没有限制。</td>
+<td>ucredit=-1</td>
+</tr>
+<tr>
+<td>lcredit</td>
+<td>口令小写字母要求的配置项。值为负数 N 时表示至少有 N 个小写字母，值为正数时对小写字母个数没有限制。</td>
+<td>lcredit=-1</td>
+</tr>
+<tr>
+<td>ocredit</td>
+<td>特殊字符要求的配置项。值为负数 N 时表示至少有 N 个特殊字符，值为正数时对特殊字符个数没有限制。</td>
+<td>ocredit=-1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用户连续登陆失败锁定"><a class="header-anchor" href="#用户连续登陆失败锁定"></a>用户连续登陆失败锁定</h2>
+<p>设置在 3 次登录尝试失败后账户将被锁定至少 5 分钟，或者由管理员将其解锁。</p>
+<p>在<code>/etc/pam.d/common-auth</code>中添加如下绿色字体内容，必须按下面顺序添加，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/pam.d/common-auth</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># /etc/pam.d/common-auth - authentication settings common to all services</span><br><span class="line">#</span><br><span class="line"># This file is included from other service-specific PAM config files,</span><br><span class="line"># and should contain a list of the authentication modules that define</span><br><span class="line"># the central authentication scheme for use on the system</span><br><span class="line"># (e.g., /etc/shadow, LDAP, Kerberos, etc.).  The default is to use the</span><br><span class="line"># traditional Unix authentication mechanisms.</span><br><span class="line">#</span><br><span class="line"># As of pam 1.0.1-6, this file is managed by pam-auth-update by default.</span><br><span class="line"># To take advantage of this, it is recommended that you configure any</span><br><span class="line"># local modules either before or after the default block, and use</span><br><span class="line"># pam-auth-update to manage selection of other modules.  See</span><br><span class="line"># pam-auth-update(8) for details.</span><br><span class="line"></span><br><span class="line"># here are the per-package modules (the &quot;Primary&quot; block)</span><br><span class="line"># 这里是可以修改的一行，参数按需添加</span><br><span class="line">auth    required pam_faillock.so preauth audit silent deny=3 fail_interval=900 unlock_time=900 even_deny_root root_unlock_time=900</span><br><span class="line">auth  [success=1 default=ignore]  pam_unix.so nullok</span><br><span class="line"># here&#x27;s the fallback if no module succeeds</span><br><span class="line"># BEGIN ANSIBLE MANAGED BLOCK</span><br><span class="line">auth    [default=die] pam_faillock.so authfail audit deny=3 fail_interval=900 unlock_time=900 even_deny_root root_unlock_time=900</span><br><span class="line">auth    sufficient pam_faillock.so authsucc audit deny=3 fail_interval=900 unlock_time=900 even_deny_root root_unlock_time=900</span><br><span class="line">auth  requisite      pam_deny.so</span><br><span class="line"># prime the stack with a positive return value if there isn&#x27;t one already;</span><br><span class="line"># this avoids us returning an error just because nothing sets a success code</span><br><span class="line"># since the modules above will each just jump around</span><br><span class="line">auth  required      pam_permit.so</span><br><span class="line"># and here are more per-package modules (the &quot;Additional&quot; block)</span><br><span class="line">auth  optional      pam_cap.so </span><br><span class="line"># end of pam-auth-update config</span><br></pre></td></tr></table></figure>
+<p>参数解析（按需添加）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">audit // 如果用户不存在，则把该用户名记录到系统日志中。</span><br><span class="line"></span><br><span class="line">Silent // 不打印信息性的消息</span><br><span class="line"></span><br><span class="line">deny=3 // 用户连续认证失败次数超过 3 则锁定</span><br><span class="line"></span><br><span class="line">fail_interval=900 // 间隔时间的长度，在这个时间段内连续的</span><br><span class="line"></span><br><span class="line">unlock_time=900 // 锁定后 n 秒后，访问将被重新启用，在没有设置 faillock 的情况下，不会重新启用。</span><br><span class="line"></span><br><span class="line">even_deny_root // root 账户和普通账户一样可以被锁定。</span><br><span class="line"></span><br><span class="line">root_unlock_time=900 // 在 root 账户被锁定后, 允许在 n 秒后访问该账户。</span><br></pre></td></tr></table></figure>
+<p>接着编辑<code>/etc/pam.d/common-account</code>文件，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/pam.d/common-account</span><br></pre></td></tr></table></figure>
+<p>修改内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># /etc/pam.d/common-account - authorization settings common to all services</span><br><span class="line">#</span><br><span class="line"># This file is included from other service-specific PAM config files,</span><br><span class="line"># and should contain a list of the authorization modules that define</span><br><span class="line"># the central access policy for use on the system.  The default is to</span><br><span class="line"># only deny service to users whose accounts are expired in /etc/shadow.</span><br><span class="line">#</span><br><span class="line"># As of pam 1.0.1-6, this file is managed by pam-auth-update by default.</span><br><span class="line"># To take advantage of this, it is recommended that you configure any</span><br><span class="line"># local modules either before or after the default block, and use</span><br><span class="line"># pam-auth-update to manage selection of other modules.  See</span><br><span class="line"># pam-auth-update(8) for details.</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line"># here are the per-package modules (the &quot;Primary&quot; block)</span><br><span class="line">account  [success=1 new_authtok_reqd=done default=ignore]  pam_unix.so </span><br><span class="line"># here&#x27;s the fallback if no module succeeds</span><br><span class="line">account  requisite      pam_deny.so</span><br><span class="line"># prime the stack with a positive return value if there isn&#x27;t one already;</span><br><span class="line"># this avoids us returning an error just because nothing sets a success code</span><br><span class="line"># since the modules above will each just jump around</span><br><span class="line">account  required      pam_permit.so</span><br><span class="line"># and here are more per-package modules (the &quot;Additional&quot; block)</span><br><span class="line"># end of pam-auth-update config</span><br><span class="line">account    required pam_faillock.so</span><br></pre></td></tr></table></figure>
+<p>常用操作命令：</p>
+<p>查看所有用户的尝试失败登录次数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> faillock</span><br></pre></td></tr></table></figure>
+<p>主要看 faillock 命令，显示的 valid 值，v 表示有效，i 表示无效。</p>
+<p>查看指定用户（test 用户）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> faillock --user <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>解锁指定用户账户（test 用户）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> faillock --user <span class="built_in">test</span> --reset</span><br></pre></td></tr></table></figure>
+<p>解锁所有用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> faillock --reset</span><br></pre></td></tr></table></figure>
+<p>重启系统也能解锁所有用户。</p>
+<h2 id="禁止-root-用户密码登录"><a class="header-anchor" href="#禁止-root-用户密码登录"></a>禁止 root 用户密码登录</h2>
+<p>建议通过 Cockpit Web 管理面板禁止 root 用户密码登陆，平时保持其处于禁用状态，如有需要时可以很方便就通过此处开启，用完即随手关闭。</p>
+<p>通过<code>Cockpit Web 管理面板 - 用户账户 - root 用户 - 选项 - 禁用交互式密码</code>，打上勾表示禁止 root 用户使用密码登陆。</p>
+<p><img src="NAS-3/image__gJDJrTSRw.png" alt=""></p>
+<h2 id="限制用户-su"><a class="header-anchor" href="#限制用户-su"></a>限制用户 su</h2>
+<p>限制能 su 到 root 的用户。使用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/pam.d/su</span><br></pre></td></tr></table></figure>
+<p>修改配置文件，在配置文件中添加行。例如，只允许 sudo 组用户 su 到 root，则添加</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth required pam_wheel.so group=sudo</span><br></pre></td></tr></table></figure>
+<p>添加后如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line"># The PAM configuration file for the Shadow `su&#x27; service</span><br><span class="line">#</span><br><span class="line">auth required pam_wheel.so group=sudo</span><br><span class="line"># This allows root to su without passwords (normal operation)</span><br><span class="line">auth       sufficient pam_rootok.so</span><br></pre></td></tr></table></figure>
+<h2 id="用户登录邮件通知告警"><a class="header-anchor" href="#用户登录邮件通知告警"></a>用户登录邮件通知告警</h2>
+<p>通过 PAM 模块，就可以实现用户登录，获取 root 权限时，通过邮件等方式进行通知。以实现，预先知道，预先警惕的目标，降低受影响的范围。以下是通过 PAM 模块实现的邮件通知用户登录的功能。</p>
+<p>登录终端，切换为 root 用户。</p>
+<p>新建脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pam.d/login-notify.sh</span><br></pre></td></tr></table></figure>
+<p>（该脚本可以存放在任意位置，但是需要将后续的路径指定好即可），内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> LANG=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line"></span><br><span class="line">[ <span class="string">&quot;<span class="variable">$PAM_TYPE</span>&quot;</span> = <span class="string">&quot;open_session&quot;</span> ] || <span class="built_in">exit</span> 0</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;用户: <span class="variable">$PAM_USER</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;远程用户: <span class="variable">$PAM_RUSER</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;远程主机: <span class="variable">$PAM_RHOST</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;服务: <span class="variable">$PAM_SERVICE</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;终端: <span class="variable">$PAM_TTY</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;日期: `date &#x27;+%Y年%m月%d日%H时%M分%S秒&#x27;`&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;服务器: `uname -s -n -r`&quot;</span></span><br><span class="line">&#125; | mail -s <span class="string">&quot;注意! 用户<span class="variable">$PAM_USER</span>正通过<span class="variable">$PAM_SERVICE</span>服务登录`hostname -s | awk &#x27;&#123;print toupper(substr(<span class="variable">$0</span>,1,1)) substr(<span class="variable">$0</span>,2)&#125;&#x27;`系统&quot;</span> user@yourdomain.com</span><br></pre></td></tr></table></figure>
+<p>脚本中的 <a href="mailto:user@yourdomain.com" rel="external nofollow noreferrer">user@yourdomain.com</a> 修改为你要接收通知的邮箱地址。</p>
+<p>编辑文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/pam.d/common-session</span><br></pre></td></tr></table></figure>
+<p>在文件最后追加一行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session optional pam_exec.so debug /bin/bash /etc/pam.d/login-notify.sh</span><br></pre></td></tr></table></figure>
+<p>至此，每一个用户登录都会发邮件通知给收件人，内容包括用户名以及登录的 IP 地址信息。如果遇到陌生 IP，那么就要注意，该主机是否正在遭受攻击。</p>
+<h2 id="超时自动注销活动状态"><a class="header-anchor" href="#超时自动注销活动状态"></a>超时自动注销活动状态</h2>
+<p>设置系统登录后，连接超时时间，增强安全性：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>修改配置文件，在文件末行添加下列内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 超时自动退出</span><br><span class="line">TMOUT=600</span><br></pre></td></tr></table></figure>
+<p>即超时时间为十分钟。</p>
+<h2 id="记录所有用户的登录和操作日志"><a class="header-anchor" href="#记录所有用户的登录和操作日志"></a>记录所有用户的登录和操作日志</h2>
+<p>通过脚本代码实现记录所有用户的登录操作日志，防止出现安全事件后无据可查。打开配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>在配置文件末行输入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 history 命令中启用时间戳</span></span><br><span class="line"><span class="built_in">export</span> HISTTIMEFORMAT=<span class="string">&quot;%F %T &quot;</span></span><br><span class="line"><span class="comment"># 记录所有用户的登录和操作日志</span></span><br><span class="line"><span class="built_in">history</span></span><br><span class="line"> USER=`<span class="built_in">whoami</span>`</span><br><span class="line"> USER_IP=`<span class="built_in">who</span> -u am i 2&gt;/dev/null| awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span>|sed -e <span class="string">&#x27;s/[()]//g&#x27;</span>`</span><br><span class="line"> <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$USER_IP</span>&quot;</span> = <span class="string">&quot;&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line"> USER_IP=`hostname`</span><br><span class="line"> <span class="keyword">fi</span></span><br><span class="line"> <span class="keyword">if</span> [ ! -d /var/log/history ]; <span class="keyword">then</span></span><br><span class="line"> <span class="built_in">mkdir</span> /var/log/history</span><br><span class="line"> <span class="built_in">chmod</span> 777 /var/log/history</span><br><span class="line"> <span class="keyword">fi</span></span><br><span class="line"> <span class="keyword">if</span> [ ! -d /var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line"> <span class="built_in">mkdir</span> /var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span></span><br><span class="line"> <span class="built_in">chmod</span> 300 /var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span></span><br><span class="line"> <span class="keyword">fi</span></span><br><span class="line"> <span class="built_in">export</span> HISTSIZE=4096</span><br><span class="line"> DT=`<span class="built_in">date</span> +<span class="string">&quot;%Y%m%d_%H:%M:%S&quot;</span>`</span><br><span class="line"> <span class="built_in">export</span> HISTFILE=<span class="string">&quot;/var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span>/<span class="variable">$&#123;USER&#125;</span>@<span class="variable">$&#123;USER_IP&#125;</span>_<span class="variable">$DT</span>&quot;</span></span><br><span class="line"> <span class="built_in">chmod</span> 600 /var/log/history/<span class="variable">$&#123;LOGNAME&#125;</span>/*<span class="built_in">history</span>* 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+<p>运行命令加载配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> bash -c <span class="string">&quot;source /etc/profile&quot;</span></span><br></pre></td></tr></table></figure>
+<p>注意：<code>/var/log/history</code>是记录日志的存放位置，可以自定义。</p>
+<p>通过上述步骤，可以在<code>/var/log/history</code>目录下以每个用户为名新建一个文件夹，每次用户退出后都会产生以用户名、登录IP、时间的日志文件，包含此用户本次的所有操作（root用户除外）。</p>
+<h2 id="禁止-ssh-服务开机自启动"><a class="header-anchor" href="#禁止-ssh-服务开机自启动"></a>禁止 SSH 服务开机自启动</h2>
+<p>为了系统的安全起见，建议 SSH 服务在有需要用的时候通过 Cockpit Web 面板开启，平常则处于关闭状态。开启路径：<code>Cockpit - 服务 - ssh.service - 启动</code></p>
+<p><img src="NAS-3/image_xy30JbgUPv.png" alt=""></p>
+<p>关闭ssh服务开机自动启动，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> ssh</span><br></pre></td></tr></table></figure>
+<p>设置开机自动启动ssh服务，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> ssh</span><br></pre></td></tr></table></figure>
+<p>单次开启ssh，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start ssh</span><br></pre></td></tr></table></figure>
+<p>单次关闭ssh，命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl stop ssh</span><br></pre></td></tr></table></figure>
+<h2 id="安装防火墙"><a class="header-anchor" href="#安装防火墙"></a>安装防火墙</h2>
+<p>推荐使用 firewalld 防火墙的理由是，Cockpit Web 管理面板搭配 firewalld 防火墙可提供一个可视化的防火墙管理界面，对新手友好。</p>
+<p>从 apt 存储库安装 firewalld，并在安装成功之后关闭 firewalld，关闭之后进入 cockpit 配置规则。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt install firewalld -y &amp;&amp; <span class="built_in">sudo</span> systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+<p>登陆<code>Cockpit - 网络 - 防火墙 - 打开防火墙 - 添加新区 - 信任级别 - public</code>，<code>允许的地址 - 整个子网</code></p>
+<p>检查运行状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status firewalld</span><br></pre></td></tr></table></figure>
+<p>在终端输出的内容中将看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active: active (running)</span><br></pre></td></tr></table></figure>
+<p><img src="NAS-3/image_wOT0G3ctSr.png" alt=""></p>
+<h2 id="安装自动封锁软件"><a class="header-anchor" href="#安装自动封锁软件"></a>安装自动封锁软件</h2>
+<h3 id="安装-fail2ban"><a class="header-anchor" href="#安装-fail2ban"></a>安装 fail2ban</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install fail2ban -y</span><br></pre></td></tr></table></figure>
+<p>Fail2ban 安装后会自动设置后台服务。但是，默认情况下它是禁用的，因为它的某些默认设置可能会导致不良影响。您可以使用以下 systemctl 命令验证这一点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl status fail2ban.service</span><br></pre></td></tr></table></figure>
+<p>终端中输出的内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">○ fail2ban.service - Fail2Ban Service</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/fail2ban.service; disabled; vendor preset: enabled)</span><br><span class="line">     Active: inactive (dead)</span><br><span class="line">       Docs: man:fail2ban(1)</span><br></pre></td></tr></table></figure>
+<h3 id="配置-fail2ban"><a class="header-anchor" href="#配置-fail2ban"></a>配置 Fail2Ban</h3>
+<p>Fail2Ban 的配置文件：<code>/etc/fail2ban/</code></p>
+<p>Fail2Ban 的安装目录：<code>/usr/share/fail2ban/</code></p>
+<p>Fail2Ban 日志文件：<code>/var/log/fail2ban.log</code></p>
+<p>达到阈值之后的执行 Fail2Ban 的动作的配置文件：<code>/etc/fail2ban/action.d/</code></p>
+<p>包含Fail2Ban所有的过滤规则：<code>/etc/fail2ban/filter.d/</code></p>
+<p>fail2ban 服务将其配置文件保存在<code>/etc/fail2ban</code>目录中。</p>
+<p>将原配置备份：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/fail2ban/jail.&#123;conf,<span class="built_in">local</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>开始更改配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/fail2ban/jail.local</span><br></pre></td></tr></table></figure>
+<p>位于文件顶部附近部分下的设置 [DEFAULT] 将应用于 Fail2ban 支持的所有服务。在文件的其他地方，有用于 [sshd] 和用于其他服务的标头，其中包含将在默认设置之上应用的特定于服务的设置。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"># 全局设置</span><br><span class="line">[DEFAULT]</span><br><span class="line"></span><br><span class="line"># 此参数标识应被禁止系统忽略的 IP 地址。默认情况下，这只是设置为忽略来自机器本身的流量，这样您就不会填写自己的日志或将自己锁定。</span><br><span class="line">ignoreip = 127.0.0.1/8 ::1</span><br><span class="line"></span><br><span class="line"># 此参数设置禁令的长度，以秒为单位。默认值为 -1，表示将永久禁止 IP 地址，设置值为 1h，则禁止1小时。</span><br><span class="line">bantime  = -1</span><br><span class="line"></span><br><span class="line"># 此参数设置 Fail2ban 在查找重复失败的身份验证尝试时将关注的窗口。默认设置为 1d ，这意味着软件将统计最近 1 天内的失败尝试次数。</span><br><span class="line">findtime  = 1d</span><br><span class="line"></span><br><span class="line"># 这设置了在禁止之前在窗口内允许的失败尝试次数。</span><br><span class="line">maxretry = 3</span><br><span class="line"></span><br><span class="line"># 此条目指定 Fail2ban 将如何监视日志文件。设置 auto 意味着 fail2ban 将尝试 pyinotify, 然后 gamin, 然后基于可用的轮询算法。inotify 是一个内置的 Linux 内核功能，用于跟踪文件何时被访问，并且是 Fail2ban 使用 pyinotify 的 Python 接口。</span><br><span class="line"># backend = auto</span><br><span class="line"># Debian12使用 systemd 才能正常启动 fail2ban</span><br><span class="line">backend = systemd</span><br><span class="line"></span><br><span class="line"># 这定义了是否使用反向 DNS 来帮助实施禁令。将此设置为“否”将禁止 IP 本身而不是其域主机名。该 warn 设置将尝试查找主机名并以这种方式禁止，但会记录活动以供审查。</span><br><span class="line">usedns = warn</span><br><span class="line"></span><br><span class="line"># 如果将您的操作配置为邮件警报，这是接收通知邮件的地址。</span><br><span class="line">destemail = root@localhost</span><br><span class="line"></span><br><span class="line"># 发送者邮件地址</span><br><span class="line">sender = root@&lt;fq-hostname&gt;</span><br><span class="line"></span><br><span class="line"># 这是用于发送通知电子邮件的邮件传输代理。</span><br><span class="line">mta = mail</span><br><span class="line"></span><br><span class="line"># “action_”之后的“mw”告诉 Fail2ban 向您发送电子邮件。“mwl”也附加了日志。</span><br><span class="line">action = %(action_mw)s</span><br><span class="line"></span><br><span class="line"># 这是实施 IP 禁令时将丢弃的流量类型。这也是发送到新 iptables 链的流量类型。</span><br><span class="line">protocol = tcp</span><br><span class="line"></span><br><span class="line"># 这里 banaction 必须用 firewallcmd-ipset,这是 firewall 支持的关键，如果是用 Iptables 请不要这样填写</span><br><span class="line">banaction = firewallcmd-ipset</span><br><span class="line"></span><br><span class="line">[SSH]</span><br><span class="line"></span><br><span class="line">enabled     = true</span><br><span class="line">port        = ssh</span><br><span class="line">filter      = sshd</span><br><span class="line">logpath     = /var/log/auth.log</span><br></pre></td></tr></table></figure>
+<p>不要忘记在每次配置更改后重新启动 Fail2ban 服务。重启命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart fail2ban</span><br></pre></td></tr></table></figure>
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">systemctl start fail2ban</span><br><span class="line"><span class="comment"># 停止</span></span><br><span class="line">systemctl stop fail2ban</span><br><span class="line"><span class="comment"># 开机启动</span></span><br><span class="line">systemctl <span class="built_in">enable</span> fail2ban</span><br><span class="line"><span class="comment"># 查看被ban IP，其中sshd为名称</span></span><br><span class="line">fail2ban-client status sshd</span><br><span class="line"><span class="comment"># 删除被ban IP</span></span><br><span class="line">fail2ban-client <span class="built_in">set</span> sshd unbanip 192.168.111.111</span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line"><span class="built_in">tail</span> /var/log/fail2ban.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<h3 id="防止暴力攻击-web-登陆窗口"><a class="header-anchor" href="#防止暴力攻击-web-登陆窗口"></a>防止暴力攻击 Web 登陆窗口</h3>
+<p>编辑<code>defaults-debian.conf</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/fail2ban/jail.d/defaults-debian.conf</span><br></pre></td></tr></table></figure>
+<p>将对应部分修改为如下内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sshd]</span><br><span class="line">enabled = true</span><br><span class="line">[pam-generic]</span><br><span class="line">enabled = true</span><br></pre></td></tr></table></figure>
+<p>保存文件后重启 Fail2ban：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart fail2ban</span><br></pre></td></tr></table></figure>
+<h3 id="配置邮件告警"><a class="header-anchor" href="#配置邮件告警"></a>配置邮件告警</h3>
+<p>备份配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /etc/fail2ban/action.d/mail-whois.&#123;conf,<span class="built_in">local</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>编辑配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/fail2ban/action.d/mail-whois.local</span><br></pre></td></tr></table></figure>
+<p>替换发送的消息部分：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"># Fail2Ban configuration file</span><br><span class="line">#</span><br><span class="line"># Author: Cyril Jaquier</span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">[INCLUDES]</span><br><span class="line"></span><br><span class="line">before = mail-whois-common.conf</span><br><span class="line"></span><br><span class="line">[Definition]</span><br><span class="line"></span><br><span class="line"># bypass ban/unban for restored tickets</span><br><span class="line">norestored = 1</span><br><span class="line"></span><br><span class="line"># Option:  actionstart</span><br><span class="line"># Notes.:  command executed on demand at the first ban (or at the start of Fail2Ban if actionstart_on_demand is set to false).</span><br><span class="line"># Values:  CMD</span><br><span class="line">#</span><br><span class="line">actionstart = printf %%b &quot;你好！\n</span><br><span class="line">              监视到【&lt;name&gt;】服务已成功启动。\n</span><br><span class="line">              敬请注意！\n</span><br><span class="line">              Fail2Ban&quot;|mail -s &quot;[Fail2Ban] &lt;name&gt;: 在 &lt;fq-hostname&gt; 服务器上启动&quot; &lt;dest&gt;</span><br><span class="line"></span><br><span class="line"># Option:  actionstop</span><br><span class="line"># Notes.:  command executed at the stop of jail (or at the end of Fail2Ban)</span><br><span class="line"># Values:  CMD</span><br><span class="line">#</span><br><span class="line">actionstop = printf %%b &quot;你好！\n</span><br><span class="line">             监视到【&lt;name&gt;】服务已被停止。\n</span><br><span class="line">             敬请注意！\n</span><br><span class="line">             Fail2Ban&quot;|mail -s &quot;[Fail2Ban] &lt;name&gt;: 在 &lt;fq-hostname&gt; 服务器上停止&quot; &lt;dest&gt;</span><br><span class="line"></span><br><span class="line"># Option:  actioncheck</span><br><span class="line"># Notes.:  command executed once before each actionban command</span><br><span class="line"># Values:  CMD</span><br><span class="line">#</span><br><span class="line">actioncheck = </span><br><span class="line"></span><br><span class="line"># Option:  actionban</span><br><span class="line"># Notes.:  command executed when banning an IP. Take care that the</span><br><span class="line">#          command is executed with Fail2Ban user rights.</span><br><span class="line"># Tags:    See jail.conf(5) man page</span><br><span class="line"># Values:  CMD</span><br><span class="line">#</span><br><span class="line">actionban = printf %%b &quot;警告!!!\n</span><br><span class="line">            攻击者IP：&lt;ip&gt;\n</span><br><span class="line">            被攻击机器名：`uname -n` \n</span><br><span class="line">            被攻击机器IP：`/bin/curl ifconfig.co` \n</span><br><span class="line">            攻击服务：&lt;name&gt; \n</span><br><span class="line">            攻击次数：&lt;failures&gt; 次 \n</span><br><span class="line">            攻击方法：暴力破解，尝试弱口令.\n</span><br><span class="line">            该IP：&lt;ip&gt;已经被Fail2Ban加入防火墙黑名单,屏蔽时间&lt;bantime&gt;秒.\n\n</span><br><span class="line">            以下是攻击者 &lt;ip&gt;信息 :\n</span><br><span class="line">            `/bin/curl https://ip.appworlds.cn?ip=&lt;ip&gt;`\n\n</span><br><span class="line">            Fail2Ban邮件提醒\n\n &quot;|/bin/mailx -s &quot;&lt;fq-hostname&gt;服务器:&lt;name&gt;服务疑似遭到&lt;ip&gt;暴力攻击。&quot; &lt;dest&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Option:  actionunban</span><br><span class="line"># Notes.:  command executed when unbanning an IP. Take care that the</span><br><span class="line">#          command is executed with Fail2Ban user rights.</span><br><span class="line"># Tags:    See jail.conf(5) man page</span><br><span class="line"># Values:  CMD</span><br><span class="line">#</span><br><span class="line">actionunban = </span><br><span class="line"></span><br><span class="line">[Init]</span><br><span class="line"></span><br><span class="line"># Default name of the chain</span><br><span class="line">#</span><br><span class="line">name = default</span><br><span class="line"></span><br><span class="line"># Destination/Addressee of the mail</span><br><span class="line">#</span><br><span class="line">dest = root</span><br></pre></td></tr></table></figure>
+<p>通过<code>curl ifconfig.co</code>获取服务器的外网 IP 地址，方便知道哪台机报出来的告警。</p>
+<p>通过<code>curl https://ip.useragentinfo.com/json?ip=&lt;ip&gt;</code>查询获取攻击者的IP信息。</p>
+<p>不要忘记在每次配置更改后重新启动 Fail2ban 服务。</p>
+<h2 id="安装病毒防护软件"><a class="header-anchor" href="#安装病毒防护软件"></a>安装病毒防护软件</h2>
+<p>ClamAV 是一个开源的防病毒软件，可用于检测木马，病毒，恶意软件和其他恶意威胁。适用于 Linux、macOS 和 Windows 平台。</p>
+<h3 id="安装-clamav"><a class="header-anchor" href="#安装-clamav"></a>安装 ClamAV</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install clamav</span><br></pre></td></tr></table></figure>
+<h3 id="更新病毒数据库"><a class="header-anchor" href="#更新病毒数据库"></a>更新病毒数据库</h3>
+<p>在安装完成后，需要运行以下命令来更新 ClamAV 的病毒数据库：</p>
+<h4 id="关闭-clamav-病毒数据库更新服务"><a class="header-anchor" href="#关闭-clamav-病毒数据库更新服务"></a>关闭 ClamAV 病毒数据库更新服务</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl stop clamav-freshclam</span><br></pre></td></tr></table></figure>
+<h4 id="更新数据库"><a class="header-anchor" href="#更新数据库"></a>更新数据库</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> freshclam</span><br></pre></td></tr></table></figure>
+<h4 id="启动-clamav-病毒数据库更新服务"><a class="header-anchor" href="#启动-clamav-病毒数据库更新服务"></a>启动 ClamAV 病毒数据库更新服务</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start clamav-freshclam</span><br></pre></td></tr></table></figure>
+<h3 id="使用-clamav"><a class="header-anchor" href="#使用-clamav"></a>使用 ClamAV</h3>
+<h4 id="扫描指定目录"><a class="header-anchor" href="#扫描指定目录"></a>扫描指定目录</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> clamscan -r /path/to/directory <span class="comment"># 输入 / 以全盘扫描</span></span><br></pre></td></tr></table></figure>
+<h4 id="删除被感染的文件"><a class="header-anchor" href="#删除被感染的文件"></a>删除被感染的文件</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> clamscan --remove /path/to/file</span><br></pre></td></tr></table></figure>
+<h4 id="扫描压缩文件"><a class="header-anchor" href="#扫描压缩文件"></a>扫描压缩文件</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> clamscan -r /path/to/archive.zip</span><br></pre></td></tr></table></figure>
+<h4 id="执行定期扫描"><a class="header-anchor" href="#执行定期扫描"></a>执行定期扫描</h4>
+<p>创建一个每天执行一次的定期扫描：</p>
+<p>（考虑到 HDD 寿命，若 NAS 部署在内网，可不进行定期扫描）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> crontab -e</span><br></pre></td></tr></table></figure>
+<p>在打开的文件中添加以下行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 0 * * * clamscan -r / &gt; /var/log/clamav/scan.log</span><br></pre></td></tr></table></figure>
+<p>这将在每天的午夜（0点）执行全系统扫描，并将扫描结果保存在<code>/var/log/clamav/scan.log</code>文件中。</p>
+<br/>
+<a href="/NAS-4" title="NAS（4）—— UPS 不断电系统">下一章节：UPS 不断电系统</a></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site">Dean Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site/NAS-3">https://blog.dawnocean.site/NAS-3</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.dawnocean.site" target="_blank">Dean's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Cockpit/">Cockpit</a></div><div class="post-share"><div class="social-share" data-image="/assets/img/kirby_cover17.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/new-domain" title="已迁移至新域名！"><img class="cover" src="/assets/img/kirby_cover10.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">已迁移至新域名！</div></div><div class="info-2"><div class="info-item-1">迁移原因  据著名安全网站 Krebsonsecurity 的消息，7 月 16 日，ICANN 致信 .top 域名注册局的所有者江苏邦宁科技有限公司，要求其在 2024 年 8 月中旬之前建立起管理网络钓鱼举报和暂停滥用域名的系统，否则将吊销其许可证。   ICANN 十分罕见地单独指出负责维护整个顶级域名（TLD）的域名注册管理机构，ICANN 还指责该注册局未能对涉及 .top 域名的网络钓鱼攻击报告做出响应。ICANN 在信中 (PDF) 写道： “根据数周来收集的信息和记录，我们确定 .TOP Registry 并未制定一套流程来及时、全面、合理地调查和处理有关 DNS 滥用的报告。”   Interisle 咨询集团今天发布的一份新的网络钓鱼报告中，以 .top 结尾的域名占据了显著位置，调查发现在 2023 年 5 月至 2024 年 4 月期间，钓鱼网站占所有新注册 .top 域名的 4%  刚好旧的域名也快到期了，就顺带着注册了一个新域名一起搬过来了，还简短一些。 自 2024 年 8 月 11 日起，本博客已迁移至deans.fun域名下。 简要谈谈关于域名...</div></div></div></a><a class="pagination-related" href="/Router-4" title="硬路由（4）—— Tailscale &amp; 远程访问（IPv4）"><img class="cover" src="/assets/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">硬路由（4）—— Tailscale & 远程访问（IPv4）</div></div><div class="info-2"><div class="info-item-1">回到目录  Tailscale 与 VPN 如果想要远程访问路由器局域网内的设备，有两个办法：  路由器暴露在公网，并作端口映射 / 转发使得远程设备能够访问到局域网内的设备 组建虚拟局域网，使得想要访问的公网设备也在这个局域网中   LeSnow：虚拟局域网 其实也算暴露在公网   LeSnow：异地组网的必要性也体现在对 NAS 的访问上。最方便的协议是 SMB，SMB （139 / 445端口）一般是不能跑在公网上的，所以需要组网。一些专用 NAS 系统也是默认不运行在公网环境下的，它们可能连防火墙配置都没有（比如 TrueNAS）  方案 1 对路由器安全配置的要求较高，针对日常使用的情况，我们采用方案 2。 Tailscale 是一个基于 WireGuard 的 VPN 配置工具，通过去中心化的方式实现各个节点之间点对点的连接。配置简单友好，跨平台支持。  安装与配置 Tailscale OpenWrt Tailscale 自动安装脚本，亲测有效。   踩坑记录：如果要将 OpenWrt 装在 AX3000T 上，建议使用此安装脚本。其原理为：每次启动后都通过脚本获取最...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#debian-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">Debian 初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%88%9D%E5%A7%8B%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">安装初始软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7%E8%87%B3-sudo-%E7%BB%84"><span class="toc-number">1.2.</span> <span class="toc-text">添加用户至 sudo 组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90"><span class="toc-number">1.3.</span> <span class="toc-text">更换国内镜像源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.4.</span> <span class="toc-text">更新系统</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cockpit-web"><span class="toc-number">2.</span> <span class="toc-text">Cockpit Web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-cockpit"><span class="toc-number">2.1.</span> <span class="toc-text">安装 Cockpit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%99%84%E5%B1%9E%E7%BB%84%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">安装附属组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-number">2.2.1.</span> <span class="toc-text">虚拟机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#podman-%E5%AE%B9%E5%99%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">Podman 容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cockpit-pcp"><span class="toc-number">2.2.3.</span> <span class="toc-text">Cockpit-pcp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#45drives-%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BB%84%E4%BB%B6"><span class="toc-number">2.2.4.</span> <span class="toc-text">45Drives（第三方组件）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cockpit-%E8%B0%83%E4%BC%98"><span class="toc-number">2.3.</span> <span class="toc-text">Cockpit 调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%B3%A8%E9%94%80%E9%97%B2%E7%BD%AE%E7%94%A8%E6%88%B7"><span class="toc-number">2.3.1.</span> <span class="toc-text">自动注销闲置用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%A0%87%E9%A2%98"><span class="toc-number">2.3.2.</span> <span class="toc-text">在登录页面中添加标题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cockpit-%E9%9D%A2%E6%9D%BF%E7%99%BB%E9%99%86%E5%90%8E%E9%A6%96%E9%A1%B5%E5%B1%95%E7%A4%BA%E4%BF%A1%E6%81%AF"><span class="toc-number">2.3.3.</span> <span class="toc-text">Cockpit 面板登陆后首页展示信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-web-%E7%99%BB%E9%99%86%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.3.4.</span> <span class="toc-text">修改 Web 登陆端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0-ssl-%E8%AF%81%E4%B9%A6"><span class="toc-number">2.3.5.</span> <span class="toc-text">上传 SSL 证书</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98"><span class="toc-number">3.</span> <span class="toc-text">系统调优</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">网络配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E7%B3%BB%E7%BB%9F%E6%97%B6%E5%8C%BA-%E6%97%B6%E9%97%B4"><span class="toc-number">3.2.</span> <span class="toc-text">调整系统时区&#x2F;时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4%E4%BC%98%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">交换空间优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-tuned-%E7%B3%BB%E7%BB%9F%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7"><span class="toc-number">3.4.</span> <span class="toc-text">安装 Tuned 系统调优工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81%E6%9C%8D%E5%8A%A1"><span class="toc-number">3.5.</span> <span class="toc-text">配置邮件发送服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.5.1.</span> <span class="toc-text">邮件系统类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E9%82%AE%E4%BB%B6%E5%90%8D%E7%A7%B0"><span class="toc-number">3.5.2.</span> <span class="toc-text">系统邮件名称</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E5%85%A5%E7%AB%99-smtp-%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.5.3.</span> <span class="toc-text">监听入站 SMTP 连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8F%AF%E6%8E%A5%E6%94%B6%E9%82%AE%E4%BB%B6%E7%9A%84%E7%9B%AE%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-number">3.5.4.</span> <span class="toc-text">其他可接收邮件的目的地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E7%94%A8%E6%88%B7%E7%9A%84%E5%8F%AF%E8%A7%81%E5%9F%9F%E5%90%8D"><span class="toc-number">3.5.5.</span> <span class="toc-text">本地用户的可见域名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%82%AE%E4%BB%B6%E4%BD%BF%E7%94%A8%E7%9A%84-smarthost"><span class="toc-number">3.5.6.</span> <span class="toc-text">发邮件使用的 smarthost</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%9C%80%E6%8B%A8%E5%8F%B7"><span class="toc-number">3.5.7.</span> <span class="toc-text">按需拨号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%8B%86%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.5.8.</span> <span class="toc-text">分拆设置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root-%E5%92%8C-postmaster-%E9%82%AE%E4%BB%B6%E6%8E%A5%E6%94%B6%E8%80%85"><span class="toc-number">3.5.9.</span> <span class="toc-text">Root 和 postmaster 邮件接收者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.5.10.</span> <span class="toc-text">后续设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="toc-number">4.</span> <span class="toc-text">安全防护</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%AB%98%E5%BC%BA%E5%BA%A6%E5%AF%86%E7%A0%81%E7%AD%96%E7%95%A5"><span class="toc-number">4.1.</span> <span class="toc-text">配置高强度密码策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E7%99%BB%E9%99%86%E5%A4%B1%E8%B4%A5%E9%94%81%E5%AE%9A"><span class="toc-number">4.2.</span> <span class="toc-text">用户连续登陆失败锁定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2-root-%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95"><span class="toc-number">4.3.</span> <span class="toc-text">禁止 root 用户密码登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%90%E5%88%B6%E7%94%A8%E6%88%B7-su"><span class="toc-number">4.4.</span> <span class="toc-text">限制用户 su</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E9%82%AE%E4%BB%B6%E9%80%9A%E7%9F%A5%E5%91%8A%E8%AD%A6"><span class="toc-number">4.5.</span> <span class="toc-text">用户登录邮件通知告警</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%97%B6%E8%87%AA%E5%8A%A8%E6%B3%A8%E9%94%80%E6%B4%BB%E5%8A%A8%E7%8A%B6%E6%80%81"><span class="toc-number">4.6.</span> <span class="toc-text">超时自动注销活动状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E6%89%80%E6%9C%89%E7%94%A8%E6%88%B7%E7%9A%84%E7%99%BB%E5%BD%95%E5%92%8C%E6%93%8D%E4%BD%9C%E6%97%A5%E5%BF%97"><span class="toc-number">4.7.</span> <span class="toc-text">记录所有用户的登录和操作日志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2-ssh-%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="toc-number">4.8.</span> <span class="toc-text">禁止 SSH 服务开机自启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">4.9.</span> <span class="toc-text">安装防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%87%AA%E5%8A%A8%E5%B0%81%E9%94%81%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.10.</span> <span class="toc-text">安装自动封锁软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-fail2ban"><span class="toc-number">4.10.1.</span> <span class="toc-text">安装 fail2ban</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-fail2ban"><span class="toc-number">4.10.2.</span> <span class="toc-text">配置 Fail2Ban</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%AD%A2%E6%9A%B4%E5%8A%9B%E6%94%BB%E5%87%BB-web-%E7%99%BB%E9%99%86%E7%AA%97%E5%8F%A3"><span class="toc-number">4.10.3.</span> <span class="toc-text">防止暴力攻击 Web 登陆窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%82%AE%E4%BB%B6%E5%91%8A%E8%AD%A6"><span class="toc-number">4.10.4.</span> <span class="toc-text">配置邮件告警</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%97%85%E6%AF%92%E9%98%B2%E6%8A%A4%E8%BD%AF%E4%BB%B6"><span class="toc-number">4.11.</span> <span class="toc-text">安装病毒防护软件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-clamav"><span class="toc-number">4.11.1.</span> <span class="toc-text">安装 ClamAV</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E7%97%85%E6%AF%92%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.11.2.</span> <span class="toc-text">更新病毒数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%97%AD-clamav-%E7%97%85%E6%AF%92%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9B%B4%E6%96%B0%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.11.2.1.</span> <span class="toc-text">关闭 ClamAV 病毒数据库更新服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">4.11.2.2.</span> <span class="toc-text">更新数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8-clamav-%E7%97%85%E6%AF%92%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9B%B4%E6%96%B0%E6%9C%8D%E5%8A%A1"><span class="toc-number">4.11.2.3.</span> <span class="toc-text">启动 ClamAV 病毒数据库更新服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-clamav"><span class="toc-number">4.11.3.</span> <span class="toc-text">使用 ClamAV</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95"><span class="toc-number">4.11.3.1.</span> <span class="toc-text">扫描指定目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%A2%AB%E6%84%9F%E6%9F%93%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">4.11.3.2.</span> <span class="toc-text">删除被感染的文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="toc-number">4.11.3.3.</span> <span class="toc-text">扫描压缩文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%AE%9A%E6%9C%9F%E6%89%AB%E6%8F%8F"><span class="toc-number">4.11.3.4.</span> <span class="toc-text">执行定期扫描</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Dawn1Ocean/giscus',
+      'data-repo-id': 'R_kgDOLniK6Q',
+      'data-category-id': 'DIC_kwDOLniK6c4CeVy2',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

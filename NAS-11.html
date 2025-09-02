@@ -1,0 +1,421 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NAS（11）—— HTPC | Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回到目录  概述 HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就是可以组建家庭影院的电脑，与功放、大屏幕电视或投影仪连接，以欣赏高清视频和音乐。 在这个部分，我们配置的机器并不能严格地称为一台 HTPC，但已经能完成媒体库的建立、管理，服务器端硬解播放，刮削等功能了，和 PT 下载配合起来，足够满足日常的影音需求。 Jellyfin Jellyf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS（11）—— HTPC">
+<meta property="og:url" content="https://blog.dawnocean.site/NAS-11">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="回到目录  概述 HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就是可以组建家庭影院的电脑，与功放、大屏幕电视或投影仪连接，以欣赏高清视频和音乐。 在这个部分，我们配置的机器并不能严格地称为一台 HTPC，但已经能完成媒体库的建立、管理，服务器端硬解播放，刮削等功能了，和 PT 下载配合起来，足够满足日常的影音需求。 Jellyfin Jellyf">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/kirby_cover11.JPG">
+<meta property="article:published_time" content="2024-08-25T18:43:54.000Z">
+<meta property="article:modified_time" content="2025-09-02T16:21:45.772Z">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="Jellyfin">
+<meta property="article:tag" content="刮削">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/kirby_cover11.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NAS（11）—— HTPC",
+  "url": "https://blog.dawnocean.site/NAS-11",
+  "image": "https://blog.dawnocean.site/assets/img/kirby_cover11.JPG",
+  "datePublished": "2024-08-25T18:43:54.000Z",
+  "dateModified": "2025-09-02T16:21:45.772Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Dean Ma",
+      "url": "https://blog.dawnocean.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/NAS-11"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NAS（11）—— HTPC',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/assets/img/kirby_cover11.JPG);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">NAS（11）—— HTPC</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">NAS（11）—— HTPC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:54.000Z" title="发表于 2024-08-26 02:43:54">2024-08-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.772Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NAS/">NAS</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NAS/HTPC/">HTPC</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><a href="/NAS-Router-0" title="NAS &#x2F; 硬路由：从入门到入门">回到目录</a>
+<br/>
+<h1 id="概述"><a class="header-anchor" href="#概述"></a>概述</h1>
+<p>HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就是可以组建家庭影院的电脑，与功放、大屏幕电视或投影仪连接，以欣赏高清视频和音乐。</p>
+<p>在这个部分，我们配置的机器并不能严格地称为一台 HTPC，但已经能完成媒体库的建立、管理，服务器端硬解播放，刮削等功能了，和 PT 下载配合起来，足够满足日常的影音需求。</p>
+<h1 id="jellyfin"><a class="header-anchor" href="#jellyfin"></a>Jellyfin</h1>
+<p>Jellyfin 是一个自由软件媒体系统，可让您控制管理和流式传输媒体。它是专有的 Emby 和 Plex 的替代方案（如：这二者的硬解功能都需付费，而 Jellyfin 是免费的），通过多个应用程序将媒体从专用服务器提供给终端用户设备。Jellyfin 衍生于 Emby 的 3.5.2 版本，并移植到 .NET Core 框架以实现完整的跨平台支持。没有附加条件，没有高级许可证或功能。</p>
+<p><img src="NAS-11/image_SCf2GtWfhf.png" alt=""></p>
+<h2 id="通过-docker-部署"><a class="header-anchor" href="#通过-docker-部署"></a>通过 Docker 部署</h2>
+<p>使用 Docker Compose：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.5&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">jellyfin:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nyanmisaka/jellyfin:latest</span> <span class="comment"># 特供版镜像</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jellyfin</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8096:8096&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/srv/dockerapps/jellyfin/config:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/srv/dockerapps/jellyfin/cache:/cache</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/path/to/media:/media</span></span><br><span class="line">    <span class="attr">devices:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/dev/dri:/dev/dri</span> <span class="comment"># 很重要，与 QSV 硬件加速相关</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">&#x27;unless-stopped&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a class="header-anchor" href="#配置"></a>配置</h2>
+<h3 id="美化"><a class="header-anchor" href="#美化"></a>美化</h3>
+<p>我们可以通过自定义 CSS 代码的方式来为 Jellyfin 设置主题。</p>
+<p>在<code>控制台 - 常规 - 品牌 - 自定义 CSS 代码</code>处放入自己喜欢的主题。</p>
+<p><img src="NAS-11/image_-y3bwSKmRM.png" alt=""></p>
+<h3 id="媒体库"><a class="header-anchor" href="#媒体库"></a>媒体库</h3>
+<p>如果想要让 Jellyfin 与 qBittorrent 等联动，需要注意：不能更改文件夹名、文件名等，否则将无法做种。</p>
+<p>可以在<code>控制台 - 媒体库 - 创建媒体库</code>处创建新媒体库。内容类型请勿选择“混合电影与电视剧”，会导致刮削问题。“节目”类型包括电视剧、番剧等包含多集、多季的媒体源。</p>
+<p>在不更改 PT 下载文件的文件夹名及文件名的前提下，我们可以这样安排媒体源的存放位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">media</span><br><span class="line">├── Anime</span><br><span class="line">│   ├── Anime 1</span><br><span class="line">│   └── ...</span><br><span class="line">├── Movie</span><br><span class="line">│   ├── Movie 1</span><br><span class="line">│   └── ...</span><br><span class="line">├── TV Play</span><br><span class="line">│   ├── TV Play 1</span><br><span class="line">│   │   ├── Season 1</span><br><span class="line">│   │   └── ...</span><br><span class="line">│   └── ...</span><br><span class="line">└── ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>PT 下载时，将文件分别设置在对应目录下：</p>
+<ul>
+<li>/media/Anime</li>
+<li>/media/Movie</li>
+<li>/media/TV Play/TV Play 1</li>
+<li>…</li>
+</ul>
+<p>只需在<code>compose.yaml</code>中将 media 文件夹挂载到容器相应目录即可。</p>
+<h3 id="软解与硬解"><a class="header-anchor" href="#软解与硬解"></a>软解与硬解</h3>
+<p>我们先来看看视频播放的基本流程：</p>
+<p><img src="NAS-11/image_piPNqjTCXG.png" alt=""></p>
+<ul>
+<li>解封装：将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。如上图，将 MP4 和 FLV 格式解封装成视频数据 H264、MPEG2 和音频数据 AAC、MP3 格式。</li>
+<li>解码：将视频 / 音频压缩编码数据，解码为非压缩的视频 / 音频原始数据。如上图，将视频数据解码成 YUV 格式和音频数据解码成 PCM 格式。</li>
+<li>视音频同步：就是根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</li>
+</ul>
+<p>解码的方式主要分为两种：</p>
+<ul>
+<li>软件解码：即通过软件让 CPU 来对视频进行解码处理。</li>
+<li>硬件解码：是将原来全部交由 CPU 来处理的视频数据的部分交由 GPU 来做。</li>
+</ul>
+<p>硬解码效率非常高，不但能够减轻 CPU 的负担，还有着低功耗，发热少等特点。但是，由于硬解码起步比较晚，软件和驱动对它的支持度很低，往往会出现兼容性不好的问题。此外，硬解码的滤镜、字幕、画质方面都做的不够理想。</p>
+<p>软解码需要对大量的视频信息进行运算，所以对 CPU 处理性能的要求非常高。巨大的运算量就会造成转换效率低，发热量高等问题。不过，软解码不需要过多的硬件支持，兼容性非常高。而且软解码拥有丰富的滤镜，字幕，画面处理优化等效果。最常见的视频软解码开源库就是 FFmpeg。</p>
+<p>由于 Jellyfin 的 GPL 协议和 Intel 的 media-driver (iHD) Linux 驱动（部分开源）在协议上不兼容的缘故，Jellyfin 官方的 Docker 镜像：jellyfin/jellyfin 并不包含 Intel Linux 核显驱动。但是 Intel 的 QuickSync QSV 硬件加速依赖于该驱动，并且 Intel 10 代酷睿（Comet Lake）以及更新的处理器需要该驱动才能正常使用硬件加速。另外 VPP / OpenCL 色调映射也需要该驱动才能正常运作。</p>
+<p>为了解决这个问题，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/nyanmisaka" title="nyanmisaka">nyanmisaka</a> 提供了一个开箱即用的 Docker 镜像，包含最新的驱动、jellyfin-ffmpeg、补丁、CJK 系统字体等。非常感谢！</p>
+<p>在<code>控制台 - 播放 - 转码</code>处配置硬件解码：</p>
+<p><img src="NAS-11/image_BO3QuVhL8A.png" alt=""></p>
+<p>笔者使用的 CPU 为 G4600，可以在<a href="www.cpu-monkey.com" title="这个网站">这个网站</a>查看 CPU 编解码支持情况。以笔者的 CPU 为例：</p>
+<p><img src="NAS-11/1891a774665180d3fce49eca998c74d0_yVYMyxXuoj.png" alt=""></p>
+<p>这说明 G4600 的核显 HD 630 不支持 AV1 的编解码与 VC-1 的编码。</p>
+<p>以下提示引自 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.chiphell.com/thread-2375777-1-1.html" title="nyanmisaka 的文章">nyanmisaka 的文章</a>：</p>
+<p><strong>对于硬件转码设置的一些提示</strong></p>
+<ol>
+<li>Intel、AMD、NVIDIA 三家的显卡/核显均不支持对 H.264 10bit 硬件加速，请使用 HEVC 10bit 替代。</li>
+<li>开启 Low-Power 低电压模式可以提升 Intel 的转码和色调映射性能，此功能在 Windows 下可以直接开启，但在 Linux 下需要手动添加内核参数 i915.enable_guc=2 才能使用。11 代之前的处理器仅支持开启 Low-Power H.264。</li>
+<li>Linux 下，如果 Intel 核显的 VPP 和 OpenCL 色调映射同时开启，则会优先使用 VPP。VPP 色调映射只支持部分 Intel 核显，目前支持的代号如下：DG1 / SG1（独显）、TigerLakeX（1135G7, 1165G7…）、IceLake（1065G7…）、GeminiLake / KabyLakeX（J4005，J5005，i3-7100 | 8100 | 9100 | 10100…）类比到对应处理器代号的赛扬 / 奔腾 / 酷睿 i3 / i5 / i7 / i9 版本。<strong>诸如 J3455 的 ApolloLake 处理器不支持 VPP 色调映射。</strong></li>
+<li>Linux 下，对于 Intel 核显，建议优先使用 QSV 而非 VAAPI，QSV 通常能提供更高的吞吐量。</li>
+</ol>
+<p><strong>对于 Intel 转码核显的选择</strong></p>
+<ol>
+<li>用于转码 4K HDR HEVC、VP9 10bit 视频的<strong>最低配置</strong>为 J4005 类似的代号为 GeminiLake 的处理器，即 UHD 600/605。更低或更旧的核显加速效果非常受限，或者只能加速H.264 8bit。</li>
+<li>最近新出的 N5105/N6005 系列 Jasper Lake 处理器，产品定位于取代 J4005 同代的处理器，在转码性能上远超后者 Gemini Lake。N5105 具有 24EU 而 N6005 具有 32EU，更多的 EU（Intel 核显运算单元）有助于加快色调映射。所以 N5095 的 16EU 要比前两者慢一些。实测 N6005 双通道内存转码性能接近 HD630 核显。</li>
+<li>用于转码 4K HDR HEVC、VP9 10bit 视频的<strong>主流配置</strong>为 i3-7100/8100/9100/10100 和同代 i5/i7 中的 HD/UHD630 核显，此类核显可以胜任绝大部分 4K HDR HEVC VP9 10bit 转码，包括 Linux 和 Windows 下的色调映射。</li>
+</ol>
+<p>手动添加内核参数的方法：</p>
+<p>创建<code>/etc/modprobe.d/i915.conf</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/modprobe.d/i915.conf</span><br></pre></td></tr></table></figure>
+<p>写入以下内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">options i915 enable_guc=2</span><br></pre></td></tr></table></figure>
+<p>保存退出后，重启系统即可生效。</p>
+<p>建议启用 OpenCL 色调映射，而非 VPP 色调映射。后者会使转换后的色彩偏暗。可以使用 BT.2390 算法。</p>
+<p>最后在配置页面勾选处理器支持的功能即可。</p>
+<p><img src="NAS-11/image_kam_3Q9WI1.png" alt=""></p>
+<p>实际观看体验，HEVC 10 bit 4K 硬解帧率也能达到 50 fps，非常满意。</p>
+<p><img src="NAS-11/image_UTwL-owV4Z.png" alt=""></p>
+<h3 id="中文字幕"><a class="header-anchor" href="#中文字幕"></a>中文字幕</h3>
+<p>当媒体源外挂 ASS 格式的字幕时，可能会出现汉字无法正常显示，而是变成一个个方框的问题。如果你使用的是 nyanmisaka 提供的镜像，这个问题很容易解决，因为该镜像已经包含了 CJK 系统字体。否则，还需要将 CJK 字体导入容器。</p>
+<p>点击<code>右上角 - 字幕</code>，将字幕语言偏好修改为 Chinese，烧录字幕选择所有复杂格式字幕，保存即可。</p>
+<p><img src="NAS-11/86cc96f171f37f53b924921f380fa451_NWsBzKWoFu.png" alt=""></p>
+<p>如果媒体源没有附带的中文字幕，我们可以使用 Open Subtitles 插件获取。</p>
+<p>在<code>控制台 - 插件 - 目录</code>处找到 Open Subtitles 插件，点击 Install。安装完成后重启 Jellyfin。</p>
+<p>此时 Open Subtitles 插件应出现在<code>控制台 - 插件 - 我的插件</code>处，进入插件设置页面：</p>
+<p><img src="NAS-11/image_ebmD9jxPmh.png" alt=""></p>
+<p>这里需要先在 <a href="opensubtitles.org" title="opensubtitles.org">opensubtitles.org</a> 上注册一个账号，在这个页面填写用户名与密码，点击保存即可。免费用户每天可以下载 20 个字幕。</p>
+<p>为了不影响 PT 下载，我们需要打开<code>控制台 - 媒体库 - 管理媒体库</code>，将“保存字幕到媒体所在文件夹”选项取消勾选。这样就不会在媒体源文件夹中产生新的文件。</p>
+<p><img src="NAS-11/image_VRItnHkMqE.png" alt=""></p>
+<p>打开要安装字幕的媒体源的菜单，点击“修改字幕”：</p>
+<p><img src="NAS-11/image_SX2agPJpln.png" alt=""></p>
+<p>语言选择 Chinese，点击搜索：</p>
+<p><img src="NAS-11/image_f6S03gGaEj.png" alt=""></p>
+<p>下载自己需要的字幕即可。在播放时点击“CC”字样的图标即可更换字幕。</p>
+<p><img src="NAS-11/2736756674013c2aee791e412eed9adf_G22wb8nic1.png" alt=""></p>
+<h3 id="iptv"><a class="header-anchor" href="#iptv"></a>IPTV</h3>
+<p>IPTV（Internet Protocol Television）是基于互联网协议传输的电视服务，通过 IP 网络将电视节目、视频内容和其他多媒体服务传输到用户的电视设备上。并使用通过互联网提供直播电视节目的技术，而不是天线，卫星天线或光纤电缆。换句话说，IPTV 通过互联网实时流式传输视频内容。用户需要在其设备上安装相应的应用程序或使用特定的设备才能访问和观看节目。</p>
+<p>简单来说，就是可以用 IPTV 来观看电视节目，如中央一台、中央六台等。</p>
+<p>如果没有开通 IPTV 业务，我们可以使用网络上的直播源。<strong>注意：仅供学习与交流使用，请勿用作任何商业用途或非法目的！</strong></p>
+<p>进入 Jellyfin 控制台，选择<code>电视直播</code>栏，点击新建调谐器设备：</p>
+<p><img src="NAS-11/5fcb516b142c3300ececb31b497b286a_z9V9K5DSZI.png" alt=""></p>
+<p>调谐器类型我们选择 M3U Tuner，再在文件或网址处填写 m3u 源的地址。请自行寻找可用的地址。</p>
+<p>接下来我们需要配置电子节目单 EPG。新建电视指南数据提供方，选择 XMLTV，填写地址（如：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://epg.51zmt.top:8000/e.xml" title="epg.51zmt.top:8000/e.xml">epg.51zmt.top:8000/e.xml</a>），点击保存，等待节目单更新完成即可。</p>
+<p><img src="NAS-11/b67c2307c5ce2dc8c542953c5e4f4ddd_5M9S1FQSYG.png" alt=""></p>
+<p>更新完成后我们回到主页，已经出现了电视直播。我们点击<code>指南</code>一栏，可以看到节目单。</p>
+<p><img src="NAS-11/5edee0dc37c1b5ae664f9aa0950396fe_1C0Wr-wkXZ.png" alt=""></p>
+<p>点击某个节目，能够正常播放。</p>
+<p><img src="NAS-11/image_Ytw13iN4RL.png" alt=""></p>
+<p>通过 Jellyfin，我们还可以录制电视节目。我们在指南中点击一个节目，就会跳出来节目录制，录制电视剧则是根据名称进行一系列录制，录制则是单独录制某一集。</p>
+<p><img src="NAS-11/image_rWr7OisoK-.png" alt=""></p>
+<p>回到控制面板，选择<code>数字录像机</code>，设置录制节目的保存路径（可以在<code>compose.yaml</code>当中挂载出来），录制前后时差选择 20 分钟可以确保录制成功。</p>
+<p><img src="NAS-11/image_G-qgNUzcuA.png" alt=""></p>
+<h1 id="刮削"><a class="header-anchor" href="#刮削"></a>刮削</h1>
+<p>刮削是视频播放软件以及视频管理软件的一个功能，可以自动识别影视文件并在线获取相应的海报、标题、导演、演员和编剧等信息，让你在管理以及播放本地影视文件的时候更加方便。</p>
+<blockquote>
+<p>刮削器，Scraper 的直译，是多媒体播放设备上的一种软件，如 TMDb（The MovieDb），用于采集电影信息，并呈现给观众。刮削器，就是根据一定规则命名的视频（音乐）文件名或者文件夹名，自动下载相关的简介、海报、缩略图等资料，帮你建立一个漂亮而实用的资料库的一种软件程序。</p>
+</blockquote>
+<h2 id="为什么不使用-tmm"><a class="header-anchor" href="#为什么不使用-tmm"></a>为什么不使用 tMM</h2>
+<p>tinyMediaManager是使用 Java / Swing 编写的媒体管理工具，能够为 Kodi、Jellyfin、Emby、Plex 媒体服务器提供元数据。tinyMediaManager 的原理是根据文件的标题到电影资料网站上匹配电影信息，下载电影的资料及图片到本地上，供 Kodi、Jellyfin、Emby、Plex 等多媒体软件使用。</p>
+<p>原因如下：</p>
+<ul>
+<li>
+<p>界面较为古早，Web 端分辨率很低（下图未经过压缩）。</p>
+<p><img src="NAS-11/7976f2f2180cdec9de4775d0629b35f2_o4Nt887VIb.png" alt=""></p>
+</li>
+<li>
+<p>由于 PT 下载的限制，不能对文件夹名以及文件名进行修改，因此 tMM 非常重要的功能——重命名、归档媒体无法使用。</p>
+</li>
+<li>
+<p>如果能够访问 TMDb，tMM 能刮削到的信息，通过 Jellyfin 也能够直接刮削到。</p>
+</li>
+</ul>
+<h2 id="jellyfin-刮削"><a class="header-anchor" href="#jellyfin-刮削"></a>Jellyfin 刮削</h2>
+<p>Jellyfin 在创建媒体库时即可进行刮削：</p>
+<p><img src="NAS-11/image_FGSt3ON59A.png" alt=""></p>
+<p>这里建议取消勾选 TOMD，因为它和 TMDb 之间会出现不兼容的问题。如果网络产生波动，可能会优先使用 TOMD 刮削到的内容，从而产生错误。</p>
+<p>媒体库添加完成后，等待媒体库扫描完成，回到主页即可看到新添加的媒体库。由于下载器的原因，Jellyfin 对电影的刮削效果较好，而对于电视剧、番剧等内容可能会出错。此时我们可以打开需要修改刮削内容的媒体源的菜单，点击<code>识别</code>。</p>
+<p><img src="NAS-11/image_nccwfAidxW.png" alt=""></p>
+<p>在此处输入名字、TMDb ID 等，再点击搜索，从结果当中选择相符的内容，耐心等待刮削完成即可。</p>
+<p><img src="NAS-11/image_TUP03hfbQE.png" alt=""></p>
+<p>国内访问 TMDb 可能会出现问题，建议修改 Host 或者使用代理，这里就不详述了。</p>
+<h2 id="bangumi-插件"><a class="header-anchor" href="#bangumi-插件"></a>Bangumi 插件</h2>
+<p>以下部分主要来自于<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.himiku.com/archives/deploy-a-more-comfortable-animation-library-with-jellyfin-and-bangumi.html" title="这篇文章">这篇文章</a>。</p>
+<p>前面我们提到过，Jellyfin 对于番剧的刮削效果不是很理想，于是我们可以使用 Bangumi 插件。</p>
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://bgm.tv/" title="Bangumi 番组计划">Bangumi 番组计划</a>是一个中文 ACG 互联网分享与交流网站，功能与豆瓣类似。因为专精 ACG，所以 Bangumi 上的元数据信息要比豆瓣详细。更关键的是，Bangumi 在国内是可以<strong>直接访问</strong>的。</p>
+<p>如果网络顺畅，可以直接在线安装。在<code>控制台 - 插件 - 存储库</code>处点击加号，添加如下网址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://jellyfin-plugin-bangumi.pages.dev/repository.json</span><br></pre></td></tr></table></figure>
+<p><img src="NAS-11/image_ORLqr0-49y.png" alt=""></p>
+<p>保存后，就可以在<code>控制台 - 插件 - 目录</code>处的元数据分类中找到 Bangumi 插件，点击 Install。安装完成后重启 Jellyfin。</p>
+<p>插件安装后，在创建番剧媒体库时，就可以将 Bangumi 下载器排在最前面，优先级最高。</p>
+<p>手动进行识别时，我们可以先在 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://bgm.tv/" title="Bangumi 网站">Bangumi 网站</a>上找到番剧 ID，直接输入即可刮削到对应番剧信息。</p>
+<p><img src="NAS-11/image_qY-BLHBynr.png" alt=""></p>
+<p>我们还可以通过 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/EstrellaXD/Auto_Bangumi" title="AutoBangumi">AutoBangumi</a> 这样的工具来通过 RSS 订阅实时追番。具体步骤在此就不详述了，可以参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.tencent.com/developer/article/2446514" title="这篇文章">这篇文章</a>。</p>
+<p><img src="NAS-11/image_mKQtExYuL4.png" alt=""></p>
+<br/>
+<a href="/NAS-12" title="NAS（12）—— Immich 照片管理">下一章节：Immich 照片管理</a></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site">Dean Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site/NAS-11">https://blog.dawnocean.site/NAS-11</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.dawnocean.site" target="_blank">Dean's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Jellyfin/">Jellyfin</a><a class="post-meta__tags" href="/tags/%E5%88%AE%E5%89%8A/">刮削</a></div><div class="post-share"><div class="social-share" data-image="/assets/img/kirby_cover11.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/NAS-12" title="NAS（12）—— Immich 照片管理"><img class="cover" src="/assets/img/kirby_cover.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">NAS（12）—— Immich 照片管理</div></div><div class="info-2"><div class="info-item-1">回到目录  概述 Immich 是一个直接从 iPhone、Android 手机上备份照片与视频的开源解决方案，通过部署在自己的电脑、NAS、服务器中，使用 App 进行备份。界面酷似 Google Photos，支持多用户、照片和相册分享、好友上传、地理位置、机器学习识别事件等功能。是居家备份照片的好帮手。  通过 Docker 部署 使用 Docker Compose： 进入部署文件夹，下载docker-compose.yml文件： 1wget -O docker-compose.yml https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml 下载.env文件： 1wget -O .env https://github.com/immich-app/immich/releases/latest/download/example.env （可选）下载hwaccel.transcoding.yml文件： 1wget -O hwaccel.transcoding.yml htt...</div></div></div></a><a class="pagination-related" href="/NAS-10" title="NAS（10）—— PT"><img class="cover" src="/assets/img/kirby_cover14.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">NAS（10）—— PT</div></div><div class="info-2"><div class="info-item-1">回到目录  PT 是什么？ 要想知道什么是 PT，我们先得了解什么是 BT。 BT 2001年，Bram Cohen 发明了BitTorrent协议。 BitTorrent（简称 BT）是一个文件分发协议，每个下载者在下载的同时不断向其他下载者上传已下载的数据。而在 FTP、HTTP 协议中，每个下载者在下载自己所需文件的同时，各个下载者之间没有交互。当非常多的用户同时访问和下载服务器上的文件时，由于 FTP 服务器处理能力和带宽的限制，下载速度会急剧下降，有的用户可能访问不了服务器。BT 协议与 FTP 协议不同，特点是下载的人越多，下载速度越快，原因在于每个下载者将已下载的数据提供给其他下载者下载，充分利用了用户的上载带宽。通过一定的策略保证上传速度越快，下载速度也越快。  种子 根据 BitTorrent 协议，文件发布者会根据要发布的文件生成提供一个.torrent文件，即种子文件，也简称为“种子”。.torrent 文件本质上是文本文件，包含 Tracker 信息和文件信息两部分。Tracker 信息主要是 BT 下载中需要用到的 Tracker 服务器的地址和针对 T...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/NAS-13" title="NAS（13）—— Navidrome + MusicTag 音乐管理"><img class="cover" src="/assets/img/default_cover4.JPG" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-07</div><div class="info-item-2">NAS（13）—— Navidrome + MusicTag 音乐管理</div></div><div class="info-2"><div class="info-item-1">回到目录  Navidrome 概述 Navidrome 是一款全功能、开源且支持多平台的音乐服务器应用程序，可以在 MacOS、Linux、Windows 以及 Docker 等平台上运行。它支持常见的音频格式如 MP3、FLAC 和 WAV，并提供了丰富的管理工具和服务。通过 Web 界面或 API，你可以轻松管理和访问你的音乐库。  通过 Docker 部署 使用 Docker Compose： 123456789101112131415161718192021222324252627services:  navidrome:    image: deluan/navidrome:latest    user: 1001:100 # should be owner of volumes    ports:      - &quot;4533:4533&quot;    restart: unless-stopped    environment:      # Optional: put your config options customization here. Exa...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jellyfin"><span class="toc-number">2.</span> <span class="toc-text">Jellyfin</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-docker-%E9%83%A8%E7%BD%B2"><span class="toc-number">2.1.</span> <span class="toc-text">通过 Docker 部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BE%8E%E5%8C%96"><span class="toc-number">2.2.1.</span> <span class="toc-text">美化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AA%92%E4%BD%93%E5%BA%93"><span class="toc-number">2.2.2.</span> <span class="toc-text">媒体库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E8%A7%A3%E4%B8%8E%E7%A1%AC%E8%A7%A3"><span class="toc-number">2.2.3.</span> <span class="toc-text">软解与硬解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E5%AD%97%E5%B9%95"><span class="toc-number">2.2.4.</span> <span class="toc-text">中文字幕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iptv"><span class="toc-number">2.2.5.</span> <span class="toc-text">IPTV</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%AE%E5%89%8A"><span class="toc-number">3.</span> <span class="toc-text">刮削</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%BD%BF%E7%94%A8-tmm"><span class="toc-number">3.1.</span> <span class="toc-text">为什么不使用 tMM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#jellyfin-%E5%88%AE%E5%89%8A"><span class="toc-number">3.2.</span> <span class="toc-text">Jellyfin 刮削</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bangumi-%E6%8F%92%E4%BB%B6"><span class="toc-number">3.3.</span> <span class="toc-text">Bangumi 插件</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Dawn1Ocean/giscus',
+      'data-repo-id': 'R_kgDOLniK6Q',
+      'data-category-id': 'DIC_kwDOLniK6c4CeVy2',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

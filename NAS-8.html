@@ -1,0 +1,431 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NAS（8）—— 反向代理 &amp; HTTPS | Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回到目录  反向代理 正向代理（Proxy）方式是指内部网络上的服务器通过代理服务器来访问 Internet 上的服务器，并把响应结果返回给内部网络服务器。 反向代理（Reverse Proxy）方式是指以代理服务器来接受 Internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 Internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS（8）—— 反向代理 &amp; HTTPS">
+<meta property="og:url" content="https://blog.dawnocean.site/NAS-8">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="回到目录  反向代理 正向代理（Proxy）方式是指内部网络上的服务器通过代理服务器来访问 Internet 上的服务器，并把响应结果返回给内部网络服务器。 反向代理（Reverse Proxy）方式是指以代理服务器来接受 Internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 Internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/kirby_cover12.JPG">
+<meta property="article:published_time" content="2024-08-25T18:43:43.000Z">
+<meta property="article:modified_time" content="2025-09-02T17:59:23.099Z">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="SSL">
+<meta property="article:tag" content="证书">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="Caddy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/kirby_cover12.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NAS（8）—— 反向代理 & HTTPS",
+  "url": "https://blog.dawnocean.site/NAS-8",
+  "image": "https://blog.dawnocean.site/assets/img/kirby_cover12.JPG",
+  "datePublished": "2024-08-25T18:43:43.000Z",
+  "dateModified": "2025-09-02T17:59:23.099Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Dean Ma",
+      "url": "https://blog.dawnocean.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/NAS-8"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NAS（8）—— 反向代理 & HTTPS',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/assets/img/kirby_cover12.JPG);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">NAS（8）—— 反向代理 &amp; HTTPS</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">NAS（8）—— 反向代理 &amp; HTTPS</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:43.000Z" title="发表于 2024-08-26 02:43:43">2024-08-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:59:23.099Z" title="更新于 2025-09-03 01:59:23">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTTPS/">HTTPS</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/HTTPS/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">反向代理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><a href="/NAS-Router-0" title="NAS &#x2F; 硬路由：从入门到入门">回到目录</a>
+<br/>
+<h1 id="反向代理"><a class="header-anchor" href="#反向代理"></a>反向代理</h1>
+<p>正向代理（Proxy）方式是指内部网络上的服务器通过代理服务器来访问 Internet 上的服务器，并把响应结果返回给内部网络服务器。</p>
+<p>反向代理（Reverse Proxy）方式是指以代理服务器来接受 Internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 Internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。</p>
+<p>通过反向代理功能，我们可以隐藏内部服务器的地址（暴露的是代理服务器），对于客户端而言，此代理是无感知的。通过 Nginx 或 Caddy 等工具，我们可以将发送给不同子域名的请求转发到同一台机器的各个端口；我们还可以更进一步，将客户端的请求转发到不同的内部服务器，这样就实现了负载均衡。</p>
+<p><img src="NAS-8/image_XGn5XU8be0.png" alt=""></p>
+<h1 id="ssl-证书"><a class="header-anchor" href="#ssl-证书"></a>SSL 证书</h1>
+<p>我们先来看看 HTTPS 的握手过程：</p>
+<p>HTTPS 在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。TLS/SSL 协议不仅仅是一套加密传输的协议，更是一件经过艺术家精心设计的艺术品，TLS/SSL 中使用了非对称加密，对称加密以及 HASH 算法。握手过程的具体描述如下：</p>
+<p><img src="NAS-8/image_8A5Ssr-fYl.png" alt=""></p>
+<ol>
+<li>浏览器将自己支持的一套加密规则发送给网站。</li>
+<li>网站从中选出一组加密算法与 HASH 算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。</li>
+<li>浏览器获得网站证书之后浏览器要做以下工作：
+<ol>
+<li>验证证书的合法性（颁发证书的机构是否合法，证书中包含的网站地址是否与正在访问的地址一致等），如果证书受信任，则浏览器栏里面会显示一个小锁头，否则会给出证书不受信的提示。</li>
+<li>如果证书受信任，或者是用户接受了不受信的证书，浏览器会生成一串随机数的 Key，并用证书中提供的公钥加密。</li>
+<li>使用约定好的 HASH 算法计算握手消息，并使用生成的随机数 Key 对消息进行加密，最后将之前生成的所有信息发送给网站。</li>
+</ol>
+</li>
+<li>网站接收浏览器发来的数据之后要做以下的操作：
+<ol>
+<li>使用自己的私钥将信息解密取出 Key，使用 Key 解密浏览器发来的握手消息，并验证 HASH 是否与浏览器发来的一致。</li>
+<li>使用密码加密一段握手消息，发送给浏览器。</li>
+</ol>
+</li>
+<li>浏览器解密并计算握手消息的 HASH，如果与服务端发来的 HASH 一致，此时握手过程结束，之后所有的通信数据将由之前浏览器生成的随机密码并利用对称加密算法进行加密。</li>
+</ol>
+<p>了解了 HTTPS 握手过程后，你可能会产生如下疑问：如果我在给客户端发送证书的时候进行伪造，选取一对有效的公私钥，伪装成服务器，会产生安全问题吗？这个时候就轮到 CA 机构出马了。</p>
+<p>CA（Certificate Authority，证书授权）机构是负责发放和管理数字证书的权威机构。CA 机构在网络安全领域扮演着重要的角色，它们通过验证和颁发数字证书，为网络通信提供身份认证的有效凭据，确保数据的安全性和可信度。</p>
+<p><img src="NAS-8/image_ikOKfaYjER.png" alt=""></p>
+<p>在申请 CA 证书时，服务器端会生成一对有效的公私钥，并将公钥、申请者信息、域名等内容发送到 CA。CA 接收后，通过 HASH 算法生成证书摘要，再用 CA 的私钥对其进行加密，生成签名，最后返回证书。</p>
+<p>这样一来，客户端就可以通过签名和公钥验证服务器返回的公钥是否由 CA 机构签发，也就确保了安全性。</p>
+<p>但获取 CA 证书是需要成本的。或者在某些情况下，我们正在进行本地开发，需要获得<code>localhost</code>等主机名的证书，而这样的私有地址不是被某个人唯一拥有的，因此 CA 机构不会提供证书。在这种情况下，我们可能需要自己生成证书。</p>
+<p>自签名证书是由不受信的 CA 机构颁发的数字证书，也就是自己签发的证书。与受信任的 CA 签发的传统数字证书不同，自签名证书是由一些公司或软件开发商创建、颁发和签名的。虽然自签名证书使用的是与 X.509 证书相同的加密密钥对架构，但是却缺少受信任第三方（如 Sectigo）的验证。在颁发过程中缺乏独立验证会产生额外的风险，这就是为什么对于面向公众的网站和应用程序来说，自签名证书是不安全的。</p>
+<h2 id="x-509-与扩展名"><a class="header-anchor" href="#x-509-与扩展名"></a>X.509 与扩展名</h2>
+<p>以下内容参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/543707056">这篇文章</a>、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/superhin/p/18308302/x509_pkcs_rfc">这篇文章</a>和<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/arnoldlu/p/18401403">这篇文章</a>。</p>
+<p>X.509 是密码学里公钥证书的格式标准，也是 TLS/SSL 协议中应用的标准。它基于一种被称为抽象语法表示法（ASN.1）的接口描述语言，这种接口描述语言定义了可以以跨平台方式序列化和反序列化的数据结构。</p>
+<p>而关于公钥的加密标准，则由 PKCS（Public Key Cryptography Standards）系列标准确定，其中包括证书申请、证书更新、证书作废表发布、扩展证书内容以及数字签名、数字信封的格式等方面的一系列相关协议。</p>
+<p><img src="NAS-8/Pasted_image_20250901020210.png" alt=""></p>
+<h3 id="存储-传输密钥和证书"><a class="header-anchor" href="#存储-传输密钥和证书"></a>存储、传输密钥和证书</h3>
+<p>DER（Distinguished Encoding Rules，可分辨编码规则）提供了一种对 ASN.1 值进行编码的方式。在密码学方面，可以简单理解为 DER 就是 ASN.1 的二进制表达，平常使用的后缀名为 <code>.der</code> 的密钥 / 证书文件里存储的就是 DER 规则的二进制，这些二进制可以被解析为 ASN.1 抽象结构。</p>
+<p>二进制数据格式的一个缺点是不能在文本传输（如电子邮件或文本文档）中交换。基于文本的编码的一个优点是，它们很容易使用通用文本编辑器进行修改；例如，用户可以连接多个证书以形成具有复制和粘贴操作的证书链。</p>
+<p>于是，PEM（Privacy Enhanced Mail，隐私增强邮件）格式逐渐发展起来。简单来说，它实际上就是把二进制内容用 Base64 编码，然后加上如下形式的头部和尾部：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN &lt;label&gt;-----</span><br><span class="line">Base64Encoding......</span><br><span class="line">-----END &lt;label&gt;-----</span><br></pre></td></tr></table></figure>
+<h3 id="扩展名：-crt-pem-key-csr"><a class="header-anchor" href="#扩展名：-crt-pem-key-csr"></a>扩展名：<code>.crt</code> / <code>.pem</code> / <code>.key</code> / <code>.csr</code></h3>
+<p>我们经常会遇到以下四种格式的密钥或证书文件：<code>.crt</code> / <code>.pem</code> / <code>.key</code> / <code>.csr</code>，看着有点让人头大。简单解释一下：</p>
+<ul>
+<li><code>.crt</code>：在 Linux 下指证书文件，在 Windows 中为 <code>.cer</code> 扩展名</li>
+<li><code>.pem</code>：也是证书文件，强调存储方式</li>
+<li><code>.key</code>：单独存放的 PEM 格式的密钥文件</li>
+<li><code>.csr</code>：证书签名请求文件，包含证书持有人的信息</li>
+</ul>
+<p>以腾讯云申请的 Nginx 格式的免费 SSL 证书为例，我们解压文件后就会得到这四个扩展名的证书文件。其中 <code>.crt</code> 与 <code>.pem</code> 文件的内容是完全一致的，也就是公钥文件。<code>.key</code> 文件就是密钥文件，而 <code>.csr</code> 文件就是上文提到申请 CA 证书时用于向 CA 发送申请者信息的请求文件，因此申请成功后一般不会再使用。</p>
+<p>在 HTTPS 配置中，我们主要使用 <code>.crt</code> / <code>.pem</code> 与 <code>.key</code> 这两类文件。</p>
+<h3 id="ca-bundle"><a class="header-anchor" href="#ca-bundle"></a>CA Bundle</h3>
+<p>有时我们获取到的 <code>.crt</code> / <code>.pem</code> 文件当中不止包含一个证书，这样的文件名中通常会包含 <code>bundle</code> 字样，这就涉及到 SSL 证书的信任链机制。</p>
+<p>一切 SSL 证书信任的根基是<strong>根证书</strong>。根证书由<strong>根证书颁发机构</strong>（Root CA）产生，是证书层级结构中的最顶层。它是一个自签名的证书，用于信任链的起点。Root CA 的公钥被广泛分发，并被操作系统和浏览器预装。</p>
+<p>直接使用根证书去签发数以亿计的网站证书风险较高。如果根证书的私钥泄露，整个互联网的信任体系就会崩溃。因此引入了<strong>中间证书</strong>（Intermediate Certificate）与<strong>中间 CA</strong>，如此可以创建一个分层的证书结构，使得根证书不需要直接签发大量的终端实体证书。这种分层管理可以提高证书管理的效率和灵活性。</p>
+<p>信任链的最后一环就是<strong>终端实体证书</strong>（End-Entity Certificate），也经常被称为叶子证书（Leaf Certificate）或服务器证书（Server Certificate，在用于网站时）。它被直接颁发给最终使用该证书的实体——比如一个网站服务器、一个电子邮件用户或一台设备——而不是颁发给另一个 CA。</p>
+<p><img src="NAS-8/Pasted_image_20250901142825.png" alt=""></p>
+<p><code>_bundle.crt</code> 文件的正确顺序遵循 X.509 证书路径验证 (Path Validation) 逻辑。其核心原则是：服务器在 TLS 握手期间，必须向客户端提供一个有序的证书序列，该序列<strong>从终端实体证书开始，逐级上溯</strong>至一个客户端本地信任库中存在的根证书所直接签发的证书为止。</p>
+<p>还是以腾讯云申请的 Nginx 格式证书为例，其中 <code>xxx.com_bundle.crt</code> 文件格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">( Base64 编码的服务器证书数据 )</span><br><span class="line">( Subject: CN=xxx.com )</span><br><span class="line">( Issuer: CN=TrustAsia TLS RSA CA )</span><br><span class="line">-----END CERTIFICATE-----</span><br><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">( Base64 编码的中级证书数据 )</span><br><span class="line">( Subject: CN=TrustAsia TLS RSA CA )</span><br><span class="line">( Issuer: CN=DigiCert Global Root CA )</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
+<p>当 TLS 握手开始，服务器发送其证书链时，客户端会严格按照以下程序进行处理：</p>
+<ol>
+<li><strong>处理第一个证书</strong> (索引 0)：客户端接收到一个证书列表。它首先处理列表中的第一个证书。这里就是我们申请的 <code>xxx.com</code> 域名的终端实体证书。客户端会通过证书的 Subject 等字段，检查其中包含的域名是否与客户端当前正在访问的域名完全匹配。</li>
+<li><strong>构建和验证链条</strong>：如果第一个证书的主机名验证通过，客户端会读取该证书的 Issuer（颁发者）字段。然后，它会在列表中寻找下一个证书（索引 1，这里就是 TrustAsia 中间 CA 的证书），并检查该证书的 Subject 字段是否与上一个证书的 Issuer 字段匹配。如果匹配，客户端将使用索引为 1 的证书的公钥来验证索引为 0 的证书的数字签名。</li>
+<li>客户端会重复步骤 2，沿着证书列表逐级向上验证，用证书 n+1 的公钥验证证书 n 的签名，前提是证书 n+1 的 Subject 必须等于证书 n 的 Issuer。</li>
+<li><strong>链接到信任锚</strong>（Trust Anchor）：当验证到列表中的最后一个证书时，客户端会读取其 Issuer 字段，并在自己本地的、预装的根证书库（Trust Store）中查找一个与该 Issuer 匹配的根证书。如果找到，就用这个本地根证书的公钥验证列表中最后一个证书的签名。如果成功，整个信任链被确认为有效。</li>
+</ol>
+<p>这个顺序是<strong>不可颠倒</strong>的。如果顺序错误，客户端的验证算法在第一步就会因为找不到能验证服务器证书签名的证书而失败。</p>
+<h1 id="nginx"><a class="header-anchor" href="#nginx"></a>Nginx</h1>
+<p>Nginx 是 lgor Sysoev 为俄罗斯访问量第二的 <a target="_blank" rel="noopener external nofollow noreferrer" href="http://rambler.ru">rambler.ru</a> 站点设计开发的。从 2004 年发布至今，凭借开源的力量，已经接近成熟与完善。</p>
+<p>Nginx 功能丰富，可作为 HTTP 服务器，也可作为反向代理服务器，邮件服务器。支持 FastCGI、SSL、Virtual Host、URL Rewrite、Gzip 等功能。并且支持很多第三方的模块扩展。</p>
+<p><img src="NAS-8/image_723xGBuc8B.png" alt=""></p>
+<h2 id="安装与配置"><a class="header-anchor" href="#安装与配置"></a>安装与配置</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install nginx</span><br></pre></td></tr></table></figure>
+<p>接下来为 Web 应用创建一个新的 Nginx 配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/nginx/sites-available/app.conf</span><br></pre></td></tr></table></figure>
+<p>基础 HTTPS 反向代理配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80; # 替换为你需要的端口</span><br><span class="line">    # listen 443 ssl; # 若要启用 HTTPS，在端口后添加 ssl</span><br><span class="line">    # ssl_certificate /path/to/cert # 这里是证书的公钥</span><br><span class="line">    # ssl_certificate_key /path/to/key # 这里是证书的私钥</span><br><span class="line">    server_name app.example.com; # 替换为你自己的域名</span><br><span class="line"></span><br><span class="line">    location / &#123; # 这里的 “/” 意为网站根目录，请根据实际情况调整</span><br><span class="line">        proxy_pass http://localhost:8080; # 这里是要反向代理转发到的端口</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WebSocket 反向代理配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80; # 替换为你需要的端口</span><br><span class="line">    # listen 443 ssl; # 若要启用 HTTPS，在端口后添加 ssl</span><br><span class="line">    # ssl_certificate /path/to/cert # 这里是证书的公钥</span><br><span class="line">    # ssl_certificate_key /path/to/key # 这里是证书的私钥</span><br><span class="line">    server_name app.example.com; # 替换为你自己的域名</span><br><span class="line"></span><br><span class="line">    location / &#123; # 这里的 “/” 意为网站根目录，请根据实际情况调整</span><br><span class="line">        proxy_pass http://localhost:8080; # 这里是要反向代理转发到的端口</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">        </span><br><span class="line">        # 1. 必须将代理协议版本设为 1.1，因为它支持 &quot;Upgrade&quot; 机制</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line"></span><br><span class="line">        # 2. 传递 &quot;Upgrade&quot; 请求头</span><br><span class="line">        # $http_upgrade 变量包含了客户端请求中的 &quot;Upgrade&quot; 头的值 (例如 &quot;websocket&quot;)</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line"></span><br><span class="line">        # 3. 传递 &quot;Connection&quot; 请求头</span><br><span class="line">        # 告诉后端服务器，这个连接需要被升级，而不是像普通 HTTP 一样处理后关闭</span><br><span class="line">        proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更改请求体大小限制配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80; # 替换为你需要的端口</span><br><span class="line">    # listen 443 ssl; # 若要启用 HTTPS，在端口后添加 ssl</span><br><span class="line">    # ssl_certificate /path/to/cert # 这里是证书的公钥</span><br><span class="line">    # ssl_certificate_key /path/to/key # 这里是证书的私钥</span><br><span class="line">    server_name app.example.com; # 替换为你自己的域名</span><br><span class="line">    </span><br><span class="line">    client_max_body_size 50000m;</span><br><span class="line"></span><br><span class="line">    location / &#123; # 这里的 “/” 意为网站根目录，请根据实际情况调整</span><br><span class="line">        proxy_pass http://localhost:8080; # 这里是要反向代理转发到的端口</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有关于域名 SSL 证书的申请，这里就不详述了。我们可以采用 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/certbot/certbot" title="certbot">certbot</a> 向 Let’s Encrypt 发送请求。</p>
+<p>创建软链接以启用站点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /etc/nginx/sites-available/app.conf /etc/nginx/sites-enabled/</span><br></pre></td></tr></table></figure>
+<p>测试 Nginx 配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nginx -t</span><br></pre></td></tr></table></figure>
+<p>如果配置有效，请重新加载 Nginx：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl reload nginx</span><br></pre></td></tr></table></figure>
+<p>记得放行防火墙对应端口。</p>
+<h1 id="caddy"><a class="header-anchor" href="#caddy"></a>Caddy</h1>
+<p>Caddy 是一个用 Go 语言开发的开源现代化 Web 服务器，因其<strong>自动 HTTPS</strong> 和<strong>简洁配置</strong>而备受欢迎。它支持 HTTP/2 和 HTTP/3，具有跨平台特性，可运行在 Windows、Linux 和 macOS 等系统上。</p>
+<p>针对一般的 NAS 需求，我们并不需要高并发的性能。相比之下，Caddy 的配置<strong>远比</strong> Nginx 易上手以及理解，因此笔者非常推荐使用 Caddy 来进行反向代理。</p>
+<h2 id="安装与配置"><a class="header-anchor" href="#安装与配置"></a>安装与配置</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y debian-keyring debian-archive-keyring apt-transport-https</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&#x27;</span> | <span class="built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&#x27;</span> | <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/sources.list.d/caddy-stable.list</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install caddy</span><br></pre></td></tr></table></figure>
+<p>启用并运行 Caddy 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> caddy</span><br><span class="line"><span class="built_in">sudo</span> systemctl start caddy</span><br></pre></td></tr></table></figure>
+<p>编辑 <code>/etc/caddy/Caddyfile</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/caddy/Caddyfile</span><br></pre></td></tr></table></figure>
+<p>基础 HTTPS 反向代理配置（自从 Caddy v2 起，<code>reverse_proxy</code> 自动支持 WebSocket 协议反向代理）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nas.dawnocean.site:1234 &#123;                    # 外部访问端口</span><br><span class="line">    reverse_proxy localhost:5678             # 本地服务端口</span><br><span class="line">    tls /path/to/your/cert /path/to/your/key # SSL 证书配置，远程访问建议启用</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更改请求体大小限制配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">nas.dawnocean.site:1234 &#123;                    # 外部访问端口</span><br><span class="line">    reverse_proxy localhost:5678             # 本地服务端口</span><br><span class="line">    request_body &#123;</span><br><span class="line">        max_size 50000MB</span><br><span class="line">    &#125;</span><br><span class="line">    tls /path/to/your/cert /path/to/your/key # SSL 证书配置，远程访问建议启用</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完成后，重载 Caddy 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl reload caddy</span><br></pre></td></tr></table></figure>
+<h2 id="自动-https"><a class="header-anchor" href="#自动-https"></a>自动 HTTPS</h2>
+<p>Caddy 是第一个也是唯一一个<strong>默认</strong>自动使用 HTTPS 的 Web 服务器。如果在以上的配置中没有手动指定 <code>tls</code> 选项，Caddy 会尝试自动申请证书：</p>
+<ul>
+<li>Caddy 使用本地自动信任的自签名证书（如果允许）通过 HTTPS 提供 IP 地址和本地 / 内部主机名，如 localhost、127.0.0.1 等。</li>
+<li>Caddy 使用来自公开的 ACME CA 的证书，通过 HTTPS 提供公共 DNS 名称，例如 Let’s Encrypt 或者 ZeroSSL。</li>
+</ul>
+<p>Caddy 会自动更新所有托管证书并将 HTTP（默认端口 80）重定向到 HTTPS（默认端口 443）。</p>
+<p><strong>对于本地 HTTPS</strong>：</p>
+<ul>
+<li>Caddy 可能会提示输入密码以将其唯一的根证书安装到你的信任库中。</li>
+<li>任何在不信任 Caddy 根目录的情况下访问该站点的客户端都会显示安全错误。</li>
+</ul>
+<p><strong>对于公共域名</strong>，需要满足以下要求，以让 Caddy 自动申请 HTTPS 证书：</p>
+<ul>
+<li>域名的 A / AAAA 记录指向你的服务器</li>
+<li>端口 80 和 443 对外开放</li>
+<li>Caddy 可以绑定到那些端口（或者这些端口被转发到 Caddy）</li>
+<li>data 目录是可写且持久的</li>
+<li>域名出现在配置中的相关位置</li>
+</ul>
+<p>在国内的网络环境中，可能较难开放 80 与 443 端口。如果 Caddy 申请证书失败，可手动申请，并上传到 NAS 合适的目录中。（目前申请的 SSL 证书期限一般为 90 天，到时手动续期即可）</p>
+<h1 id="局域网中的-https"><a class="header-anchor" href="#局域网中的-https"></a>局域网中的 HTTPS</h1>
+<p>正如前文所提到过的，如果我们的服务都是在局域网中运行的，那么就无法使用 CA 机构签发的证书。如果我们部署的服务有要求必须使用 HTTPS，就需要我们自签名 SSL 证书。</p>
+<p>以下部分主要参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://sanyers.github.io/blog/web/webrtc/%E6%90%AD%E5%BB%BA%E5%B1%80%E5%9F%9F%E7%BD%91https.html" title="这篇文章">这篇文章</a>。</p>
+<h2 id="自签名-ssl-证书"><a class="header-anchor" href="#自签名-ssl-证书"></a>自签名 SSL 证书</h2>
+<p>我们直接在 GitHub <a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/FiloSottile/mkcert" title="对应仓库">对应仓库</a>的 Release 处下载软件，放入待生成证书的机器中。</p>
+<p>先生成根证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkcert -install</span><br><span class="line"></span><br><span class="line">mkcert -CAROOT <span class="comment"># 查看根证书路径</span></span><br></pre></td></tr></table></figure>
+<p>会自动生成 <code>rootCA.pem</code>与<code>rootCA-key.pem</code>两个文件。</p>
+<p>再生成自签证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkcert localhost 127.0.0.1 ::1 &lt;待申请证书的局域网 IP 地址，可多个&gt;</span><br></pre></td></tr></table></figure>
+<p>返回结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Using the local CA at &quot;C:\Users\sanye\AppData\Local\mkcert&quot; ✨</span><br><span class="line"></span><br><span class="line">Created a new certificate valid for the following names 📜</span><br><span class="line"> - &quot;localhost&quot;</span><br><span class="line"> - &quot;127.0.0.1&quot;</span><br><span class="line"> - &quot;::1&quot;</span><br><span class="line"> - &quot;192.168.xx.xx&quot;</span><br><span class="line"></span><br><span class="line">The certificate is at &quot;./localhost+2.pem&quot; and the key at &quot;./localhost+2-key.pem&quot;</span><br></pre></td></tr></table></figure>
+<p>可以将证书重命名为自己需要的名字比如 <code>localhost_key.pem</code> <code>localhost_cert.pem</code>。</p>
+<h2 id="局域网内其他设备安装自签证书"><a class="header-anchor" href="#局域网内其他设备安装自签证书"></a>局域网内其他设备安装自签证书</h2>
+<p>将刚才生成的根证书 <code>rootCA.pem</code> 拷贝一个副本，并命名为 <code>rootCA.crt</code> (因为 Windows 并不识别 .pem 扩展名，并且 Ubuntu 也不会将 .pem 扩展名作为 CA 证书文件对待)，将 <code>rootCA.crt</code> 文件复制给局域网内的其他用户，手工导入。</p>
+<h3 id="windows"><a class="header-anchor" href="#windows"></a>Windows</h3>
+<p>双击这个证书文件，在常规选项卡，点击安装证书证书，在导入向导中将证书导入 <code>受信任的根证书颁发机构</code>:</p>
+<p><img src="NAS-8/image_ovVeUpRqIN.png" alt=""></p>
+<p><img src="NAS-8/image_2kWD-I5COb.png" alt=""></p>
+<p><img src="NAS-8/image_nUjQg9Qgb5.png" alt=""></p>
+<p>Windows 命令行执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -addstore -f <span class="string">&quot;ROOT&quot;</span> selfsigned.crt</span><br></pre></td></tr></table></figure>
+<h3 id="macos"><a class="header-anchor" href="#macos"></a>macOS</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> security add-trusted-cert -d -r trustRoot -k ~/Library/Keychains/login.keychain <span class="string">&quot;selfsigned.crt&quot;</span></span><br></pre></td></tr></table></figure>
+<p>如果想将自签名证书在全系统级别受信任，需要将上面的证书目标路径从 <code>~/Library/Keychains/login.keychain</code>替换成<code>/Library/Keychains/login.keychain</code>。</p>
+<p>注意：在 macOS 下，浏览器和 curl 会自动信任新增的自签名证书，但许多编程语言并没有默认集成 keychain，因此不能自动通过自签名证书。</p>
+<h3 id="ubuntu"><a class="header-anchor" href="#ubuntu"></a>Ubuntu</h3>
+<p>将证书文件（必须是 .crt 后缀）放入 <code>/usr/local/share/ca-certificates/</code>，然后执行 <code>sudo update-ca-certificates</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install ca-certificates -y</span><br><span class="line"><span class="built_in">cp</span> selfsigned.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">sudo</span> update-ca-certificates --verbose</span><br></pre></td></tr></table></figure>
+<br/>
+<a href="/NAS-9" title="NAS（9）—— Homepage 导航页">下一章节：Homepage 导航页</a></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site">Dean Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site/NAS-8">https://blog.dawnocean.site/NAS-8</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.dawnocean.site" target="_blank">Dean's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SSL/">SSL</a><a class="post-meta__tags" href="/tags/%E8%AF%81%E4%B9%A6/">证书</a><a class="post-meta__tags" href="/tags/Nginx/">Nginx</a><a class="post-meta__tags" href="/tags/Caddy/">Caddy</a></div><div class="post-share"><div class="social-share" data-image="/assets/img/kirby_cover12.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/NAS-9" title="NAS（9）—— Homepage 导航页"><img class="cover" src="/assets/img/kirby_cover2.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">NAS（9）—— Homepage 导航页</div></div><div class="info-2"><div class="info-item-1">回到目录  介绍 Homepage 是一个开源的、现代的、安全的、高度可自定制的应用程序仪表板（Home­page），或者，大家更习惯称这类应用为「导航页」。 如果我们在内网部署了 NAS，一般来说我们需要记住 IP 地址和各种服务的端口才能访问到各种应用，比较麻烦。但是如果将这些地址写入 Homepage 的配置当中，我们就可以直接通过 Homepage 导航页一键直达我们想要访问的服务。 Homepage 导航页的布局和背景等还能手动配置，自定义打造一个自己喜欢的主页。  通过 Docker 部署 使用 Docker Compose： 12345678910111213141516version: &quot;3.3&quot;services:  homepage:    image: ghcr.io/gethomepage/homepage:latest    container_name: homepage    ports:      - 3000:3000    volumes:      - ./homepage/config:/app/config      -...</div></div></div></a><a class="pagination-related" href="/NAS-7" title="NAS（7）—— Docker 服务"><img class="cover" src="/assets/img/kirby_cover19.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">NAS（7）—— Docker 服务</div></div><div class="info-2"><div class="info-item-1">回到目录  概述 恭喜你读到了这里！如果你按照前面几篇文章配置下来，那么你的 NAS 已经可以应对各种数据存储需求了。接下来，我们要让 NAS 行使作为一台服务器的功能了。 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache 2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器完全使用沙箱机制，相互之间不会有任何接口，更重要的是容器性能开销极低。 如果有条件，请务必为你的 NAS 配置科学上网服务，可以使用部署在 OpenWrt 上等方法。由于国内镜像源不全面等原因，部分镜像在拉取时很容易出现超时的问题。尤其是 Docker 的安装过程，在没有代理的情况下很难完成。 Docker 架构   守护进程 (Docker daemon)：负责管理镜像、容器、容器网络、数据卷等。 Client：负责发送 Docker 操作指令，日常主要通过 Client 完成镜像和容器的管理。 镜像 (Image)：即容器的模版，镜像是可以继承的，镜像主要通过 D...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssl-%E8%AF%81%E4%B9%A6"><span class="toc-number">2.</span> <span class="toc-text">SSL 证书</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#x-509-%E4%B8%8E%E6%89%A9%E5%B1%95%E5%90%8D"><span class="toc-number">2.1.</span> <span class="toc-text">X.509 与扩展名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8-%E4%BC%A0%E8%BE%93%E5%AF%86%E9%92%A5%E5%92%8C%E8%AF%81%E4%B9%A6"><span class="toc-number">2.1.1.</span> <span class="toc-text">存储、传输密钥和证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%90%8D%EF%BC%9A-crt-pem-key-csr"><span class="toc-number">2.1.2.</span> <span class="toc-text">扩展名：.crt &#x2F; .pem &#x2F; .key &#x2F; .csr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ca-bundle"><span class="toc-number">2.1.3.</span> <span class="toc-text">CA Bundle</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx"><span class="toc-number">3.</span> <span class="toc-text">Nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">安装与配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#caddy"><span class="toc-number">4.</span> <span class="toc-text">Caddy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">4.1.</span> <span class="toc-text">安装与配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8-https"><span class="toc-number">4.2.</span> <span class="toc-text">自动 HTTPS</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%AD%E7%9A%84-https"><span class="toc-number">5.</span> <span class="toc-text">局域网中的 HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%AD%BE%E5%90%8D-ssl-%E8%AF%81%E4%B9%A6"><span class="toc-number">5.1.</span> <span class="toc-text">自签名 SSL 证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E5%86%85%E5%85%B6%E4%BB%96%E8%AE%BE%E5%A4%87%E5%AE%89%E8%A3%85%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6"><span class="toc-number">5.2.</span> <span class="toc-text">局域网内其他设备安装自签证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows"><span class="toc-number">5.2.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macos"><span class="toc-number">5.2.2.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu"><span class="toc-number">5.2.3.</span> <span class="toc-text">Ubuntu</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Dawn1Ocean/giscus',
+      'data-repo-id': 'R_kgDOLniK6Q',
+      'data-category-id': 'DIC_kwDOLniK6c4CeVy2',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

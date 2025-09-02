@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="晓洋的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dean&#39;s Blog">
+<meta property="og:url" content="https://blog.dawnocean.site/">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="晓洋的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="dean,dawn_ocean,dawn1ocean,晓洋,博客,furry,NAS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Dean's Blog",
+  "url": "https://blog.dawnocean.site/"
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Dean\'s Blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/assets/img/index.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Dean's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img class="post-bg" src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:49:48.583Z" title="更新于 2025-09-03 01:49:48">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/NAS/">NAS</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A1%AC%E4%BB%B6/">硬件</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/QNAP/">QNAP</a></span></div><div class="content">回到目录  系统调优 系统选择 2024 年 9 月 27 日，威联通发布了一则消息称，其经典的企业级操作系统 QuTS hero 已开放更多机型的支持，尤其是针对家用桌面级 NAS，比如最常见的 TS-464C2、TS-466C、TBS-464、HS-264、TS-664 等。 QuTS hero 相比，最大的区别就是采用了 ZFS（详见 数据冗余保障）来管理存储池。而 QTS 采用 Ext4 来管理存储池。QuTS hero 的去重（Deduplication）功能要求至少 16 GB 内存。  系统安装 TS-464C2 有一块预装了初始固件（写作时，为 QTS 系统）的闪存。如果不装入固态或机械硬盘，NAS 就无法存储文件，以及安装新的应用程序。 如果要从预装的 QTS 系统切换到 QuTS hero 系统，先确认预装 QTS 系统版本号是否大于等于 5.2.1，如果不符合要求，先安装最新版本的 QTS 固件，再进行完全初始化。  QNAP 提供了多种方式初始安装 NAS 系统，可以直接在浏览器访问 NAS 的 5000 端口，也可以使用 Qfinder Pro 软件，根...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img class="post-bg" src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"></a></div><div class="recent-post-info"><a class="article-title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.975Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Python/">Python</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/uv/">uv</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/">包管理</a></span></div><div class="content">以下内容整理自 uv 中文文档。 uv 是什么  An extremely fast Python package and project manager, written in Rust.  uv 是由 Astral 团队开发的一款超高速 Python 包管理器，旨在替代传统的 pip 和 virtualenv。它聚焦于三个关键点：性能、安全性、以及现代化开发流程的兼容性。 为什么要使用 uv 性能 Benchmark 仓库地址：https://github.com/astral-sh/uv/blob/main/BENCHMARKS.md  使用热缓存对软件包安装（例如 uv sync）进行基准测试：删除并重新创建虚拟环境，并使用同一台机器上安装的依赖项填充该环境。    使用冷缓存对软件包安装（例如 uv sync）进行基准测试：运行 uv sync 在新机器上或在 CI 中（假设包管理器缓存未在运行之间共享）。    使用热缓存（但没有现有的 lockfile）对依赖项解析（例如 uv lock）进行基准测试：清除现有的 requirements.txt 文件，从 requ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img class="post-bg" src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"></a></div><div class="recent-post-info"><a class="article-title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.973Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/">激活函数</a></span></div><div class="content">Sigmoid σ(x)=11+e−x\sigma(x)=\frac{1}{1+e^{-x}} σ(x)=1+e−x1​ σ′(x)=e−x(1+e−x)2=σ(x)(1−σ(x))\sigma&#x27;(x)=\frac{e^{-x}}{(1+e^{-x})^2}=\sigma(x)(1-\sigma(x)) σ′(x)=(1+e−x)2e−x​=σ(x)(1−σ(x))  Sigmoid函数的输出范围是0到1。因此它对每个神经元的输出进行了归一化 用于将预测概率作为输出的模型。由于概率的取值范围是0到1，因此Sigmoid函数非常合适 梯度平滑，避免跳跃的输出值 函数是可微的。这意味着可以找到任意两个点的Sigmoid曲线的斜率 明确的预测，即非常接近1或0。 函数输出不是以0为中心的，这会降低权重更新的效率 Sigmoid函数执行指数运算，计算机运行得较慢。   Tanh tanh⁡(x)=ex−e−xex+e−x\tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}} tanh(x)=ex+e−xex−e−x​ tanh⁡′(x)=1−tanh⁡2(...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img class="post-bg" src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"></a></div><div class="recent-post-info"><a class="article-title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.973Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/MLP/">MLP</a></span></div><div class="content">向量求导定义 我们对向量求导作出如下定义： ∂f(x)∂ xn×1:=[∂f∂x1∂f∂x2⋯∂f∂xn]1×n,∂f(x)∂ x1×n:=[∂f∂x1∂f∂x2⋮∂f∂xn]n×1∂ fm×1(x)∂ xn×1:=[∂f1∂x1∂f1∂x2⋯∂f1∂xn∂f2∂x1∂f2∂x2⋯∂f2∂xn⋮⋮⋱⋮∂fm∂x1∂fm∂x2⋯∂fm∂xn]m×n,∂ f1×m(x)∂ x1×n:=[∂f1∂x1∂f2∂x1⋯∂fm∂x1∂f1∂x2∂f2∂x2⋯∂fm∂x2⋮⋮⋱⋮∂f1∂xn∂f2∂xn⋯∂fm∂xn]n×m\begin{gathered} \frac{\partial f(\mathbf{x})}{\partial\ \mathbf{x}_{n\times1}}:=\begin{bmatrix} \frac{\partial f}{\partial x_1}&amp;\frac{\partial f}{\partial x_2}&amp;\cdots&amp;\frac{\partial f}{\partial x_n} \end{bmatrix}_{1\times n} ,...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img class="post-bg" src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"></a></div><div class="recent-post-info"><a class="article-title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.970Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">神经网络</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/MLP/">MLP</a></span></div><div class="content">神经网络学习笔记 MLP 对于 nnn 层全连接神经网络（MLP），   Xk−1,Wk,bk,Pk\mathbf{X}^{k-1},\mathbf{W}^k,\mathbf{b}^k,\mathbf{P}^kXk−1,Wk,bk,Pk 分别表示第 kkk 层全连接网络的输入向量、权重矩阵、偏置向量与隐藏层中间向量  Xk:=[X1kX2k⋮XDkk]Dk×1, Wk:=[W1,1kW1,2k⋯W1,Dk−1kW2,1kW2,2k⋯W2,Dk−1k⋮⋮⋱⋮WDk,1kWDk,2k⋯WDk,Dk−1k]Dk×Dk−1, bk:=[b1kb2k⋮bDkk]Dk×1\mathbf{X}^k:=\begin{bmatrix} X_1^k\\ X_2^k\\ \vdots\\ X_{D_k}^k\\ \end{bmatrix}_{D_k\times1},\  \mathbf{W}^k:=\begin{bmatrix} W_{1,1}^k&amp;W_{1,2}^k&amp;\cdots&amp;W_{1,D_{k-1}}^k\\ W_{2,1}^k&amp;W_{2,2}^k&amp;\c...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/new-new-domain" title="又迁移至新域名！"><img class="post-bg" src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="又迁移至新域名！"></a></div><div class="recent-post-info"><a class="article-title" href="/new-new-domain" title="又迁移至新域名！">又迁移至新域名！</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-22T11:32:07.000Z" title="发表于 2025-06-22 19:32:07">2025-06-22</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.969Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/DNS/">DNS</a></span></div><div class="content">迁移原因 这次是因为域名续费比较贵……并且 DNSPod 有一个十年长期域名活动，于是花了 230 元购买了十年的域名。大概是不会再迁移了！ 自 2025 年 6 月 22 日起，本博客已迁移至dawnocean.site域名下。原域名deans.fun在 7 月 27 日到期前可继续访问。 由于需要将原域名逐渐转移到新域名去，在双域名共存的配置情况下也有了一些经验，就在这里分享一下吧。 GitHub Pages CNAME Github Pages 对应的 Repository 下包含一个 CNAME 文件，它表明了你的自定义域名。在仓库的 Page 配置页面，只能选择一个自定义域名。 直接在域名 DNS 服务商进行 DNS 配置也是不可以的，会出现“404 There is not a GitHub Pages site here.”的错误信息。 解决办法 我们可以在自己账户下新建一个同样支持 GitHub Pages 的仓库，再绑定自己的另一个自定义域名就可以了。 首先，需要在 DNS 服务商处建立从新域名到 username.github.io 以及原域名到 userna...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/KDE-Tricks-3" title="KDE Tricks (3) —— Howdy!"><img class="post-bg" src="/assets/img/kirby_cover13.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="KDE Tricks (3) —— Howdy!"></a></div><div class="recent-post-info"><a class="article-title" href="/KDE-Tricks-3" title="KDE Tricks (3) —— Howdy!">KDE Tricks (3) —— Howdy!</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-16T03:18:25.000Z" title="发表于 2025-04-16 11:18:25">2025-04-16</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.739Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux-%E9%85%8D%E7%BD%AE/">Linux 配置</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">人脸识别</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95/">自动登录</a></span></div><div class="content">需求 你好！想让电脑跟你打招呼嘛，就像 Windows Hello 那样？来试试 Howdy 吧，它是 Linux 上通过电脑的红外传感器（或摄像头）识别人脸，解锁电脑的程序。  Arch Linux Wiki 上有对它的介绍。Howdy 最新的稳定版是 v2.6.1，发布于 2020 年，因此有很多配置会在如今出现问题，在这篇博客中记录一下。 操作 安装 在 Arch Linux 上可以以 AUR 包的形式安装： 1paru -S howdy 添加红外传感器 / 摄像头 可以在诸如 cheese、fswebcamAUR 或者 v4l-utils 的程序里找到并确定能连接到红外传感器的正确 /dev/videoX 文件， 以内置于 v4l-utils 软件包的工具为例： 123456789101112$ v4l2-ctl --list-devicesIntegrated_Webcam_HD: Integrate (usb-0000:00:14.0-11):        /dev/video0        /dev/video1EyeChip: Tobii Video (usb...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Math-1" title="补完高中的数学发现"><img class="post-bg" src="/assets/img/default_cover5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="补完高中的数学发现"></a></div><div class="recent-post-info"><a class="article-title" href="/Math-1" title="补完高中的数学发现">补完高中的数学发现</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-04-14T19:18:24.000Z" title="发表于 2025-04-15 03:18:24">2025-04-15</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.741Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%B0%84%E5%BD%B1%E5%87%A0%E4%BD%95/">射影几何</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E9%80%8F%E8%A7%86/">透视</a></span></div><div class="content">写在前面 这是我为自己高中的数学探索过程补上的拼图。我不是数学专业的学生，因此有很多推理过程会掺杂着自己的直觉，也会有很多不严谨的描述，感觉有点班门弄斧了，请各位多多包涵。如果各位能提出一些全新的观点，我更是感激不尽。 我还是不想做一个辜负以前的自己的人。 探索过程 高中时的一天，我闲来无事，在纸上画长方体的透视结构。以前学习的素描知识告诉我：所有不平行于画面的线都有灭点。同一个方向的所有直线，都有同一个灭点。对于长方体而言，就是每组四条平行的棱如果不平行于画面，（它们的延长线）就会相交于同一个点。 当时我想画一个符合两点透视（即只有一组棱平行于画面）的长方体。我怎么保证自己能够画出一个符合透视结构的长方体呢？ 我先选取了两个灭点，又在两个灭点之间选取了一条线段作为最远离我们的那条棱（也是四条平行于画面的棱当中的一条），从两个灭点出发分别连接棱的两个端点，形成了两个面。接下来，我在两个平面分别选取一条棱（是四条平行于画面的棱当中的第二、三条），与第一条棱平行。再将新确定的两条棱的端点分别与对侧灭点相连，这样得到的两个交点，就确定了第四条棱。  我当时就有个疑问：第四条棱为什么这样...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Router-0" title="硬路由（0）—— 编译属于自己的 OpenWrt"><img class="post-bg" src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="硬路由（0）—— 编译属于自己的 OpenWrt"></a></div><div class="recent-post-info"><a class="article-title" href="/Router-0" title="硬路由（0）—— 编译属于自己的 OpenWrt">硬路由（0）—— 编译属于自己的 OpenWrt</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-28T13:22:07.000Z" title="发表于 2025-03-28 21:22:07">2025-03-28</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.894Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux/OpenWrt/">OpenWrt</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%BC%96%E8%AF%91/">编译</a></span></div><div class="content">回到目录  OpenWrt OpenWrt 项目是针对嵌入式设备的 Linux 操作系统，常用在路由器上。OpenWrt 高度模块化、自动化，不仅占用空间小，而且具有强大的网络组件。 OpenWrt 项目始于 2004 年 1 月，其第一个版本采用了 LinkSys 的源码。在 LinkSys 的代码收费后，改为 Linux 内核集成，并将 OpenWrt 完全模块化，不断推出补丁和驱动。 更多的信息可以在 OpenWrt Wiki 找到。 OpenWrt 有数个民间衍生出的版本，加入了一些官方列表没有，针对国内具体情况定制的插件，且源码和开发规范与官方同步，保证了软件的纯净和稳定，目前网络上的很多固件都是针对这3个固件进行编译。  Lienol：紧跟官方版本进行更新，其编译出来的固件体积比其它版本小，集成的软件少，源码改动少，使用起来稳定性更强。 Lean：由恩山论坛 Lean 分享了全部开源代码，由于加入了很多中国特色的功能，并告诉所有人怎么通过编译去得到自己想要的 OpenWRT，定制灵活性很强。（不推荐） ImmortalWrt：OpenWrt 的一个分支，移植了更多的软...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/NAS-13" title="NAS（13）—— Navidrome + MusicTag 音乐管理"><img class="post-bg" src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（13）—— Navidrome + MusicTag 音乐管理"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-13" title="NAS（13）—— Navidrome + MusicTag 音乐管理">NAS（13）—— Navidrome + MusicTag 音乐管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-07T10:46:27.000Z" title="发表于 2025-03-07 18:46:27">2025-03-07</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.836Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Navidrome/">Navidrome</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Navidrome/MusicTag/">MusicTag</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%88%AE%E5%89%8A/">刮削</a></span></div><div class="content">回到目录  Navidrome 概述 Navidrome 是一款全功能、开源且支持多平台的音乐服务器应用程序，可以在 MacOS、Linux、Windows 以及 Docker 等平台上运行。它支持常见的音频格式如 MP3、FLAC 和 WAV，并提供了丰富的管理工具和服务。通过 Web 界面或 API，你可以轻松管理和访问你的音乐库。  通过 Docker 部署 使用 Docker Compose： 123456789101112131415161718192021222324252627services:  navidrome:    image: deluan/navidrome:latest    user: 1001:100 # should be owner of volumes    ports:      - &quot;4533:4533&quot;    restart: unless-stopped    environment:      # Optional: put your config options customization here. Exa...</div></div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Furry/"><span class="card-category-list-name">Furry</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/"><span class="card-category-list-name">HTTPS</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"><span class="card-category-list-name">反向代理</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Homepage/"><span class="card-category-list-name">Homepage</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Immich/"><span class="card-category-list-name">Immich</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/OpenWrt/"><span class="card-category-list-name">OpenWrt</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/odhcpd/" style="font-size: 1.1em; color: #999">odhcpd</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">学习</a> <a href="/tags/Tailscale/" style="font-size: 1.1em; color: #999">Tailscale</a> <a href="/tags/uv/" style="font-size: 1.1em; color: #999">uv</a> <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" style="font-size: 1.1em; color: #999">激活函数</a> <a href="/tags/KDE/" style="font-size: 1.23em; color: #999ea6">KDE</a> <a href="/tags/24H2/" style="font-size: 1.1em; color: #999">24H2</a> <a href="/tags/%E5%B0%9D%E8%AF%95/" style="font-size: 1.1em; color: #999">尝试</a> <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">包管理</a> <a href="/tags/Shell/" style="font-size: 1.1em; color: #999">Shell</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95/" style="font-size: 1.1em; color: #999">自动登录</a> <a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.5em; color: #99a9bf">杂谈</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Cockpit/" style="font-size: 1.1em; color: #999">Cockpit</a> <a href="/tags/QNAP/" style="font-size: 1.1em; color: #999">QNAP</a> <a href="/tags/%E7%A1%AC%E4%BB%B6/" style="font-size: 1.23em; color: #999ea6">硬件</a> <a href="/tags/%E5%88%AE%E5%89%8A/" style="font-size: 1.23em; color: #999ea6">刮削</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.37em; color: #99a4b2">神经网络</a> <a href="/tags/%E9%80%8F%E8%A7%86/" style="font-size: 1.1em; color: #999">透视</a> <a href="/tags/Docker-Compose/" style="font-size: 1.1em; color: #999">Docker Compose</a> <a href="/tags/Caddy/" style="font-size: 1.1em; color: #999">Caddy</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 1.1em; color: #999">编译</a> <a href="/tags/DNS/" style="font-size: 1.23em; color: #999ea6">DNS</a> <a href="/tags/SSL/" style="font-size: 1.1em; color: #999">SSL</a> <a href="/tags/%E8%AF%81%E4%B9%A6/" style="font-size: 1.1em; color: #999">证书</a> <a href="/tags/L2TP/" style="font-size: 1.1em; color: #999">L2TP</a> <a href="/tags/WebDAV/" style="font-size: 1.1em; color: #999">WebDAV</a> <a href="/tags/LuCi/" style="font-size: 1.37em; color: #99a4b2">LuCi</a> <a href="/tags/%E6%A6%82%E8%BF%B0/" style="font-size: 1.23em; color: #999ea6">概述</a> <a href="/tags/Windows/" style="font-size: 1.1em; color: #999">Windows</a> <a href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" style="font-size: 1.1em; color: #999">人脸识别</a> <a href="/tags/%E7%A6%8F%E7%91%9E/" style="font-size: 1.5em; color: #99a9bf">福瑞</a> <a href="/tags/%E5%B0%84%E5%BD%B1%E5%87%A0%E4%BD%95/" style="font-size: 1.1em; color: #999">射影几何</a> <a href="/tags/MLP/" style="font-size: 1.23em; color: #999ea6">MLP</a> <a href="/tags/Jellyfin/" style="font-size: 1.1em; color: #999">Jellyfin</a> <a href="/tags/SMB/" style="font-size: 1.1em; color: #999">SMB</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/07/">
+            <span class="card-archive-list-date">
+              七月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">18</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/02/">
+            <span class="card-archive-list-date">
+              二月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."])
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

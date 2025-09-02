@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="晓洋的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dean&#39;s Blog">
+<meta property="og:url" content="https://blog.dawnocean.site/page/4/">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="晓洋的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="dean,dawn_ocean,dawn1ocean,晓洋,博客,furry,NAS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/page/4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Dean\'s Blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/assets/img/index.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Dean's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/NAS-Router-0" title="NAS / 硬路由：从入门到入门"><img class="post-bg" src="/assets/img/kirby_cover20.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS / 硬路由：从入门到入门"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-Router-0" title="NAS / 硬路由：从入门到入门">NAS / 硬路由：从入门到入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-09T13:04:06.000Z" title="发表于 2024-08-09 21:04:06">2024-08-09</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:56:54.481Z" title="更新于 2025-09-03 01:56:54">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/NAS/">NAS</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%A6%82%E8%BF%B0/">概述</a></span></div><div class="content">为了获得更良好的体验，在阅读前最好对以下知识有部分了解：  Linux &amp; 系统终端的使用 计算机网络 Docker  2025/3/29 第三次更新内容：   OpenWrt 编译  关于 Lean’s LEDE 的问题 适配 OpenWrt 主线配置 替换 AX3000T 部分为通用刷机步骤    LuCI 配置  IPv6 防火墙通信规则 新版 UPnP 无法转发问题    ZFS 维护与灾难恢复   系统备份   SMB 配置更新   2025/3/6 第二次更新内容：   IPv6 配置   Windows 有线 / 无线网卡分流  Windows 连有线网络后无线网卡断连问题    组网图景综述  对 AX3000T 的个人意见    Cockpit ZFS 界面图标不显示问题   24H2 的一系列问题  SMB 无法访问 RDP 连接失败    qBitTorrent UPnP 无法转发问题   Navidrome + MusicTag 音乐管理   引言 众所周知，一台服务器能实现的事情有很多。如果你有以下需求：  大量数据存储需求（比如电影、番剧等） ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/KDE-Tricks-2" title="KDE Tricks (2) —— Locale，真叫人抓狂"><img class="post-bg" src="/assets/img/kirby_cover2.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="KDE Tricks (2) —— Locale，真叫人抓狂"></a></div><div class="recent-post-info"><a class="article-title" href="/KDE-Tricks-2" title="KDE Tricks (2) —— Locale，真叫人抓狂">KDE Tricks (2) —— Locale，真叫人抓狂</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-02-27T08:30:19.000Z" title="发表于 2024-02-27 16:30:19">2024-02-27</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.729Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux-%E9%85%8D%E7%BD%AE/">Linux 配置</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/KDE/">KDE</a></span></div><div class="content">需求 我的 KDE 桌面环境只使用了两个组件：  ClearClock：在桌面显示时间、日期等信息 Panel Transparency Button：类似于 Windows 端的 TranslucentTB，可让任务栏透明   其中 ClearClock 重叠在时间上方显示星期的方案让我很有兴趣。于是问题来了：如果本地 Locale 为中文，那么 ClearClock 的星期也会显示中文。但它只有英文的对应字体（而且我也很喜欢），使用中文的话只好关闭星期显示。 有人就要问了：那为什么不把 Locale 全部设置为英文呢？问题又来了：为了学习、办公，我安装了 WPS 的一套软件，但是它有个致命 Bug：如果本地 Locale 为英文，那么所有路径包含中文的文件，在通过 WPS 打开后，都会造成其未响应。  截至写作，该 Bug 未被修复。AUR 链接 操作 如果知道这一点，事情就会很好办：KDE 可以单独设置不同部分的 Locale。 显然，ClearClock 只涉及时间日期方面的 Locale。虽然不知道 WPS 涉及哪些方面，我还是把除了时间日期之外的 Locale 全部设...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/KDE-Tricks-1" title="KDE Tricks (1) —— 快捷键切换下一张壁纸"><img class="post-bg" src="/assets/img/default_cover3.JPEG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="KDE Tricks (1) —— 快捷键切换下一张壁纸"></a></div><div class="recent-post-info"><a class="article-title" href="/KDE-Tricks-1" title="KDE Tricks (1) —— 快捷键切换下一张壁纸">KDE Tricks (1) —— 快捷键切换下一张壁纸</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-17T10:13:30.000Z" title="发表于 2023-12-17 18:13:30">2023-12-17</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.726Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux-%E9%85%8D%E7%BD%AE/">Linux 配置</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Linux-%E9%85%8D%E7%BD%AE/Shell/">Shell</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/KDE/">KDE</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Shell/">Shell</a></span></div><div class="content">需求 KDE 自带的环境可以实现桌面定时切换下一张壁纸，但是想要手动切换，就只能右击桌面 -&gt; 点击 Next Wallpaper Image。  经过查询，并无命令负责此动作，因此打算通过脚本实现，并绑定快捷键。 在 SuperUser 上找到一个办法，可以通过 QDBus 直接写入需要更改的图片，将随机选择图片部分和定时部分均交由脚本处理。 操作 由于直接采用写入图片的方式，KDE 的壁纸模式会被切换为 Image，因此同时需要接管 SlideShow 模式：定时自动切换下一张壁纸。 接管定时功能 新建一个 .sh 脚本，写入如下内容： 1234567891011121314151617181920212223242526272829303132333435while truedo# //////////// 配置变量 ////////////# 两次切换时间间隔，单位为秒sleeptime=900# 壁纸文件夹路径location=&quot;/home/myusername/Pictures&quot;# //////////////////////////////...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Furry-5" title="Furry 杂谈（5） - 总结及后话"><img class="post-bg" src="/assets/img/default_cover2.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Furry 杂谈（5） - 总结及后话"></a></div><div class="recent-post-info"><a class="article-title" href="/Furry-5" title="Furry 杂谈（5） - 总结及后话">Furry 杂谈（5） - 总结及后话</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T12:16:53.000Z" title="发表于 2023-10-13 20:16:53">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.724Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Furry/">Furry</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A6%8F%E7%91%9E/">福瑞</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">回到目录  兽文化属于舶来品，以其“开放、包容”的核心以及幻想形象，顺应国内的文化背景立住了脚，同时也形成了独具特点的国内兽圈。 一句话道出兽圈中的情感纽带：“每个人都有爱与被爱的权利。”正是秉承着这一观念，兽迷们在彼此的交流与互动之中寻求他人的肯定，得到一份属于自己的慰藉。以虚拟形象加强交流，让他人看到理想化的自己，让自己具有对自身美好的向往期待，正是兽文化引人入胜之处。 然而，对于国内兽圈中出现的种种问题，我们也应正面对待。很多问题，不只存在于兽圈之中，究其原因，主要是缺乏统一标准和有效的监管措施。在圈子的规模和标准尚未形成之前，带头者应发挥积极的领导作用，促使兽圈向有利的一面发展。 总的来说，兽文化的多样性与包容性给予了群体发言权，兽迷心中都怀着一份对美好未来的憧憬。最近[1]，一首由唱见超学生和制作人匹诺曹P共同合作的歌曲《好想变成兽人啊》引进国内，再度激发了国内兽圈的浪潮。我想，这就是兽迷们心中认知的共同点。也正是兽迷们凭借共同之处聚在一起，才形成了多姿多彩的兽圈。  作为圈内人，我们共同进步，携手成长； 作为圈外人，我们给予理解，贡献支持。 为此，我愿意相信，在适当的...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Furry-4" title="Furry 杂谈（4） - 现状及问题"><img class="post-bg" src="/assets/img/kirby_cover10.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Furry 杂谈（4） - 现状及问题"></a></div><div class="recent-post-info"><a class="article-title" href="/Furry-4" title="Furry 杂谈（4） - 现状及问题">Furry 杂谈（4） - 现状及问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T12:13:27.000Z" title="发表于 2023-10-13 20:13:27">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.695Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Furry/">Furry</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A6%8F%E7%91%9E/">福瑞</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">回到目录  污名化  由于圈外人对圈内人了解不深，兽迷们可能会被错误地打上“恋兽癖”的标签。事实上，国内大多数兽迷对现实中的这种癖好都十分反感。兽圈中有一部分作品被称为 yiff[1]，有许多兽迷喜爱 yiff，但这并不代表着他们在现实生活中就会去实践。Yiff 当然不乏优秀作品（如：欲染君色）。 很早便有“十兽九基”的说法，这源于圈内外对兽圈与非异性恋族群（尤其是男性同性恋族群）存在一定重合度的疑问。事实上，对拟人化动物的喜爱与性取向并无本质上的联系。在国外兽圈中，兽迷们性取向比例与大众群体无显著差异，而在国内兽圈中，非异性恋族群占比稍高（数据待补充），但也不能证明二者间较强的相关性。笔者推测，这一特点可能与兽文化传入国内时所展现出的开放性与包容性有关，涉及到小众圈子文化之间的相互渗透，故使得不被大众普遍接受的兽文化在非异性恋族群中得到广泛传播。 兽圈中的语c（请注意与文爱[2]区分）现象。 语c，即语言cosplay，是指在语言上通过模仿/代入角色从而扮演该角色的一种行为。在兽圈内，即指通过语言文字（大多是聊天消息）代入/扮演兽设的一种行为。这些语言特征通常会使说话人显得更加...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Furry-3" title="Furry 杂谈（3） - 相关名词介绍"><img class="post-bg" src="/assets/img/kirby_cover15.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Furry 杂谈（3） - 相关名词介绍"></a></div><div class="recent-post-info"><a class="article-title" href="/Furry-3" title="Furry 杂谈（3） - 相关名词介绍">Furry 杂谈（3） - 相关名词介绍</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T12:13:06.000Z" title="发表于 2023-10-13 20:13:06">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.683Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Furry/">Furry</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A6%8F%E7%91%9E/">福瑞</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">回到目录  兽设（Fursona） 从构词法可以看出，兽设类似于人设（persona），是兽迷们构建的一类拟人化动物形象，用于代表自己，具有理想化的特点（可以看作是自己在虚拟世界中的化身）。设定可以很粗略，也可以很详细（种族、毛色等形象特征、性格特征等），分为文设（主要描绘性格等内在特征）和图设（主要描绘形象等外在特征）。由于不是每个兽迷都有能力绘出自己心目中的兽设，有些兽迷会请画师帮忙绘制，并支付相应的稿费。   兽装（Fursuit） 穿上兽装是兽迷们在现实中扮演自己兽设的一种重要方式。在兽装中，毛毛仅能通过兽装头部的眼睛[1]观察外部（全装），外界也无法看到内部（借用vup圈的说法叫做中之人，另一种较符合圈子语境的提法叫做内馅），这在一定程度上消除了部分社交恐惧，使得毛毛们能够更自然地表现出自我（本色出演）。兽装一般由以不同颜色的毛布（体现花纹、毛色、标记等）做外部，和海绵填充骨架的内部构成，分为全装（即从头到脚）和半装（一般含头，爪子）。根据服装风格又可分为日系兽装、欧美兽装、写实兽装（甚至还有四脚着地的兽装），这些风格与前文提到的画风类似，故在此不做赘述。 获得一套属于...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Furry-2" title="Furry 杂谈（2） - 序言介绍"><img class="post-bg" src="/assets/img/kirby_cover3.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Furry 杂谈（2） - 序言介绍"></a></div><div class="recent-post-info"><a class="article-title" href="/Furry-2" title="Furry 杂谈（2） - 序言介绍">Furry 杂谈（2） - 序言介绍</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T12:05:56.000Z" title="发表于 2023-10-13 20:05:56">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.666Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Furry/">Furry</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A6%8F%E7%91%9E/">福瑞</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">回到目录  让我们从拟人化动物的派系说起。 兽文化从欧美发源，传播至日本、中国等其他国家，于是当今兽迷分布在全球各地。 对于拟人化动物的想象和描摹，图画当然是最直观的形式。各个地区的绘画风格，对兽人的形象特点有着决定性的影响。经过长期发展，兽人形象的表现风格主要有如下三种：  日系兽人（Kemono）：    以萌作为主要特点，大眼睛、小鼻子，体型较小，吻部不突出（与人更相符） （例：宝可梦、动物新世代中的某些角色等）    以强壮作为主要特点（筋肉），体型较大，吻部较突出，日系画风特点 （例：从零开始的魔法书中的佣兵）    欧美系兽人（Toony）：    吻部突出（更接近真实情况） 欧美动漫（cartoon）风格，给人以俏皮活泼之感，有时也会更加突出动物的真实、野性等特点 （例：迪士尼出品的疯狂动物城，坏蛋联盟等电影）    写实风兽人（Realistic）： 如果现实中真正存在兽人，那么应与此类型十分接近（画手运用生物学知识进行合理的描绘）   在此笔者仅对中国兽圈的现状进行阐述。可能是受邻近地域文化（亚洲）传播的影响，兽圈（以下均指国内兽圈）中的内容以日系为主。 国内进...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Furry-1" title="Furry 杂谈（1） - 亚文化"><img class="post-bg" src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Furry 杂谈（1） - 亚文化"></a></div><div class="recent-post-info"><a class="article-title" href="/Furry-1" title="Furry 杂谈（1） - 亚文化">Furry 杂谈（1） - 亚文化</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T11:34:53.000Z" title="发表于 2023-10-13 19:34:53">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.666Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Furry/">Furry</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E7%A6%8F%E7%91%9E/">福瑞</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">初稿于2021.10.7 志同道合的人聚在一起便形成了圈子。圈子有大小之分，圈子中也会有圈子。圈子中的内容越能被大众接受和认可，其规模相应地也会更大。于是和像二次元那样受众广泛的大圈子相比，一些小众圈子的内容便显得不那么容易接受。圈外人的态度一般都是井水不犯河水，但对于不同的圈子，实际情况也各有不同。 今天我想来聊聊兽圈。这个圈子是由喜爱拟人化动物（英文中称furry [1]）的人们（称作兽迷/毛毛[2]）组成的。实际上拟人化动物并不存在，他们属于幻想生物的范畴，但是文学当中很早便有拟人的手法，这类生物也（曾）出现在荧屏上[3]、游戏中[4]，有些甚至成为了家喻户晓的角色。 这个以想象力构建起来的圈子中，兽迷们究竟对圈子的主体（拟人化动物）怀着一种怎样的态度？他们是如何进入这个圈子的呢？  目录 序言介绍   相关名词介绍   现状及问题   总结及后话 1.在英文语境中furry包含的范围较广，furry既可以指拟人化动物也可以指兽娘。 ↩2.“毛毛”这个词事实上已经滥用，其既可以指兽迷，也可以指拟人化动物，还可以指兽装穿戴者fursuiter。 ↩3.指迪士尼等出品的相关作品...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/initialization" title="初始化完成"><img class="post-bg" src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="初始化完成"></a></div><div class="recent-post-info"><a class="article-title" href="/initialization" title="初始化完成">初始化完成</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-13T09:51:23.000Z" title="发表于 2023-10-13 17:51:23">2023-10-13</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.966Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%B0%9D%E8%AF%95/">尝试</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">起因  想试试搭建一篇 Blog 需要多长时间，于是就有了这个网站。同时作测试用。 搭建  使用快捷方便的 Hexo 框架、简洁美观的 Butterfly 主题。 关于我  生物医学工程 | 在校大学生 喜欢一切简洁有趣的事物 </div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/3/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#content-inner">3</a><span class="page-number current">4</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Furry/"><span class="card-category-list-name">Furry</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/"><span class="card-category-list-name">HTTPS</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"><span class="card-category-list-name">反向代理</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Homepage/"><span class="card-category-list-name">Homepage</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Immich/"><span class="card-category-list-name">Immich</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/OpenWrt/"><span class="card-category-list-name">OpenWrt</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/odhcpd/" style="font-size: 1.1em; color: #999">odhcpd</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">学习</a> <a href="/tags/Tailscale/" style="font-size: 1.1em; color: #999">Tailscale</a> <a href="/tags/uv/" style="font-size: 1.1em; color: #999">uv</a> <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" style="font-size: 1.1em; color: #999">激活函数</a> <a href="/tags/KDE/" style="font-size: 1.23em; color: #999ea6">KDE</a> <a href="/tags/24H2/" style="font-size: 1.1em; color: #999">24H2</a> <a href="/tags/%E5%B0%9D%E8%AF%95/" style="font-size: 1.1em; color: #999">尝试</a> <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">包管理</a> <a href="/tags/Shell/" style="font-size: 1.1em; color: #999">Shell</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95/" style="font-size: 1.1em; color: #999">自动登录</a> <a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.5em; color: #99a9bf">杂谈</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Cockpit/" style="font-size: 1.1em; color: #999">Cockpit</a> <a href="/tags/QNAP/" style="font-size: 1.1em; color: #999">QNAP</a> <a href="/tags/%E7%A1%AC%E4%BB%B6/" style="font-size: 1.23em; color: #999ea6">硬件</a> <a href="/tags/%E5%88%AE%E5%89%8A/" style="font-size: 1.23em; color: #999ea6">刮削</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.37em; color: #99a4b2">神经网络</a> <a href="/tags/%E9%80%8F%E8%A7%86/" style="font-size: 1.1em; color: #999">透视</a> <a href="/tags/Docker-Compose/" style="font-size: 1.1em; color: #999">Docker Compose</a> <a href="/tags/Caddy/" style="font-size: 1.1em; color: #999">Caddy</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 1.1em; color: #999">编译</a> <a href="/tags/DNS/" style="font-size: 1.23em; color: #999ea6">DNS</a> <a href="/tags/SSL/" style="font-size: 1.1em; color: #999">SSL</a> <a href="/tags/%E8%AF%81%E4%B9%A6/" style="font-size: 1.1em; color: #999">证书</a> <a href="/tags/L2TP/" style="font-size: 1.1em; color: #999">L2TP</a> <a href="/tags/WebDAV/" style="font-size: 1.1em; color: #999">WebDAV</a> <a href="/tags/LuCi/" style="font-size: 1.37em; color: #99a4b2">LuCi</a> <a href="/tags/%E6%A6%82%E8%BF%B0/" style="font-size: 1.23em; color: #999ea6">概述</a> <a href="/tags/Windows/" style="font-size: 1.1em; color: #999">Windows</a> <a href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" style="font-size: 1.1em; color: #999">人脸识别</a> <a href="/tags/%E7%A6%8F%E7%91%9E/" style="font-size: 1.5em; color: #99a9bf">福瑞</a> <a href="/tags/%E5%B0%84%E5%BD%B1%E5%87%A0%E4%BD%95/" style="font-size: 1.1em; color: #999">射影几何</a> <a href="/tags/MLP/" style="font-size: 1.23em; color: #999ea6">MLP</a> <a href="/tags/Jellyfin/" style="font-size: 1.1em; color: #999">Jellyfin</a> <a href="/tags/SMB/" style="font-size: 1.1em; color: #999">SMB</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/07/">
+            <span class="card-archive-list-date">
+              七月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">18</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/02/">
+            <span class="card-archive-list-date">
+              二月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."])
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

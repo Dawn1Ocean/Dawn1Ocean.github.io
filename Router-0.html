@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>硬路由（0）—— 编译属于自己的 OpenWrt | Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回到目录  OpenWrt OpenWrt 项目是针对嵌入式设备的 Linux 操作系统，常用在路由器上。OpenWrt 高度模块化、自动化，不仅占用空间小，而且具有强大的网络组件。 OpenWrt 项目始于 2004 年 1 月，其第一个版本采用了 LinkSys 的源码。在 LinkSys 的代码收费后，改为 Linux 内核集成，并将 OpenWrt 完全模块化，不断推出补丁和驱动。 更多的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="硬路由（0）—— 编译属于自己的 OpenWrt">
+<meta property="og:url" content="https://blog.dawnocean.site/Router-0">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="回到目录  OpenWrt OpenWrt 项目是针对嵌入式设备的 Linux 操作系统，常用在路由器上。OpenWrt 高度模块化、自动化，不仅占用空间小，而且具有强大的网络组件。 OpenWrt 项目始于 2004 年 1 月，其第一个版本采用了 LinkSys 的源码。在 LinkSys 的代码收费后，改为 Linux 内核集成，并将 OpenWrt 完全模块化，不断推出补丁和驱动。 更多的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/kirby_cover19.JPG">
+<meta property="article:published_time" content="2025-03-28T13:22:07.000Z">
+<meta property="article:modified_time" content="2025-09-02T16:21:45.894Z">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="编译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/kirby_cover19.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "硬路由（0）—— 编译属于自己的 OpenWrt",
+  "url": "https://blog.dawnocean.site/Router-0",
+  "image": "https://blog.dawnocean.site/assets/img/kirby_cover19.JPG",
+  "datePublished": "2025-03-28T13:22:07.000Z",
+  "dateModified": "2025-09-02T16:21:45.894Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Dean Ma",
+      "url": "https://blog.dawnocean.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/Router-0"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '硬路由（0）—— 编译属于自己的 OpenWrt',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/assets/img/kirby_cover19.JPG);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">硬路由（0）—— 编译属于自己的 OpenWrt</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">硬路由（0）—— 编译属于自己的 OpenWrt</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-28T13:22:07.000Z" title="发表于 2025-03-28 21:22:07">2025-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.894Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/">Linux</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux/OpenWrt/">OpenWrt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><a href="/NAS-Router-0" title="NAS &#x2F; 硬路由：从入门到入门">回到目录</a>
+<br/>
+<h1 id="openwrt"><a class="header-anchor" href="#openwrt"></a>OpenWrt</h1>
+<p>OpenWrt 项目是针对嵌入式设备的 Linux 操作系统，常用在路由器上。OpenWrt 高度模块化、自动化，不仅占用空间小，而且具有强大的网络组件。</p>
+<p>OpenWrt 项目始于 2004 年 1 月，其第一个版本采用了 LinkSys 的源码。在 LinkSys 的代码收费后，改为 Linux 内核集成，并将 OpenWrt 完全模块化，不断推出补丁和驱动。</p>
+<p>更多的信息可以在 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://openwrt.org/zh/start" title="OpenWrt Wiki">OpenWrt Wiki</a> 找到。</p>
+<p>OpenWrt 有数个民间衍生出的版本，加入了一些官方列表没有，针对国内具体情况定制的插件，且源码和开发规范与官方同步，保证了软件的纯净和稳定，目前网络上的很多固件都是针对这3个固件进行编译。</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Lienol/openwrt" title="Lienol">Lienol</a>：紧跟官方版本进行更新，其编译出来的固件体积比其它版本小，集成的软件少，源码改动少，使用起来稳定性更强。</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/coolsnowwolf/lede" title="Lean"><s>Lean</s></a><s>：由恩山论坛 Lean 分享了全部开源代码，由于加入了很多中国特色的功能，并告诉所有人怎么通过编译去得到自己想要的 OpenWRT，定制灵活性很强。</s>（不推荐）</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/immortalwrt/immortalwrt" title="ImmortalWrt">ImmortalWrt</a>：OpenWrt 的一个分支，移植了更多的软件包，支持了更多的设备，更好的性能，并为中国大陆用户进行了特殊的优化。</li>
+</ul>
+<p>前两者需要自行编译，ImmortalWrt 可直接选择固件下载。</p>
+<p>OpenWrt 的当前稳定版本系列是 24.10，其中 “v24.10.0” 是该系列的最新版本。它于 2025 年 2 月 6 日发布。</p>
+<blockquote>
+<p>来自 OpenWrt Wiki：</p>
+</blockquote>
+<blockquote>
+<p>如果您熟悉 Linux 类系统，那么 OpenWrt 对于您就非常简单。如果您不熟悉，那我们就需要首先从一些基础概念开始。</p>
+</blockquote>
+<blockquote>
+<p>您应该已经知道 OpenWrt 是一个针对嵌入式设备的 Linux 发行版，Linux“<strong>发行版</strong>“是一个通过创建和维护一些软件包实现根据用户需求来定制 Linux 系统的项目。一个”<strong>软件包</strong>“是包含一个应用程序或一些脚本的压缩档案，其配置文件中还包含了用于将其集成到操作系统中的信息。软件包可被一个能够下载、打开、安装、卸载的应用程序——<strong>包管理器</strong>（OpenWrt 中为 opkg）处理。所以，一个 OpenWrt 固件是一些围绕 Linux 内核的软件包组装而成。</p>
+</blockquote>
+<blockquote>
+<p>每个软件包都被独立进行编译，当软件包编译完成后，所需的软件包都被“安装”在一个临时文件夹中。其后，该文件夹会被压缩并变为设备固件的只读压缩分区（squashfs）。</p>
+</blockquote>
+<blockquote>
+<p>内核也被当作一个软件包处理，但却通过特殊的方式添加到固件映像中以便设备的引导程序可以发现它。所以，您可以在不触及设备的引导程序（比较危险而且不是总是可行）的情况下替换设备原版的固件。</p>
+</blockquote>
+<blockquote>
+<p>构建程序的最后一步才是生成一个固件文件（也就是您用于安装或升级 OpenWrt 的文件），这个文件通常是一个准备写入内置闪存储存装置磁盘映像，所以您会发现许多开发人员在 IRC 或邮件列表称其为“映像”。</p>
+</blockquote>
+<h2 id="为什么不推荐-lean-s-lede"><a class="header-anchor" href="#为什么不推荐-lean-s-lede"></a>为什么不推荐 Lean’s LEDE</h2>
+<p>知乎上的回答：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.zhihu.com/question/635802944" title="https://www.zhihu.com/question/635802944">https://www.zhihu.com/question/635802944</a>。</p>
+<p>根据笔者自己使用 Lean’s LEDE 及其改版的体验，它对 OpenWrt 主线（老的主线）进行了大量魔改，并且安装了大量臃肿的软件包，导致实际体验很差。由于深度魔改的原因，我们也无法使用一般的软件源，经常运行更新后整个系统都无法使用。</p>
+<p>从一个入门者的角度，在一开始就使用这种定制系统是十分不合适的。笔者同时也是 Arch Linux 用户，对这种做法不太赞成。再加上 Lean 等人如此圈地自萌，与官方主线越走越远的行为，无疑是在分裂这个社区，更是开源精神所不能容忍的。</p>
+<h2 id="自己编译-openwrt-的好处"><a class="header-anchor" href="#自己编译-openwrt-的好处"></a>自己编译 OpenWrt 的好处</h2>
+<ol>
+<li>高度定制化。预编译的固件通常包含很多默认的软件包，而自己编译可以去除不需要的组件，节省存储空间，提升性能。比如，如果不需要 IPv6 支持或者某些 VPN 功能，去掉这些可以减少固件大小，可能让旧设备运行得更流畅。</li>
+<li>便于刷写固件。如果在使用过程中发现某个内核模块未安装，我们只需加入该模块并重新编译即可，并且相比于第一次编译会减少很多时间。将编译好的 sysupgrade 映像文件直接上传到 LuCI 内，OpenWrt 会完成剩下的工作。</li>
+<li>硬件兼容性。不同路由器硬件差异大，官方可能没有针对特定型号的优化。自己编译时可以选择适合的驱动和内核模块，提升稳定性和性能。比如某些无线网卡可能需要特定的驱动，官方固件没包含，自己编译就可以加入。</li>
+<li>功能扩展。OpenWrt 的软件仓库有很多第三方包，我们可以添加官方未包含的功能。如内网穿透工具 frp、zerotier，或者网络监控工具如 ntopng。对于开发者来说，可能需要集成调试工具或开发环境，自己编译就能方便地加入这些工具。</li>
+<li>学习价值。编译过程涉及 Linux 系统、交叉编译、网络配置等知识，对技术提升有帮助。我们可以通过这个过程更深入了解操作系统的工作原理，或者为将来开发自己的项目打基础。  </li>
+</ol>
+<h1 id="为新设备添加-openwrt-支持"><a class="header-anchor" href="#为新设备添加-openwrt-支持"></a>为新设备添加 OpenWrt 支持</h1>
+<p>此部分主要来自于 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://openwrt.org/zh/docs/guide-developer/adding_new_device" title="OpenWrt Wiki">OpenWrt Wiki</a>。</p>
+<p>为了全面了解如何添加新设备支持，我们建议您查看一台新设备相关的最新的 commit，摸清楚哪些文件发生了修改和如何修改它们。我们只需要去 GitHub 仓库找到某设备对应的 PR 查看就能理解。</p>
+<p><img src="Router-0/image_mG_0-GHHgK.png" alt=""></p>
+<h2 id="重要文件"><a class="header-anchor" href="#重要文件"></a>重要文件</h2>
+<p>最重要的文件一般存放于以下目录：</p>
+<p><code>/target/linux/&lt;arch_name&gt;/base-files/etc/…</code></p>
+<p>该目录的文件和文件夹最终将会存放于设备固件的<code>/etc</code>目录。</p>
+<p>它一般包含下列的文件和文件夹：</p>
+<ul>
+<li><strong>…board.d/</strong>：定义设备专用的默认硬件的脚本，如 LED 和网络接口。</li>
+<li><strong>…hotplug.d/</strong>：定义设备专用的，在插入热插拔设备时自动运行的脚本</li>
+<li><strong>…init.d/</strong>：定义设备专用的在启动时自动运行的脚本</li>
+<li><strong>…uci-defaults/</strong>：定义设备专用的 UCI 默认设置</li>
+<li><strong>…<a target="_blank" rel="noopener external nofollow noreferrer" href="http://diag.sh">diag.sh</a></strong>：定义设备显示的错误代码</li>
+</ul>
+<p><code>/target/linux/&lt;arch_name&gt;/base-files/lib/…</code></p>
+<p>该文件夹下的文件夹和文件对应固件中的<code>/lib</code>目录下文件夹和文件。</p>
+<p>它的子文件夹和文件有：</p>
+<ul>
+<li><strong>…&lt;arch_name&gt;.sh</strong>：将 <em>阅读友好的设备名</em> 转化为 <em>脚本安全的设备名</em> 的脚本</li>
+<li><strong>…preinit/</strong>：通用 &lt;arch_name&gt; 预初始化脚本</li>
+<li><strong>…upgrade/</strong>：通用 &lt;arch_name&gt; 升级脚本</li>
+</ul>
+<p><code>/target/linux/&lt;arch_name&gt;/base-files/sbin</code></p>
+<p>该文件夹对应固件中的<code>/sbin</code>文件夹, 一般为通用的 &lt;arch_name&gt; sbin 脚本和工具。</p>
+<p><code>/target/linux/&lt;arch_name&gt;/dts/</code></p>
+<p>设备树源文件（Device tree source files，简写为dts）。</p>
+<p><code>/target/linux/&lt;arch_name&gt;/</code></p>
+<p>用于构建写入用镜像的设置文件。</p>
+<p><code>/target/linux/&lt;arch_name&gt;/&lt;board_name&gt;/</code></p>
+<p>设备专用的设置文件。</p>
+<p><code>/target/linux/&lt;arch_name&gt;/modules.mk</code></p>
+<p><em>menuconfig</em> 中使用的架构专用（Arch-specific）配置文件。</p>
+<h3 id="使新设备出现在-make-menuconfig-中"><a class="header-anchor" href="#使新设备出现在-make-menuconfig-中"></a>使新设备出现在 make menuconfig 中</h3>
+<p>在编辑了上述的文件后, 你需要对 Makefile 使用 touch 命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> target/linux/*/Makefile</span><br></pre></td></tr></table></figure>
+<h2 id="dts-设备树"><a class="header-anchor" href="#dts-设备树"></a>DTS（设备树）</h2>
+<p>Linux 内核从 V2.6 开始引入设备树的概念，其起源于<code>OF:OpenFirmware</code>， 用于<strong>描述一个硬件平台的硬件资源信息</strong>，这些信息包括：CPU 的数量和类别、内存基地址和大小、总线和桥、外设连接、中断控制器和中断使用情况、GPIO 控制器和 GPIO 使用情况、Clock 控制器和 Clock 使用情况等等。</p>
+<p>以下是 DeepSeek 生成的关于 N60 Pro 的部分 DTS 注释，仅供参考。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SPDX-License-Identifier: GPL-2.0-or-later OR MIT</span></span><br><span class="line"><span class="comment">// 定义许可证信息，GPL-2.0 或 MIT</span></span><br><span class="line"></span><br><span class="line">/dts-v1/;</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dt-bindings/gpio/gpio.h&gt;</span> <span class="comment">// 包含 GPIO 绑定定义</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dt-bindings/input/input.h&gt;</span> <span class="comment">// 包含输入设备绑定定义</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dt-bindings/leds/common.h&gt;</span> <span class="comment">// 包含 LED 绑定定义</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mt7986a.dtsi&quot;</span> <span class="comment">// 包含 MT7986A SoC 的基础设备树文件</span></span></span><br><span class="line"></span><br><span class="line">/ &#123;</span><br><span class="line">    model = <span class="string">&quot;Netcore N60 Pro&quot;</span>; <span class="comment">// 设备型号</span></span><br><span class="line">    compatible = <span class="string">&quot;netcore,n60-pro&quot;</span>, <span class="string">&quot;mediatek,mt7986a&quot;</span>; <span class="comment">// 设备兼容性列表</span></span><br><span class="line"></span><br><span class="line">    aliases &#123;</span><br><span class="line">        serial0 = &amp;uart0; <span class="comment">// 串口0别名</span></span><br><span class="line">        label-mac-device = &amp;gmac0; <span class="comment">// MAC地址关联的设备</span></span><br><span class="line">        led-boot = &amp;led_power; <span class="comment">// 启动时使用的 LED</span></span><br><span class="line">        led-failsafe = &amp;led_power; <span class="comment">// 安全模式时使用的 LED</span></span><br><span class="line">        led-running = &amp;led_power; <span class="comment">// 运行时使用的 LED</span></span><br><span class="line">        led-upgrade = &amp;led_power; <span class="comment">// 升级时使用的 LED</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    chosen &#123;</span><br><span class="line">        bootargs = <span class="string">&quot;root=/dev/fit0 rootwait&quot;</span>; <span class="comment">// 内核启动参数</span></span><br><span class="line">        rootdisk = &lt;&amp;ubi_rootdisk&gt;; <span class="comment">// 根文件系统设备</span></span><br><span class="line">        <span class="built_in">stdout</span>-path = <span class="string">&quot;serial0:115200n8&quot;</span>; <span class="comment">// 标准输出路径（串口0，波特率115200）</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    memory@<span class="number">40000000</span> &#123;</span><br><span class="line">        reg = &lt;<span class="number">0</span> <span class="number">0x40000000</span> <span class="number">0</span> <span class="number">0x20000000</span>&gt;; <span class="comment">// 内存地址范围</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    gpio-keys &#123;</span><br><span class="line">        compatible = <span class="string">&quot;gpio-keys&quot;</span>; <span class="comment">// GPIO按键设备</span></span><br><span class="line"></span><br><span class="line">        button-reset &#123;</span><br><span class="line">            label = <span class="string">&quot;reset&quot;</span>; <span class="comment">// 按键标签</span></span><br><span class="line">            linux,code = &lt;KEY_RESTART&gt;; <span class="comment">// 按键对应的 Linux 键值</span></span><br><span class="line">            gpios = &lt;&amp;pio <span class="number">9</span> GPIO_ACTIVE_LOW&gt;; <span class="comment">// 按键连接的 GPIO</span></span><br><span class="line">        &#125;;</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    gpio-leds &#123;</span><br><span class="line">        compatible = <span class="string">&quot;gpio-leds&quot;</span>; <span class="comment">// GPIO LED 设备</span></span><br><span class="line"></span><br><span class="line">        led<span class="number">-0</span> &#123;</span><br><span class="line">            color = &lt;LED_COLOR_ID_BLUE&gt;; <span class="comment">// LED 颜色</span></span><br><span class="line">            function = LED_FUNCTION_WLAN; <span class="comment">// LED 功能（WLAN）</span></span><br><span class="line">            gpios = &lt;&amp;pio <span class="number">1</span> GPIO_ACTIVE_LOW&gt;; <span class="comment">// LED 连接的 GPIO</span></span><br><span class="line">            linux,<span class="keyword">default</span>-trigger = <span class="string">&quot;phy1tpt&quot;</span>; <span class="comment">// 默认触发器（WLAN 活动）</span></span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    reg_3p3v: regulator<span class="number">-3</span>p3v &#123;</span><br><span class="line">        compatible = <span class="string">&quot;regulator-fixed&quot;</span>; <span class="comment">// 固定电压调节器</span></span><br><span class="line">        regulator-name = <span class="string">&quot;fixed-3.3V&quot;</span>; <span class="comment">// 调节器名称</span></span><br><span class="line">        regulator-min-microvolt = &lt;<span class="number">3300000</span>&gt;; <span class="comment">// 最小电压</span></span><br><span class="line">        regulator-max-microvolt = &lt;<span class="number">3300000</span>&gt;; <span class="comment">// 最大电压</span></span><br><span class="line">        regulator-boot-on; <span class="comment">// 启动时启用</span></span><br><span class="line">        regulator-always-on; <span class="comment">// 始终启用</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;crypto &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用加密模块</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;eth &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用以太网模块</span></span><br><span class="line"></span><br><span class="line">    gmac0: mac@<span class="number">0</span> &#123;</span><br><span class="line">        compatible = <span class="string">&quot;mediatek,eth-mac&quot;</span>; <span class="comment">// 以太网 MAC 设备</span></span><br><span class="line">        reg = &lt;<span class="number">0</span>&gt;; <span class="comment">// 寄存器地址</span></span><br><span class="line">        phy-mode = <span class="string">&quot;2500base-x&quot;</span>; <span class="comment">// PHY 模式（2.5Gbps）</span></span><br><span class="line"></span><br><span class="line">        nvmem-cells = &lt;&amp;macaddr_factory_1fef20 <span class="number">0</span>&gt;; <span class="comment">// MAC 地址存储单元</span></span><br><span class="line">        nvmem-cell-names = <span class="string">&quot;mac-address&quot;</span>; <span class="comment">// MAC 地址名称</span></span><br><span class="line"></span><br><span class="line">        fixed-link &#123;</span><br><span class="line">            speed = &lt;<span class="number">2500</span>&gt;; <span class="comment">// 固定连接速度</span></span><br><span class="line">            full-duplex; <span class="comment">// 全双工模式</span></span><br><span class="line">            pause; <span class="comment">// 启用流控</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    mdio: mdio-bus &#123;</span><br><span class="line">        <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">        <span class="meta">#size-cells = <span class="string">&lt;0&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;mdio &#123;</span><br><span class="line">    reset-delay-us = &lt;<span class="number">600</span>&gt;; <span class="comment">// 复位延迟（微秒）</span></span><br><span class="line">    reset-post-delay-us = &lt;<span class="number">20000</span>&gt;; <span class="comment">// 复位后延迟（微秒）</span></span><br><span class="line">    reset-gpios = &lt;&amp;pio <span class="number">6</span> GPIO_ACTIVE_LOW&gt;; <span class="comment">// 复位 GPIO</span></span><br><span class="line"></span><br><span class="line">    phy5: phy@<span class="number">5</span> &#123;</span><br><span class="line">        compatible = <span class="string">&quot;ethernet-phy-ieee802.3-c45&quot;</span>; <span class="comment">// PHY 设备兼容性</span></span><br><span class="line">        reg = &lt;<span class="number">5</span>&gt;; <span class="comment">// PHY 地址</span></span><br><span class="line"></span><br><span class="line">        leds &#123;</span><br><span class="line">            <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">            <span class="meta">#size-cells = <span class="string">&lt;0&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line"></span><br><span class="line">            led@<span class="number">3</span> &#123;</span><br><span class="line">                reg = &lt;<span class="number">3</span>&gt;; <span class="comment">// LED 寄存器地址</span></span><br><span class="line">                color = &lt;LED_COLOR_ID_GREEN&gt;; <span class="comment">// LED 颜色</span></span><br><span class="line">                function = LED_FUNCTION_LAN; <span class="comment">// LED 功能（LAN）</span></span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>: <span class="keyword">switch</span>@<span class="number">1f</span> &#123;</span><br><span class="line">        compatible = <span class="string">&quot;mediatek,mt7531&quot;</span>; <span class="comment">// 交换机设备兼容性</span></span><br><span class="line">        reg = &lt;<span class="number">31</span>&gt;; <span class="comment">// 交换机地址</span></span><br><span class="line">        reset-gpios = &lt;&amp;pio <span class="number">5</span> GPIO_ACTIVE_HIGH&gt;; <span class="comment">// 复位 GPIO</span></span><br><span class="line">        interrupt-controller; <span class="comment">// 中断控制器</span></span><br><span class="line">        <span class="meta">#interrupt-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 中断单元数量</span></span></span><br><span class="line">        interrupt-parent = &lt;&amp;pio&gt;; <span class="comment">// 中断父设备</span></span><br><span class="line">        interrupts = &lt;<span class="number">66</span> IRQ_TYPE_LEVEL_HIGH&gt;; <span class="comment">// 中断引脚和类型</span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;<span class="keyword">switch</span> &#123;</span><br><span class="line">    ports &#123;</span><br><span class="line">        <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">        <span class="meta">#size-cells = <span class="string">&lt;0&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        port@<span class="number">5</span> &#123;</span><br><span class="line">            reg = &lt;<span class="number">5</span>&gt;; <span class="comment">// 端口地址</span></span><br><span class="line">            label = <span class="string">&quot;lan1&quot;</span>; <span class="comment">// 端口标签</span></span><br><span class="line">            phy-mode = <span class="string">&quot;2500base-x&quot;</span>; <span class="comment">// PHY 模式（2.5Gbps）</span></span><br><span class="line">            phy-handle = &lt;&amp;phy5&gt;; <span class="comment">// 关联的 PHY 设备</span></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        port@<span class="number">6</span> &#123;</span><br><span class="line">            reg = &lt;<span class="number">6</span>&gt;; <span class="comment">// 端口地址</span></span><br><span class="line">            ethernet = &lt;&amp;gmac0&gt;; <span class="comment">// 关联的以太网设备</span></span><br><span class="line">            phy-mode = <span class="string">&quot;2500base-x&quot;</span>; <span class="comment">// PHY 模式（2.5Gbps）</span></span><br><span class="line"></span><br><span class="line">            fixed-link &#123;</span><br><span class="line">                speed = &lt;<span class="number">2500</span>&gt;; <span class="comment">// 固定连接速度</span></span><br><span class="line">                full-duplex; <span class="comment">// 全双工模式</span></span><br><span class="line">                pause; <span class="comment">// 启用流控</span></span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;spi0 &#123;</span><br><span class="line">    pinctrl-names = <span class="string">&quot;default&quot;</span>; <span class="comment">// 引脚控制名称</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = &lt;&amp;spi_flash_pins&gt;; <span class="comment">// 引脚控制配置</span></span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用 SPI0</span></span><br><span class="line"></span><br><span class="line">    flash@<span class="number">0</span> &#123;</span><br><span class="line">        compatible = <span class="string">&quot;spi-nand&quot;</span>; <span class="comment">// SPI NAND 闪存设备</span></span><br><span class="line">        <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">        <span class="meta">#size-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line">        reg = &lt;<span class="number">0</span>&gt;; <span class="comment">// 寄存器地址</span></span><br><span class="line"></span><br><span class="line">        spi-max-frequency = &lt;<span class="number">20000000</span>&gt;; <span class="comment">// SPI 最大频率</span></span><br><span class="line">        spi-tx-bus-width = &lt;<span class="number">4</span>&gt;; <span class="comment">// SPI 发送总线宽度</span></span><br><span class="line">        spi-rx-bus-width = &lt;<span class="number">4</span>&gt;; <span class="comment">// SPI 接收总线宽度</span></span><br><span class="line"></span><br><span class="line">        partitions &#123;</span><br><span class="line">            compatible = <span class="string">&quot;fixed-partitions&quot;</span>; <span class="comment">// 固定分区</span></span><br><span class="line">            <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">            <span class="meta">#size-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line">            ...</span><br><span class="line"></span><br><span class="line">            partition@<span class="number">180000</span> &#123;</span><br><span class="line">                label = <span class="string">&quot;factory&quot;</span>; <span class="comment">// 分区标签</span></span><br><span class="line">                reg = &lt;<span class="number">0x180000</span> <span class="number">0x200000</span>&gt;; <span class="comment">// 分区地址范围</span></span><br><span class="line">                read-only; <span class="comment">// 只读分区</span></span><br><span class="line"></span><br><span class="line">                nvmem-layout &#123;</span><br><span class="line">                    compatible = <span class="string">&quot;fixed-layout&quot;</span>; <span class="comment">// 固定布局</span></span><br><span class="line">                    <span class="meta">#address-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 地址单元数量</span></span></span><br><span class="line">                    <span class="meta">#size-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// 大小单元数量</span></span></span><br><span class="line"></span><br><span class="line">                    eeprom_factory_0: eeprom@<span class="number">0</span> &#123;</span><br><span class="line">                        reg = &lt;<span class="number">0x0</span> <span class="number">0x1000</span>&gt;; <span class="comment">// EEPROM 地址范围</span></span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    macaddr_factory_1fef20: macaddr@<span class="number">1f</span>ef20 &#123;</span><br><span class="line">                        compatible = <span class="string">&quot;mac-base&quot;</span>; <span class="comment">// MAC 地址基础</span></span><br><span class="line">                        reg = &lt;<span class="number">0x1fef20</span> <span class="number">0x6</span>&gt;; <span class="comment">// MAC 地址存储位置</span></span><br><span class="line">                        <span class="meta">#nvmem-cell-cells = <span class="string">&lt;1&gt;</span>; <span class="comment">// NVMEM 单元数量</span></span></span><br><span class="line">                    &#125;;</span><br><span class="line">                    ...</span><br><span class="line">                &#125;;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            partition@<span class="number">380000</span> &#123;</span><br><span class="line">                label = <span class="string">&quot;fip&quot;</span>; <span class="comment">// 分区标签</span></span><br><span class="line">                reg = &lt;<span class="number">0x380000</span> <span class="number">0x200000</span>&gt;; <span class="comment">// 分区地址范围</span></span><br><span class="line">                read-only; <span class="comment">// 只读分区</span></span><br><span class="line">            &#125;;</span><br><span class="line">            ...</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;pio &#123;</span><br><span class="line">    spi_flash_pins: spi-flash-pins<span class="number">-33</span>-to<span class="number">-38</span> &#123;</span><br><span class="line">        mux &#123;</span><br><span class="line">            function = <span class="string">&quot;spi&quot;</span>; <span class="comment">// 引脚功能（SPI）</span></span><br><span class="line">            groups = <span class="string">&quot;spi0&quot;</span>, <span class="string">&quot;spi0_wp_hold&quot;</span>; <span class="comment">// 引脚组</span></span><br><span class="line">        &#125;;</span><br><span class="line">        conf-pu &#123;</span><br><span class="line">            pins = <span class="string">&quot;SPI2_CS&quot;</span>, <span class="string">&quot;SPI2_HOLD&quot;</span>, <span class="string">&quot;SPI2_WP&quot;</span>; <span class="comment">// 引脚名称</span></span><br><span class="line">            drive-strength = &lt;<span class="number">8</span>&gt;; <span class="comment">// 驱动强度</span></span><br><span class="line">            mediatek,pull-up-adv = &lt;<span class="number">0</span>&gt;; <span class="comment">// 上拉配置（禁用）</span></span><br><span class="line">        &#125;;</span><br><span class="line">        ...</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    wf_2g_5g_pins: wf_2g_5g-pins &#123;</span><br><span class="line">        mux &#123;</span><br><span class="line">            function = <span class="string">&quot;wifi&quot;</span>; <span class="comment">// 引脚功能（WiFi）</span></span><br><span class="line">            groups = <span class="string">&quot;wf_2g&quot;</span>, <span class="string">&quot;wf_5g&quot;</span>; <span class="comment">// 引脚组</span></span><br><span class="line">        &#125;;</span><br><span class="line">        conf &#123;</span><br><span class="line">            pins = <span class="string">&quot;WF0_HB1&quot;</span>, <span class="string">&quot;WF0_HB2&quot;</span>, <span class="string">&quot;WF0_HB3&quot;</span>, <span class="string">&quot;WF0_HB4&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF0_HB0&quot;</span>, <span class="string">&quot;WF0_HB0_B&quot;</span>, <span class="string">&quot;WF0_HB5&quot;</span>, <span class="string">&quot;WF0_HB6&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF0_HB7&quot;</span>, <span class="string">&quot;WF0_HB8&quot;</span>, <span class="string">&quot;WF0_HB9&quot;</span>, <span class="string">&quot;WF0_HB10&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF0_TOP_CLK&quot;</span>, <span class="string">&quot;WF0_TOP_DATA&quot;</span>, <span class="string">&quot;WF1_HB1&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF1_HB2&quot;</span>, <span class="string">&quot;WF1_HB3&quot;</span>, <span class="string">&quot;WF1_HB4&quot;</span>, <span class="string">&quot;WF1_HB0&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF1_HB5&quot;</span>, <span class="string">&quot;WF1_HB6&quot;</span>, <span class="string">&quot;WF1_HB7&quot;</span>, <span class="string">&quot;WF1_HB8&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;WF1_TOP_CLK&quot;</span>, <span class="string">&quot;WF1_TOP_DATA&quot;</span>; <span class="comment">// 引脚名称</span></span><br><span class="line">            drive-strength = &lt;<span class="number">4</span>&gt;; <span class="comment">// 驱动强度</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;trng &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用随机数生成器</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;ssusb &#123;</span><br><span class="line">    vusb33-supply = &lt;&amp;reg_3p3v&gt;; <span class="comment">// USB 3.3V 电源</span></span><br><span class="line">    vbus-supply = &lt;&amp;reg_5v&gt;; <span class="comment">// USB 5V 电源</span></span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用 USB 模块</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;uart0 &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用串口0</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;usb_phy &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用 USB PHY</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;watchdog &#123;</span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用看门狗</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">&amp;wifi &#123;</span><br><span class="line">    nvmem-cells = &lt;&amp;eeprom_factory_0&gt;; <span class="comment">// WiFi EEPROM 存储单元</span></span><br><span class="line">    nvmem-cell-names = <span class="string">&quot;eeprom&quot;</span>; <span class="comment">// EEPROM 名称</span></span><br><span class="line">    pinctrl-names = <span class="string">&quot;default&quot;</span>; <span class="comment">// 引脚控制名称</span></span><br><span class="line">    pinctrl<span class="number">-0</span> = &lt;&amp;wf_2g_5g_pins&gt;; <span class="comment">// 引脚控制配置</span></span><br><span class="line">    status = <span class="string">&quot;okay&quot;</span>; <span class="comment">// 启用 WiFi 模块</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="补丁"><a class="header-anchor" href="#补丁"></a>补丁</h2>
+<p>子目录<code>patches-xxx</code> 是对一个目标版本为 xxx 的内核补丁。<br>
+它包含的文件名称（<code>3个数字-全小写字母的简介.patch</code>）含义如下:</p>
+<p><strong>0xx</strong> - 上游需要回退的内容补丁<br>
+<strong>1xx</strong> - 等待上游合并的代码补丁<br>
+<strong>2xx</strong> - 内核构建、配置和头文件的补丁<br>
+<strong>3xx</strong> - 用于特定体系结构的补丁<br>
+<strong>4xx</strong> - MTD相关的补丁（系统和设备方面）<br>
+<strong>5xx</strong> - 文件系统相关的补丁<br>
+<strong>6xx</strong> - 网络通用补丁<br>
+<strong>7xx</strong> - 网络物理层驱动补丁<br>
+<strong>8xx</strong> - 其他设备补丁<br>
+<strong>9xx</strong> - 未分类的其他补丁</p>
+<h1 id="uboot"><a class="header-anchor" href="#uboot"></a>Uboot</h1>
+<p>先让我们来看看更常见的 PC 机的启动过程：</p>
+<ul>
+<li>BIOS / UEFI 程序部署在主板特定芯片上，操作系统部署在硬盘上</li>
+<li>上电后，PC 先执行 BIOS 程序，由 BIOS 程序负责初始化内存、硬盘，将 OS 镜像读取到内存中，最后跳转到内存中执行 OS 直至启动</li>
+</ul>
+<p>相对应地，嵌入式系统的启动过程：</p>
+<ul>
+<li>Uboot 程序部署在能作为启动设备的 Flash 上，操作系统部署在 Flash 上</li>
+<li>上电后，嵌入式系统先执行 Uboot 程序，由 Uboot 程序负责初始化内存、Flash，将 OS 镜像读取到内存中，最后跳转到内存中执行 OS 直至启动</li>
+</ul>
+<p>因此，可以将 Uboot 程序类比成 PC 中的 BIOS，引导系统启动。对于这一类程序，更通用的描述是 BootLoader，Uboot 只是其中一种。</p>
+<p><img src="Router-0/image_Z6RF3dWvZC.png" alt=""></p>
+<p>不死 Uboot（Breed）是路由器刷机常见的 Uboot 之一，由国内个人<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/hackpascal" title="hackpascal">hackpascal</a> 开发。</p>
+<p>为什么会被称为“不死鸟”？有些官方升级固件自带 Bootloader，如果从官方固件升级，会导致现有 Bootloader 被覆盖。而当 Breed 更新固件时，它会自动删除固件附带的引导加载程序，因此可以防止 Breed 被覆盖。</p>
+<h1 id="uci"><a class="header-anchor" href="#uci"></a>UCI</h1>
+<p><code>UCI</code>是一个用 C 语言编写的功能组件，为了 <em>集中化</em> 管理运行 OpenWrt 系统的设备的配置文件。</p>
+<p>UCI 是在 OpenWrt 历史版本 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://openwrt.org/about/history" title="White Russian">White Russian</a> 中存在的基于 NVRAM 的配置文件的 <em>替代版本</em> 和 <em>其附带的标准配置文件程序</em> 的封装，例如<code>/etc/network/interfaces</code>，<code>/etc/exports</code>，<code>/etc/dnsmasq.conf</code>，<code>/etc/samba/samba.conf</code>等。</p>
+<p>他们可以通过任何文本编辑器、命令行功能组件<code>uci</code>、各种编程API（如 Shell，Lua 和 C）实现更改。</p>
+<h1 id="luci"><a class="header-anchor" href="#luci"></a>LuCI</h1>
+<p>LuCI 建立于 2008 年 3 月，最初名为“FFLuCI”，作为将 OpenWrt 分支 White Russian 的 Freifunk-Firmware 移植到其继任分支 Kamikaze 的努力的一部分。这个项目的起因是在嵌入式设备上缺乏一个免费、干净、可扩展且易于维护的 Web 用户界面。虽然大多数类似的配置界面都大量使用了 Shell 脚本语言，但 LuCI：</p>
+<ul>
+<li>使用 Lua 编程语言</li>
+<li>将接口分割成逻辑部分，如模型和视图，使用面向对象的库和模板。</li>
+</ul>
+<p>这确保了更好的性能、更小的安装体积、更快的运行时间和简单的可维护性。</p>
+<p>同时，LuCI 从 MVC 框架发展成为一个包含多个库、应用程序和用户界面的集合，适用于 Lua 程序员，同时仍然专注于 Web 用户界面，这也成为了 OpenWrt Kamikaze 8.09 以来的 OpenWrt 官方发布的一部分。</p>
+<p><img src="Router-0/image_bgRESdsw-U.png" alt=""></p>
+<h1 id="squashfs"><a class="header-anchor" href="#squashfs"></a>SquashFS</h1>
+<p><strong>Squashfs（.sfs）<strong>是一套供 Linux 核心使用的 GPL 开源</strong>只读</strong>压缩文件系统。Squashfs 能够为文件系统内的文件、inode 及目录结构进行压缩，并支持最大 1024k 字节的块大小，以提供更大的压缩比。</p>
+<p>Squashfs 常被用于各 Linux 发行版的 LiveCD 中，也用于 OpenWrt 和 DD-WRT 的路由器固件。Chromecast 也是该文件系统的用户。在 LiveCD 中，Squashfs 通常与 UnionFS，OverlayFS 和 aufs 等联合挂载文件系统结合使用，以便在 LiveCD 系统中提供可读写支持。Appimage 项目也使用 Squashfs 作为镜像。</p>
+<h1 id="overlayfs"><a class="header-anchor" href="#overlayfs"></a>OverlayFS</h1>
+<p>此部分来源于<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/436450556" title="这篇文章">这篇文章</a>。</p>
+<p>OverlayFS，顾名思义是一种堆叠文件系统，可以将多个目录的内容叠加到另一个目录上。OverlayFS 并不直接涉及磁盘空间结构，看起来像是将多个目录的文件按照规则合并到同一个目录。且对多个源目录具体使用文件系统类型没有要求，即使各个源目录的文件系统类型不同也不影响使用。</p>
+<p><img src="Router-0/image_jeOjki7-LG.png" alt=""></p>
+<p>在使用如上 mount 进行 OverlayFS 合并之后，遵循如下规则：</p>
+<ul>
+<li>lowerdir 和 upperdir 两个目录存在同名文件时，lowerdir 的文件将会被隐藏，用户只能看到 upperdir 的文件。</li>
+<li>lowerdir 低优先级的同目录同名文件将会被隐藏。</li>
+<li>如果存在同名目录，那么 lowerdir 和 upperdir 目录中的内容将会合并。</li>
+<li>当用户修改 mergedir 中来自 upperdir 的数据时，数据将直接写入 upperdir 中原来目录中，删除文件也同理。</li>
+<li>当用户修改 mergedir 中来自 lowerdir 的数据时，lowerdir 中内容均不会发生任何改变。因为 lowerdir 是只读的。用户想修改来自 lowerdir 数据时，overlayfs 会首先拷贝一份 lowerdir 中文件副本到 upperdir 中（这也被称作 OverlayFS 的 copy-up 特性）。后续修改或删除将会在 upperdir 下的副本中进行，lowerdir 中原文件将会被隐藏。</li>
+<li>如果某一个目录单纯来自 lowerdir 或者 lowerdir 和 upperdir 合并，默认无法进行 rename 系统调用。但是可以通过 mv 重命名。</li>
+</ul>
+<p>一般 lowerdir 为只读文件系统，upperdir 为可写文件系统，这形成了一个有趣的机制，似乎我们可以修改 lowerdir 下的文件或目录，lowerdir 看上去变成了一个可读写的文件系统。</p>
+<h3 id="删除文件和目录"><a class="header-anchor" href="#删除文件和目录"></a>删除文件和目录</h3>
+<p>为了支持 rm 和 rmdir 而又不修改 lower 文件系统，需要在 upper 文件系统中记录文件或目录已经被删除。OverlayFS 引入了 whiteout 文件的概念。如果需要删除 lower 层的文件或目录，需要在 upper 层创建一个 whiteout 文件。因此会导致删除文件反而会导致占用空间增加的特性。</p>
+<p>OverlayFS 以其独特的优势正得到越来越广泛的应用，OpenWrt 系统也利用 OverlayFS 减少擦写闪存的次数，延长闪存的使用寿命。</p>
+<h1 id="编译-openwrt"><a class="header-anchor" href="#编译-openwrt"></a>编译 OpenWrt</h1>
+<p>以下操作请使用普通用户，不要使用 root 以及 sudo。</p>
+<h2 id="拉取官方源码"><a class="header-anchor" href="#拉取官方源码"></a>拉取官方源码</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/openwrt/openwrt.git</span><br><span class="line"><span class="built_in">cd</span> openwrt</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p>切换分支，一般选择最新的稳定版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -a</span><br><span class="line">git tag</span><br><span class="line">git checkout v24.10.0</span><br></pre></td></tr></table></figure>
+<h2 id="更新并安装软件包列表"><a class="header-anchor" href="#更新并安装软件包列表"></a>更新并安装软件包列表</h2>
+<p>可能需要使用代理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br></pre></td></tr></table></figure>
+<h2 id="选取设备文件"><a class="header-anchor" href="#选取设备文件"></a>选取设备文件</h2>
+<p>终端输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
+<p>在出现的菜单中按照目标设备依次选择<code>Target System</code>，<code>Subtarget</code>与<code>Target Profile</code>。</p>
+<p><img src="Router-0/image_ChdlOfNh3P.png" alt=""></p>
+<h2 id="挑选内核模块与软件包"><a class="header-anchor" href="#挑选内核模块与软件包"></a>挑选内核模块与软件包</h2>
+<p>这是 OpenWrt 编译过程中最激动人心的时刻。你可以随意挑选自己所需的软件包与内核模块。</p>
+<p><img src="Router-0/image_XXJpUFMaYV.png" alt=""></p>
+<p>我们可能会加入如下类别的软件包：</p>
+<ul>
+<li><strong>Base system</strong>：基础包，如<code>dnsmasq</code>、<code>firewall4</code>等</li>
+<li><strong>Administration</strong>：权限相关以及数据监控等管理功能</li>
+<li><strong>Boot Loaders</strong></li>
+<li><strong>Firmware</strong>：固件支持，请根据设备芯片选择</li>
+<li><strong>Libraries</strong>：支持库文件</li>
+<li><strong>LuCI</strong>：包括 LuCI 模块、应用、主题等</li>
+<li><strong>Network</strong>：网络相关包</li>
+<li><strong>Utilities</strong>：其他基础工具软件</li>
+</ul>
+<p>别忘了选择对应的内核模块（在 <strong>Kernel modules</strong> 中）：</p>
+<p><img src="Router-0/image_8Ct4UpPfQE.png" alt=""></p>
+<p>我们还可以在界面中键入<code>/</code>（和 Vim 一样）以查询软件包。</p>
+<p><img src="Router-0/image_dypskqiPqm.png" alt=""></p>
+<h3 id="可能会安装的内核模块-软件包"><a class="header-anchor" href="#可能会安装的内核模块-软件包"></a>可能会安装的内核模块 / 软件包</h3>
+<ul>
+<li><code>kmod-tun</code>：TUN 模块</li>
+<li><code>luci-theme-argon</code>：这是一个较为用户友好的 LuCI 主题，需要<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerrykuku/luci-theme-argon" title="手动安装">手动安装</a>。</li>
+<li><code>wpad</code>：是<code>wpad-basic</code>的完整版，支持 WPA 企业热点（PEAP 认证）登录。</li>
+<li><code>odhcp6c</code>：轻量级 DHCPv6 和 RA 客户端
+<ul>
+<li>如选用<code>dnsmasq-full</code>请不要加入<code>odhcpd</code>与<code>odhcpd-ipv6only</code>包</li>
+</ul>
+</li>
+<li><code>ca-bundle</code>与<code>ca-certificate</code>：SSL 支持</li>
+</ul>
+<h2 id="编译前操作"><a class="header-anchor" href="#编译前操作"></a>编译前操作</h2>
+<h3 id="安装依赖"><a class="header-anchor" href="#安装依赖"></a>安装依赖</h3>
+<p>以 Debian 系为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update </span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses-dev libssl-dev python3-distutils rsync unzip zlib1g-dev file wget</span><br></pre></td></tr></table></figure>
+<h3 id="预下载"><a class="header-anchor" href="#预下载"></a>预下载</h3>
+<p>使用<code>make download</code>在最终构建前下载所有依赖，并激活多线程编译。可能需要使用代理。</p>
+<h2 id="正式编译"><a class="header-anchor" href="#正式编译"></a>正式编译</h2>
+<p>经过了这么多的准备工作，我们终于要迎来最后一步了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make -jN V=s</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-jN</code>: make 命令可以加上<code>-j</code>参数用于指定使用多少 CPU 核编译，可以加速编译过程。例如：<code>make download -j4</code>，<code>make -j5</code>。</li>
+<li><code>V=s</code>：make命令可以加上<code>V=s</code>以输出更多的编译错误信息。</li>
+</ul>
+<p>在实际的编译过程中，可能会出现一些错误和警告。例如某个包没有安装，package 依赖冲突等等。根据提示的信息进行查询和解决即可。</p>
+<p>编译完成后，我们可以在<code>bin/targets/xxx</code>目录下找到我们最终需要的文件。</p>
+<p><img src="Router-0/image_jVfU8o9sW_.png" alt=""></p>
+<p>其中，</p>
+<ul>
+<li><strong>…imagebuilder…tar.zst</strong>：Image Builder</li>
+<li><strong>…uboot.fip</strong>：Uboot FIP（Firmware Image Package）分区映像</li>
+<li><strong>…initramfs-recovery.itb</strong>：临时的 InitramFS 恢复镜像（用于安装到内存中）</li>
+<li><strong>…preloader.bin</strong>：Flash BL2 分区映像</li>
+<li><strong>…squashfs-sysupgrade.itb</strong>：SquashFS 构建的系统升级镜像</li>
+</ul>
+<h2 id="关于-image-builder"><a class="header-anchor" href="#关于-image-builder"></a>关于 Image Builder</h2>
+<p>Image Builder（以前称为 Image Generator）是一个预编译环境，适用于创建自定义映像，而无需从源代码编译它们。它下载预编译的软件包并将它们集成到单个可闪存映像中。</p>
+<p>在以下情况下，这样做很有用：</p>
+<ul>
+<li>您想在较小的闪存中容纳更多的封装</li>
+<li>您想关注开发快照</li>
+<li>您的设备具有 32MB 或更少的 RAM 并且 opkg 无法正常工作</li>
+<li>您想批量刷新几十个设备，并且需要一个特定的映像设置</li>
+</ul>
+<p>使用 Image Builder 进行编译的速度相比从零开始很快，但定制性会下降。</p>
+<p>为了生成 Image Builder，我们在<code>make menuconfig</code>中勾选<code>Build the Openwrt Image Builder</code>即可。</p>
+<h3 id="使用-image-builder"><a class="header-anchor" href="#使用-image-builder"></a>使用 Image Builder</h3>
+<p>解压存档并更改工作目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -J -x -f openwrt-imagebuilder-*.tar.xz</span><br><span class="line"><span class="built_in">cd</span> openwrt-imagebuilder-*/</span><br></pre></td></tr></table></figure>
+<p>选择适当的配置文件，插件和自定义文件夹，将其传递给<code>make image</code>命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make image \</span><br><span class="line">PROFILE=<span class="string">&quot;profile-name&quot;</span> \ <span class="comment"># 选择配置文件</span></span><br><span class="line">PACKAGES=<span class="string">&quot;pkg1 pkg2 pkg3 -pkg4 -pkg5 -pkg6&quot;</span> \ <span class="comment"># 选择插件</span></span><br><span class="line">FILES=<span class="string">&quot;files&quot;</span> \ <span class="comment"># 自定义文件夹</span></span><br><span class="line">DISABLED_SERVICES=<span class="string">&quot;svc1 svc2 svc3&quot;</span> <span class="comment"># 要禁用的 /etc/init.d 中服务的名称</span></span><br></pre></td></tr></table></figure>
+<p><code>make</code>命令完成后，生成的镜像存放在<code>bin/&lt;设备架构&gt;</code>目录下，就像编译一样。</p>
+<br/>
+<a href="/Router-1" title="硬路由（1）—— 概述 &amp; OpenWrt 安装">下一章节：概述 &amp; OpenWrt 安装</a>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site">Dean Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site/Router-0">https://blog.dawnocean.site/Router-0</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.dawnocean.site" target="_blank">Dean's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%AF%91/">编译</a></div><div class="post-share"><div class="social-share" data-image="/assets/img/kirby_cover19.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/Math-1" title="补完高中的数学发现"><img class="cover" src="/assets/img/default_cover5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">补完高中的数学发现</div></div><div class="info-2"><div class="info-item-1">写在前面 这是我为自己高中的数学探索过程补上的拼图。我不是数学专业的学生，因此有很多推理过程会掺杂着自己的直觉，也会有很多不严谨的描述，感觉有点班门弄斧了，请各位多多包涵。如果各位能提出一些全新的观点，我更是感激不尽。 我还是不想做一个辜负以前的自己的人。 探索过程 高中时的一天，我闲来无事，在纸上画长方体的透视结构。以前学习的素描知识告诉我：所有不平行于画面的线都有灭点。同一个方向的所有直线，都有同一个灭点。对于长方体而言，就是每组四条平行的棱如果不平行于画面，（它们的延长线）就会相交于同一个点。 当时我想画一个符合两点透视（即只有一组棱平行于画面）的长方体。我怎么保证自己能够画出一个符合透视结构的长方体呢？ 我先选取了两个灭点，又在两个灭点之间选取了一条线段作为最远离我们的那条棱（也是四条平行于画面的棱当中的一条），从两个灭点出发分别连接棱的两个端点，形成了两个面。接下来，我在两个平面分别选取一条棱（是四条平行于画面的棱当中的第二、三条），与第一条棱平行。再将新确定的两条棱的端点分别与对侧灭点相连，这样得到的两个交点，就确定了第四条棱。  我当时就有个疑问：第四条棱为什么这样...</div></div></div></a><a class="pagination-related" href="/NAS-13" title="NAS（13）—— Navidrome + MusicTag 音乐管理"><img class="cover" src="/assets/img/default_cover4.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">NAS（13）—— Navidrome + MusicTag 音乐管理</div></div><div class="info-2"><div class="info-item-1">回到目录  Navidrome 概述 Navidrome 是一款全功能、开源且支持多平台的音乐服务器应用程序，可以在 MacOS、Linux、Windows 以及 Docker 等平台上运行。它支持常见的音频格式如 MP3、FLAC 和 WAV，并提供了丰富的管理工具和服务。通过 Web 界面或 API，你可以轻松管理和访问你的音乐库。  通过 Docker 部署 使用 Docker Compose： 123456789101112131415161718192021222324252627services:  navidrome:    image: deluan/navidrome:latest    user: 1001:100 # should be owner of volumes    ports:      - &quot;4533:4533&quot;    restart: unless-stopped    environment:      # Optional: put your config options customization here. Exa...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#openwrt"><span class="toc-number">1.</span> <span class="toc-text">OpenWrt</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90-lean-s-lede"><span class="toc-number">1.1.</span> <span class="toc-text">为什么不推荐 Lean’s LEDE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91-openwrt-%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">1.2.</span> <span class="toc-text">自己编译 OpenWrt 的好处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E6%96%B0%E8%AE%BE%E5%A4%87%E6%B7%BB%E5%8A%A0-openwrt-%E6%94%AF%E6%8C%81"><span class="toc-number">2.</span> <span class="toc-text">为新设备添加 OpenWrt 支持</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%96%87%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">重要文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E6%96%B0%E8%AE%BE%E5%A4%87%E5%87%BA%E7%8E%B0%E5%9C%A8-make-menuconfig-%E4%B8%AD"><span class="toc-number">2.1.1.</span> <span class="toc-text">使新设备出现在 make menuconfig 中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dts-%E8%AE%BE%E5%A4%87%E6%A0%91"><span class="toc-number">2.2.</span> <span class="toc-text">DTS（设备树）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E4%B8%81"><span class="toc-number">2.3.</span> <span class="toc-text">补丁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#uboot"><span class="toc-number">3.</span> <span class="toc-text">Uboot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#uci"><span class="toc-number">4.</span> <span class="toc-text">UCI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#luci"><span class="toc-number">5.</span> <span class="toc-text">LuCI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#squashfs"><span class="toc-number">6.</span> <span class="toc-text">SquashFS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#overlayfs"><span class="toc-number">7.</span> <span class="toc-text">OverlayFS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-number">7.0.1.</span> <span class="toc-text">删除文件和目录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91-openwrt"><span class="toc-number">8.</span> <span class="toc-text">编译 OpenWrt</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E5%8F%96%E5%AE%98%E6%96%B9%E6%BA%90%E7%A0%81"><span class="toc-number">8.1.</span> <span class="toc-text">拉取官方源码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%E5%B9%B6%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%88%97%E8%A1%A8"><span class="toc-number">8.2.</span> <span class="toc-text">更新并安装软件包列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E5%8F%96%E8%AE%BE%E5%A4%87%E6%96%87%E4%BB%B6"><span class="toc-number">8.3.</span> <span class="toc-text">选取设备文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%91%E9%80%89%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97%E4%B8%8E%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-number">8.4.</span> <span class="toc-text">挑选内核模块与软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%AE%89%E8%A3%85%E7%9A%84%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97-%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="toc-number">8.4.1.</span> <span class="toc-text">可能会安装的内核模块 &#x2F; 软件包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%89%8D%E6%93%8D%E4%BD%9C"><span class="toc-number">8.5.</span> <span class="toc-text">编译前操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-number">8.5.1.</span> <span class="toc-text">安装依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E4%B8%8B%E8%BD%BD"><span class="toc-number">8.5.2.</span> <span class="toc-text">预下载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E7%BC%96%E8%AF%91"><span class="toc-number">8.6.</span> <span class="toc-text">正式编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-image-builder"><span class="toc-number">8.7.</span> <span class="toc-text">关于 Image Builder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-image-builder"><span class="toc-number">8.7.1.</span> <span class="toc-text">使用 Image Builder</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Dawn1Ocean/giscus',
+      'data-repo-id': 'R_kgDOLniK6Q',
+      'data-category-id': 'DIC_kwDOLniK6c4CeVy2',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

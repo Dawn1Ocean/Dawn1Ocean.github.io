@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="晓洋的博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dean&#39;s Blog">
+<meta property="og:url" content="https://blog.dawnocean.site/page/2/">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="晓洋的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="dean,dawn_ocean,dawn1ocean,晓洋,博客,furry,NAS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/avatar.jpg"><script type="application/ld+json"></script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Dean\'s Blog',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/assets/img/index.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">Dean's Blog</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/Router-6" title="硬路由（6）—— Tricks &amp; 组网图景"><img class="post-bg" src="/assets/img/kirby_cover17.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="硬路由（6）—— Tricks &amp; 组网图景"></a></div><div class="recent-post-info"><a class="article-title" href="/Router-6" title="硬路由（6）—— Tricks &amp; 组网图景">硬路由（6）—— Tricks &amp; 组网图景</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-06T08:56:11.000Z" title="发表于 2025-03-06 16:56:11">2025-03-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:30:58.052Z" title="更新于 2025-09-03 01:30:58">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A1%AC%E8%B7%AF%E7%94%B1/">硬路由</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A1%AC%E8%B7%AF%E7%94%B1/%E7%BB%84%E7%BD%91/">组网</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Windows/">Windows</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/24H2/">24H2</a></span></div><div class="content">回到目录  Tricks 这里是一些笔者在配置网络中遇到并解决的问题，由于暂时无法归类到其他页面所以存放在此处。 Q：发现路由器带不动 NAS + 台式机组合，总是断流怎么办？ 以下是笔者使用 AX3000T 的自述： 这大半年来配置并使用 AX3000T，我的感受是：能用，但是一点也不好用。它的配置如下：  Filogic 820（MT7981B） WiFi 6 256 MB RAM + 128 MB Flash  虽然它支持解锁 SSH、刷入 OpenWrt（我的固件为 qwrt 改），但我为了它做了一次次妥协。 起初，我希望它能够实现以下功能：  Tailscale 远程组网  安装时发现空间不足，使用脚本装入了/tmp  导致路由器频繁 OOM 重启   最终将 Tailscale 安装在了 NAS 上   科学上网  使用自带的 OpenClash 插件时会崩溃 改用 Shellcrash   无线组网（5G + 2.4G）  5G 频段同时开启 Client 和 Master 模式导致性能下降 关闭 5G 频段的 Master 模式    即便如此，在台式机和 NAS...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Router-5" title="硬路由（5）—— 校园网 &amp; 远程访问（IPv6）"><img class="post-bg" src="/assets/img/kirby_cover22.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="硬路由（5）—— 校园网 &amp; 远程访问（IPv6）"></a></div><div class="recent-post-info"><a class="article-title" href="/Router-5" title="硬路由（5）—— 校园网 &amp; 远程访问（IPv6）">硬路由（5）—— 校园网 &amp; 远程访问（IPv6）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-06T08:48:46.000Z" title="发表于 2025-03-06 16:48:46">2025-03-06</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.937Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A1%AC%E8%B7%AF%E7%94%B1/">硬路由</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A1%AC%E8%B7%AF%E7%94%B1/OpenWrt/">OpenWrt</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%A1%AC%E8%B7%AF%E7%94%B1/OpenWrt/IPv6/">IPv6</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/LuCi/">LuCi</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/odhcpd/">odhcpd</a></span></div><div class="content">回到目录  概述 经过上述配置后，我们已经能够在 IPv4 环境下实现组网，并通过 Tailscale 远程加入了内网。 但我们可能会遇到很多问题：  Tailscale 走国外中继服务器 / 自建 Derp 性能不足，导致连接不稳定 NAT 对路由器性能开销较大 校内某些网站（如 NexusHD、ZJU Mirror 等）支持 IPv6 访问  这时，我们就需要配置 IPv6 环境。 IPv6 是 Internet 协议的最新版本，旨在替换 IPv4 地址。IPv6 地址使用以冒号分隔的十六进制数字。它分为八个 16 位块，构成一个 128 位地址方案。与 IPv4 的 NAT 方案相比，IPv6 可以给主机分配全球单播地址来实现对主机的远程访问。 在配置之前，让我们简单地了解一下关于配置校园网 IPv6 的部分所需知识。 全球单播地址 全局单播地址是带有全局单播前缀的IPv6地址，其作用类似于IPv4中的公网地址。 全球单播地址由全球路由前缀、子网ID和接口标识组成，其格式如下所示：  全球单播地址的范围为2xxx::/3，其中前 3 位固定，第 4 位至第 48 位为公共拓...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/DeaNG" title="DeaNG —— Dean 的纯主观游戏评价合集"><img class="post-bg" src="/assets/img/kirby_cover9.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeaNG —— Dean 的纯主观游戏评价合集"></a></div><div class="recent-post-info"><a class="article-title" href="/DeaNG" title="DeaNG —— Dean 的纯主观游戏评价合集">DeaNG —— Dean 的纯主观游戏评价合集</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-14T12:31:46.000Z" title="发表于 2024-11-14 20:31:46">2024-11-14</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.666Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span></div><div class="content">概述 DeaNG，Dean’s Network for Games，是 Dean 对于他游玩过的游戏的纯主观评价合集。 本合集更注重个人的游玩体验，而倾向于忽略游戏的开发过程、背后故事。 满足以下要求的游戏会加入 DeaNG 当中：  Dean 已游玩过全部主要内容 Dean 愿意将此游戏加入 DeaNG  评分标准 总分为 100 分，每小项 10 分，加权后计算总分：  游戏性（GamePlay）：一个游戏最重要的部分。 创新性（Innovation）| 剧情（Plot）。  不同的游戏在二者之间会有不同的侧重。   可持续性（New Game+）| 沉浸度（Flow）。  可持续性：游戏多周目 / 持续游玩的体验、价值。 沉浸度：游玩过程的连续性 / 惯性。 不同的游戏在二者之间会有不同的侧重。   图像（Graphics）。 音效 / 音乐（Sounds）。  这五项的基本权重： (GP):(I∣P):(N∣F):(G):(S)=2:1.7:1.3:1:1(GP):(I|P):(N|F):(G):(S)=2:1.7:1.3:1:1 (GP):(I∣P):(N∣F):(G)...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/NAS-12" title="NAS（12）—— Immich 照片管理"><img class="post-bg" src="/assets/img/kirby_cover.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（12）—— Immich 照片管理"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-12" title="NAS（12）—— Immich 照片管理">NAS（12）—— Immich 照片管理</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:44:00.000Z" title="发表于 2024-08-26 02:44:00">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.819Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Immich/">Immich</a></span></div><div class="content">回到目录  概述 Immich 是一个直接从 iPhone、Android 手机上备份照片与视频的开源解决方案，通过部署在自己的电脑、NAS、服务器中，使用 App 进行备份。界面酷似 Google Photos，支持多用户、照片和相册分享、好友上传、地理位置、机器学习识别事件等功能。是居家备份照片的好帮手。  通过 Docker 部署 使用 Docker Compose： 进入部署文件夹，下载docker-compose.yml文件： 1wget -O docker-compose.yml https://github.com/immich-app/immich/releases/latest/download/docker-compose.yml 下载.env文件： 1wget -O .env https://github.com/immich-app/immich/releases/latest/download/example.env （可选）下载hwaccel.transcoding.yml文件： 1wget -O hwaccel.transcoding.yml htt...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/NAS-11" title="NAS（11）—— HTPC"><img class="post-bg" src="/assets/img/kirby_cover11.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（11）—— HTPC"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-11" title="NAS（11）—— HTPC">NAS（11）—— HTPC</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:54.000Z" title="发表于 2024-08-26 02:43:54">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.772Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/NAS/">NAS</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/NAS/HTPC/">HTPC</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Jellyfin/">Jellyfin</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E5%88%AE%E5%89%8A/">刮削</a></span></div><div class="content">回到目录  概述 HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就是可以组建家庭影院的电脑，与功放、大屏幕电视或投影仪连接，以欣赏高清视频和音乐。 在这个部分，我们配置的机器并不能严格地称为一台 HTPC，但已经能完成媒体库的建立、管理，服务器端硬解播放，刮削等功能了，和 PT 下载配合起来，足够满足日常的影音需求。 Jellyfin Jellyfin 是一个自由软件媒体系统，可让您控制管理和流式传输媒体。它是专有的 Emby 和 Plex 的替代方案（如：这二者的硬解功能都需付费，而 Jellyfin 是免费的），通过多个应用程序将媒体从专用服务器提供给终端用户设备。Jellyfin 衍生于 Emby 的 3.5.2 版本，并移植到 .NET Core 框架以实现完整的跨平台支持。没有附加条件，没有高级许可证或功能。  通过 Docker 部署 使用 Docker Compose： 1234567891011121314version: &#x27;3.5&#x27;services:  jellyfin:    image: ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/NAS-10" title="NAS（10）—— PT"><img class="post-bg" src="/assets/img/kirby_cover14.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（10）—— PT"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-10" title="NAS（10）—— PT">NAS（10）—— PT</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:51.000Z" title="发表于 2024-08-26 02:43:51">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.768Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/PT/">PT</a></span></div><div class="content">回到目录  PT 是什么？ 要想知道什么是 PT，我们先得了解什么是 BT。 BT 2001年，Bram Cohen 发明了BitTorrent协议。 BitTorrent（简称 BT）是一个文件分发协议，每个下载者在下载的同时不断向其他下载者上传已下载的数据。而在 FTP、HTTP 协议中，每个下载者在下载自己所需文件的同时，各个下载者之间没有交互。当非常多的用户同时访问和下载服务器上的文件时，由于 FTP 服务器处理能力和带宽的限制，下载速度会急剧下降，有的用户可能访问不了服务器。BT 协议与 FTP 协议不同，特点是下载的人越多，下载速度越快，原因在于每个下载者将已下载的数据提供给其他下载者下载，充分利用了用户的上载带宽。通过一定的策略保证上传速度越快，下载速度也越快。  种子 根据 BitTorrent 协议，文件发布者会根据要发布的文件生成提供一个.torrent文件，即种子文件，也简称为“种子”。.torrent 文件本质上是文本文件，包含 Tracker 信息和文件信息两部分。Tracker 信息主要是 BT 下载中需要用到的 Tracker 服务器的地址和针对 T...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/NAS-9" title="NAS（9）—— Homepage 导航页"><img class="post-bg" src="/assets/img/kirby_cover2.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（9）—— Homepage 导航页"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-9" title="NAS（9）—— Homepage 导航页">NAS（9）—— Homepage 导航页</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:46.000Z" title="发表于 2024-08-26 02:43:46">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.887Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Homepage/">Homepage</a></span></div><div class="content">回到目录  介绍 Homepage 是一个开源的、现代的、安全的、高度可自定制的应用程序仪表板（Home­page），或者，大家更习惯称这类应用为「导航页」。 如果我们在内网部署了 NAS，一般来说我们需要记住 IP 地址和各种服务的端口才能访问到各种应用，比较麻烦。但是如果将这些地址写入 Homepage 的配置当中，我们就可以直接通过 Homepage 导航页一键直达我们想要访问的服务。 Homepage 导航页的布局和背景等还能手动配置，自定义打造一个自己喜欢的主页。  通过 Docker 部署 使用 Docker Compose： 12345678910111213141516version: &quot;3.3&quot;services:  homepage:    image: ghcr.io/gethomepage/homepage:latest    container_name: homepage    ports:      - 3000:3000    volumes:      - ./homepage/config:/app/config      -...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/NAS-8" title="NAS（8）—— 反向代理 &amp; HTTPS"><img class="post-bg" src="/assets/img/kirby_cover12.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（8）—— 反向代理 &amp; HTTPS"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-8" title="NAS（8）—— 反向代理 &amp; HTTPS">NAS（8）—— 反向代理 &amp; HTTPS</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:43.000Z" title="发表于 2024-08-26 02:43:43">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:59:23.099Z" title="更新于 2025-09-03 01:59:23">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/HTTPS/">HTTPS</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/HTTPS/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/">反向代理</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SSL/">SSL</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%AF%81%E4%B9%A6/">证书</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Nginx/">Nginx</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Caddy/">Caddy</a></span></div><div class="content">回到目录  反向代理 正向代理（Proxy）方式是指内部网络上的服务器通过代理服务器来访问 Internet 上的服务器，并把响应结果返回给内部网络服务器。 反向代理（Reverse Proxy）方式是指以代理服务器来接受 Internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 Internet 上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。 通过反向代理功能，我们可以隐藏内部服务器的地址（暴露的是代理服务器），对于客户端而言，此代理是无感知的。通过 Nginx 或 Caddy 等工具，我们可以将发送给不同子域名的请求转发到同一台机器的各个端口；我们还可以更进一步，将客户端的请求转发到不同的内部服务器，这样就实现了负载均衡。  SSL 证书 我们先来看看 HTTPS 的握手过程： HTTPS 在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。TLS/SSL 协议不仅仅是一套加密传输的协议，更是一件经过艺术家精心设计的艺术品，TLS/SSL 中使用了非对称...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/NAS-7" title="NAS（7）—— Docker 服务"><img class="post-bg" src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（7）—— Docker 服务"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-7" title="NAS（7）—— Docker 服务">NAS（7）—— Docker 服务</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:39.000Z" title="发表于 2024-08-26 02:43:39">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.879Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Docker/">Docker</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Docker-Compose/">Docker Compose</a></span></div><div class="content">回到目录  概述 恭喜你读到了这里！如果你按照前面几篇文章配置下来，那么你的 NAS 已经可以应对各种数据存储需求了。接下来，我们要让 NAS 行使作为一台服务器的功能了。 Docker 是一个开源的应用容器引擎，基于 Go 语言 并遵从 Apache 2.0 协议开源。 Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。 容器完全使用沙箱机制，相互之间不会有任何接口，更重要的是容器性能开销极低。 如果有条件，请务必为你的 NAS 配置科学上网服务，可以使用部署在 OpenWrt 上等方法。由于国内镜像源不全面等原因，部分镜像在拉取时很容易出现超时的问题。尤其是 Docker 的安装过程，在没有代理的情况下很难完成。 Docker 架构   守护进程 (Docker daemon)：负责管理镜像、容器、容器网络、数据卷等。 Client：负责发送 Docker 操作指令，日常主要通过 Client 完成镜像和容器的管理。 镜像 (Image)：即容器的模版，镜像是可以继承的，镜像主要通过 D...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/NAS-6" title="NAS（6）—— SMB &amp; WebDAV"><img class="post-bg" src="/assets/img/default_cover3.JPEG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（6）—— SMB &amp; WebDAV"></a></div><div class="recent-post-info"><a class="article-title" href="/NAS-6" title="NAS（6）—— SMB &amp; WebDAV">NAS（6）—— SMB &amp; WebDAV</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:35.000Z" title="发表于 2024-08-26 02:43:35">2024-08-26</time><span class="article-meta-separator">|</span><i class="fas fa-history"></i><span class="article-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T17:33:35.538Z" title="更新于 2025-09-03 01:33:35">2025-09-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/NAS/">NAS</a></span><span class="article-meta tags"><span class="article-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/SMB/">SMB</a><span class="article-meta-link">•</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/WebDAV/">WebDAV</a></span></div><div class="content">回到目录  概述 经过前面几个模块的配置，我们已经能够在 NAS 上存放我们的数据，并且通过组建 RAID 与接入 UPS 等方式加强了数据存储的安全性。在这个部分，我们需要通过配置来实现通过各种设备来访问 NAS 中存储的数据，并且进一步加强数据存储的安全性。 SMB / Samba SMB（Server Message Block）可用于在计算机间共享文件、打印机、串口等，电脑上的网上邻居就是靠它实现的。通过 SMB 协议，客户端应用程序可以在各种网络环境下读、写服务器上的文件，以及对服务器程序提出服务请求。此外通过 SMB 协议，应用程序可以访问远程服务器端的文件、以及打印机等资源。 Samba 能让 Linux 服务器实现文件服务器、身份授权和认证、名称解析和打印服务等功能。 Samba 也是 SMB 协议的实现，它允许 Windows 客户访问 Linux 系统上的目录、打印机和文件（就像访问 Windows 服务器时一样）。重要的是，Samba 可以将 Linux 服务器构建成一个域控制器。这样一来，就可以直接使用 Windows 域中的用户凭据，免去手动在 Linu...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#content-inner">3</a><a class="page-number" href="/page/4/#content-inner">4</a><a class="extend next" rel="next" href="/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Docker/"><span class="card-category-list-name">Docker</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Furry/"><span class="card-category-list-name">Furry</span><span class="card-category-list-count">5</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/"><span class="card-category-list-name">HTTPS</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/HTTPS/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"><span class="card-category-list-name">反向代理</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Homepage/"><span class="card-category-list-name">Homepage</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Immich/"><span class="card-category-list-name">Immich</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/OpenWrt/"><span class="card-category-list-name">OpenWrt</span><span class="card-category-list-count">1</span></a></li></ul></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/odhcpd/" style="font-size: 1.1em; color: #999">odhcpd</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">学习</a> <a href="/tags/Tailscale/" style="font-size: 1.1em; color: #999">Tailscale</a> <a href="/tags/uv/" style="font-size: 1.1em; color: #999">uv</a> <a href="/tags/%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" style="font-size: 1.1em; color: #999">激活函数</a> <a href="/tags/KDE/" style="font-size: 1.23em; color: #999ea6">KDE</a> <a href="/tags/24H2/" style="font-size: 1.1em; color: #999">24H2</a> <a href="/tags/%E5%B0%9D%E8%AF%95/" style="font-size: 1.1em; color: #999">尝试</a> <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/" style="font-size: 1.1em; color: #999">包管理</a> <a href="/tags/Shell/" style="font-size: 1.1em; color: #999">Shell</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95/" style="font-size: 1.1em; color: #999">自动登录</a> <a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.5em; color: #99a9bf">杂谈</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Cockpit/" style="font-size: 1.1em; color: #999">Cockpit</a> <a href="/tags/QNAP/" style="font-size: 1.1em; color: #999">QNAP</a> <a href="/tags/%E7%A1%AC%E4%BB%B6/" style="font-size: 1.23em; color: #999ea6">硬件</a> <a href="/tags/%E5%88%AE%E5%89%8A/" style="font-size: 1.23em; color: #999ea6">刮削</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.37em; color: #99a4b2">神经网络</a> <a href="/tags/%E9%80%8F%E8%A7%86/" style="font-size: 1.1em; color: #999">透视</a> <a href="/tags/Docker-Compose/" style="font-size: 1.1em; color: #999">Docker Compose</a> <a href="/tags/Caddy/" style="font-size: 1.1em; color: #999">Caddy</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 1.1em; color: #999">编译</a> <a href="/tags/DNS/" style="font-size: 1.23em; color: #999ea6">DNS</a> <a href="/tags/SSL/" style="font-size: 1.1em; color: #999">SSL</a> <a href="/tags/%E8%AF%81%E4%B9%A6/" style="font-size: 1.1em; color: #999">证书</a> <a href="/tags/L2TP/" style="font-size: 1.1em; color: #999">L2TP</a> <a href="/tags/WebDAV/" style="font-size: 1.1em; color: #999">WebDAV</a> <a href="/tags/LuCi/" style="font-size: 1.37em; color: #99a4b2">LuCi</a> <a href="/tags/%E6%A6%82%E8%BF%B0/" style="font-size: 1.23em; color: #999ea6">概述</a> <a href="/tags/Windows/" style="font-size: 1.1em; color: #999">Windows</a> <a href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/" style="font-size: 1.1em; color: #999">人脸识别</a> <a href="/tags/%E7%A6%8F%E7%91%9E/" style="font-size: 1.5em; color: #99a9bf">福瑞</a> <a href="/tags/%E5%B0%84%E5%BD%B1%E5%87%A0%E4%BD%95/" style="font-size: 1.1em; color: #999">射影几何</a> <a href="/tags/MLP/" style="font-size: 1.23em; color: #999ea6">MLP</a> <a href="/tags/Jellyfin/" style="font-size: 1.1em; color: #999">Jellyfin</a> <a href="/tags/SMB/" style="font-size: 1.1em; color: #999">SMB</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/07/">
+            <span class="card-archive-list-date">
+              七月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/06/">
+            <span class="card-archive-list-date">
+              六月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/11/">
+            <span class="card-archive-list-date">
+              十一月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/08/">
+            <span class="card-archive-list-date">
+              八月 2024
+            </span>
+            <span class="card-archive-list-count">18</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/02/">
+            <span class="card-archive-list-date">
+              二月 2024
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = ["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["无穷的远方&#44; 无数的人们&#44; 都和我有关。","Boundless outland and countless people, are all related to me."])
+}
+typedJSFn.run(subtitleType)</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

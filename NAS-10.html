@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>NAS（10）—— PT | Dean's Blog</title><meta name="author" content="Dean Ma"><meta name="copyright" content="Dean Ma"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="回到目录  PT 是什么？ 要想知道什么是 PT，我们先得了解什么是 BT。 BT 2001年，Bram Cohen 发明了BitTorrent协议。 BitTorrent（简称 BT）是一个文件分发协议，每个下载者在下载的同时不断向其他下载者上传已下载的数据。而在 FTP、HTTP 协议中，每个下载者在下载自己所需文件的同时，各个下载者之间没有交互。当非常多的用户同时访问和下载服务器上的文件时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NAS（10）—— PT">
+<meta property="og:url" content="https://blog.dawnocean.site/NAS-10">
+<meta property="og:site_name" content="Dean&#39;s Blog">
+<meta property="og:description" content="回到目录  PT 是什么？ 要想知道什么是 PT，我们先得了解什么是 BT。 BT 2001年，Bram Cohen 发明了BitTorrent协议。 BitTorrent（简称 BT）是一个文件分发协议，每个下载者在下载的同时不断向其他下载者上传已下载的数据。而在 FTP、HTTP 协议中，每个下载者在下载自己所需文件的同时，各个下载者之间没有交互。当非常多的用户同时访问和下载服务器上的文件时，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.dawnocean.site/assets/img/kirby_cover14.JPG">
+<meta property="article:published_time" content="2024-08-25T18:43:51.000Z">
+<meta property="article:modified_time" content="2025-09-02T16:21:45.768Z">
+<meta property="article:author" content="Dean Ma">
+<meta property="article:tag" content="dean,dawn_ocean,dawn1ocean,晓洋,博客,furry,NAS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.dawnocean.site/assets/img/kirby_cover14.JPG"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "NAS（10）—— PT",
+  "url": "https://blog.dawnocean.site/NAS-10",
+  "image": "https://blog.dawnocean.site/assets/img/kirby_cover14.JPG",
+  "datePublished": "2024-08-25T18:43:51.000Z",
+  "dateModified": "2025-09-02T16:21:45.768Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Dean Ma",
+      "url": "https://blog.dawnocean.site"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/img/avatar.jpg"><link rel="canonical" href="https://blog.dawnocean.site/NAS-10"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="codeva-GQcRECGqLJ"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Dean Ma","link":"链接: ","source":"来源: Dean's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'NAS（10）—— PT',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/assets/img/kirby_cover14.JPG);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/assets/img/avatar.jpg" alt="Logo"><span class="site-name">Dean's Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">NAS（10）—— PT</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-compass"></i><span> 页面</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/shuoshuo/"><i class="fa-fw fas fa-comments"></i><span> 说说</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/NAS-Router-0"><i class="fa-fw fas fa-computer"></i><span> 硬路由 / NAS</span></a></li><li><a class="site-page child" href="/Furry-1"><i class="fa-fw fas fa-paw"></i><span> Furry 杂谈</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">NAS（10）—— PT</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-25T18:43:51.000Z" title="发表于 2024-08-26 02:43:51">2024-08-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-02T16:21:45.768Z" title="更新于 2025-09-03 00:21:45">2025-09-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/PT/">PT</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><link rel="stylesheet external nofollow noreferrer" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><a href="/NAS-Router-0" title="NAS &#x2F; 硬路由：从入门到入门">回到目录</a>
+<br/>
+<h1 id="pt-是什么？"><a class="header-anchor" href="#pt-是什么？"></a>PT 是什么？</h1>
+<p>要想知道什么是 PT，我们先得了解什么是 BT。</p>
+<h2 id="bt"><a class="header-anchor" href="#bt"></a>BT</h2>
+<p>2001年，Bram Cohen 发明了<a target="_blank" rel="noopener external nofollow noreferrer" href="https://baike.baidu.com/item/BitTorrent%E5%8D%8F%E8%AE%AE/10961364?fromModule=lemma_inlink" title="BitTorrent协议">BitTorrent协议</a>。</p>
+<p>BitTorrent（简称 BT）是一个文件分发协议，每个下载者在下载的同时不断向其他下载者上传已下载的数据。而在 FTP、HTTP 协议中，每个下载者在下载自己所需文件的同时，各个下载者之间没有交互。当非常多的用户同时访问和下载服务器上的文件时，由于 FTP 服务器处理能力和带宽的限制，下载速度会急剧下降，有的用户可能访问不了服务器。BT 协议与 FTP 协议不同，特点是下载的人越多，下载速度越快，原因在于每个下载者将已下载的数据提供给其他下载者下载，充分利用了用户的上载带宽。通过一定的策略保证上传速度越快，下载速度也越快。</p>
+<p><img src="NAS-10/image_w5xF8WN_a1.png" alt=""></p>
+<h2 id="种子"><a class="header-anchor" href="#种子"></a>种子</h2>
+<p>根据 BitTorrent 协议，文件发布者会根据要发布的文件生成提供一个<code>.torrent</code>文件，即种子文件，也简称为“种子”。.torrent 文件本质上是文本文件，包含 Tracker 信息和文件信息两部分。Tracker 信息主要是 BT 下载中需要用到的 Tracker 服务器的地址和针对 Tracker 服务器的设置，文件信息是根据对目标的计算生成的。所以，种子文件就是被下载文件的“索引”。</p>
+<h2 id="peer"><a class="header-anchor" href="#peer"></a>Peer</h2>
+<p>Peer 可以理解成节点，或者等同于 Client 客户端。只要你在本地打开了 BT 软件，连接了 Swarm，有数据传输，就可以认为是一个 Peer。严格地来说，Peer 指的是还未下载完成的节点。一般认为所有连接到 Swarm 的客户端都叫做 Peer。</p>
+<h2 id="swarm"><a class="header-anchor" href="#swarm"></a>Swarm</h2>
+<p>Swarm 是一个用来描述当前分享的 Torrent 的所有可连接的 Peers 的术语，换句话说，一个 Swarm 也就是当前对同一个种子文件正在交换数据的 Peers。在 BT 最初的协议中，Peers 需要请求 Tracker 来获取 Swarm，也就是当前可连接的 Peers 列表。</p>
+<h2 id="tracker"><a class="header-anchor" href="#tracker"></a>Tracker</h2>
+<p>BitTorrent Tracker 是一个 HTTP/HTTPS 服务，通过 BitTorrent 协议间接地和 Peers 连接，它可以追踪哪些种子和 Peers 在一个 Swarm 中。为了初始化下载，客户端首先要和 Tracker 通信，获取一个当前可连接的 Peers 列表。Tracker 实际上并不参与任何数据的传输，并且也没有 Torrents 数据的备份。一旦 Peers 列表获取成功，Peers 之间的通信就可以不依赖 Tracker 进行。但是 Clients 会周期性地向 Tracker 发送数据报告，并换取新节点的信息。</p>
+<p>基本上，Tracker 就是一台回应 HTTP GET 请求的服务器，请求中包含客户端整体传输的数据。回应信息包括一个 Peers 列表，让 Peers 参与 Torrent 传输。</p>
+<h2 id="dht"><a class="header-anchor" href="#dht"></a>DHT</h2>
+<p>DHT（Distributed Hash Table）网络用来寻找在 Swarm 中的 Peers 的 IP 地址，用来取代 Tracker 的功能。DHT 允许通过 Info Hash 来查询 Peers，而不需要通过 Trackers。</p>
+<p>在原始的 BitTorrent 设计中，Tracker 是初始化时必须要经过的步骤，并且 Tracker 被部署在网络的单一节点上。这就意味着，如果 Tracker 故障，那么 Peers 就无法相互知道，结果就是 Torrent 死掉。而在 DHT 网络中，这个问题就不存在。二者的差别在于，不像 Tracker，DHT 不依赖于一个单一机器来初始化 Peers 之间的连接，而是将 DHT 网络中所有的节点都认为是潜在的节点，因此提供了容错机制。一旦获取到一个节点，客户端就可以使用该节点在 DHT 网络中找到更多的节点，然后就可以用 DHT 节点来获取 Peers 完成下载。</p>
+<h2 id="pxe"><a class="header-anchor" href="#pxe"></a>PXE</h2>
+<p>在 BitTorrent 文件共享网络中，PXE（Peer Exchange）用来维持共享同一个 Torrent 的一组 Peers。PXE 允许一组 Peers 中的成员自己在 Swarm 中交换群组成员信息，也就意味着可以减少对 Tracker 的依赖，减少对 Tracker 的轮询，也就减少了 Tracker 的负载。</p>
+<p>但 PXE 并没有完全地消除对 Tracker 的依赖，一个 Peers 第一次要加入给定 Torrent 的 Swarm，就必须请求 Tracker。</p>
+<h2 id="磁力链接"><a class="header-anchor" href="#磁力链接"></a>磁力链接</h2>
+<p>根据原始的 BitTorrent 网络协议，.torrent 文件是从 Torrent 网站下载的。下载文件后，BitTorrent 客户端会从 .torrent 文件中计算信息密钥的 20 字节 SHA-1 哈希，它会在对 Tracker（或 DHT网络）的查询中使用该 ID 来唯一地识别种子并找出共享该 Torrent 的其他 Peers 的 IP 地址，随后它将连接并下载 .torrent 文件中的内容。</p>
+<p>磁力链接更进一步，它已经计算得到该哈希值。 BT 客户端可以通过该 Hash，在 DHT 网络中查询，找到网络中同样共享着这个 Torrent 的 Peers。客户端会从其他 Peers 处下载这个 Torrent 文件。一旦获取到 torrent 文件，后面就是熟悉的流程了。</p>
+<p>可以看到客户端依然需要依赖 .torrent 文件来完成初始化过程，因为 Torrent 包含着下载需要的必不可少的信息，但磁力链接使得 Client 不再需要依赖一个 Tracker 服务器，你甚至可以不需要从网站上下载一个 .torrent 文件。</p>
+<p>另外，由于磁力链接是纯文本的，因此可以简单地将链接复制并粘贴到电子邮件，即时消息，博客或其他社交网络媒体中，以实现非常快速的分发。</p>
+<h2 id="pt"><a class="header-anchor" href="#pt"></a>PT</h2>
+<p>BT 没有分享率的要求，你可以随时停止上传，甚至也可以直接在 BT 下载软件中关闭上传都没问题。迅雷就是因为只从 BT 网络中白嫖别人的上传，而从不贡献上传，所以才被人称为 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://tsingjyujing.github.io/blog/other-tech/fuck-thunder.html" title="吸血雷">吸血雷</a>。</p>
+<p>为了解决这个问题，PT（Private Tracker）产生了。PT 对每个下载者都有分享率的要求，你下载完毕某个 Torrent，必须保持一定的做种时间，PT 网站会实时统计你的总下载和总上传比例，也就是你的分享率。如果你的分享率低于网站的要求，可能会被警告，降级或者封号。也因为有了分享率要求，PT 种子一般都会一直有人在做种，出现死种的几率也比较低，下载速度相较 BT 也更快更稳定。如果你想下载更多自己需要的资源，就要持续地为别人做种获取上传流量，提高分享率来获取对应下载的流量。</p>
+<h2 id="pt-站点"><a class="header-anchor" href="#pt-站点"></a>PT 站点</h2>
+<p>许多高清爱好者聚集在 PT 站，发布翻录的蓝光原盘、CD 资源以及录制的高清卫星电视讯号；得益于 Netflix、HBO、Apple TV 等高清流媒体在线视频平台的发展，近年也出现了一些 WEB-DL (Download from Web) 资源。</p>
+<p>你可以从 PT 站下载到：</p>
+<ul>
+<li>Netflix / HBO / Apple TV / Paramount / Hulu / Disney+ 等海外流媒体平台的电视剧和电影</li>
+<li>爱奇艺 / 腾讯视频 / 优酷等流媒体平台的电视剧和电影</li>
+<li>包含特典和封面图片的蓝光动漫原盘</li>
+<li>体育赛事和晚会庆典的卫星电视或 IPTV 录制</li>
+<li>从 CD 抓取或从 Spotify / Tidal / Qobuz 等音乐平台下载的无损音乐</li>
+</ul>
+<p>目前国内使用的 PT 站源码主要为基于浙江大学 <a href="mailto:xiazuojie@gmail.com" rel="external nofollow noreferrer" title="xiazuojie">xiazuojie</a> 团队所开发的开源整站项目 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://sourceforge.net/projects/nexusphp/" title="NexusPHP">NexusPHP</a>，基于 PHP + MySQL + memcached。个别站点使用 Discuz! 进行二次开发。</p>
+<p>关于 PT 站点的一些名词，如辅种、魔力值、做种率、H&amp;R 等，你可以在 PT 站中的规则 / 说明部分找到，这里就不多言了。校内的 PT 站点为 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.nexushd.org/forums.php" title="NexusHD">NexusHD</a>，目前使用校内邮箱即可注册。</p>
+<h1 id="pt-下载工具-以-qbittorrent-为例"><a class="header-anchor" href="#pt-下载工具-以-qbittorrent-为例"></a>PT 下载工具 —— 以 qBittorrent 为例</h1>
+<h2 id="qbittorrent-使用"><a class="header-anchor" href="#qbittorrent-使用"></a>qBittorrent 使用</h2>
+<p>qBittorrent 的界面非常清晰，简洁易懂。只需要点击左上角的加号，即可添加本地种子。</p>
+<p><img src="NAS-10/image_ea_jqAAJGi.png" alt=""></p>
+<h2 id="通过-docker-部署-qbittorrent"><a class="header-anchor" href="#通过-docker-部署-qbittorrent"></a>通过 Docker 部署 qBittorrent</h2>
+<p>使用 Docker Compose：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">qbittorrent:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">lscr.io/linuxserver/qbittorrent:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">qbittorrent</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PUID=1001</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PGID=100</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Etc/UTC</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">WEBUI_PORT=8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TORRENTING_PORT=41543</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/srv/dockerapps/qbittorrent/config:/config</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/Normal/qbittorrent/qBitTorrent:/downloads</span> <span class="comment"># 和 qBittorrent 配置一致</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;41543:41543&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;41543:41543/udp&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br></pre></td></tr></table></figure>
+<h2 id="qbittorrent-与-https"><a class="header-anchor" href="#qbittorrent-与-https"></a>qBittorrent 与 HTTPS</h2>
+<p>如果通过 Nginx 反代 qBittorrent 并通过 HTTPS 访问服务时，可能会出现 Unauthorized 错误。</p>
+<p>请按照以下步骤排除问题：</p>
+<ol>
+<li>确保启动参数无误，尤其是配置文件的目录，必须是 qbittorrent 的父级目录，不可以到 qbittorrent 这一层。</li>
+<li>如果你是在外网通过 IP 访问内网服务器，则需查看<code>qbittorrent.conf</code>中，是否设置了<code>WebUI\HostHeaderValidation=true</code>参数，如有，请改为 false。</li>
+<li>如果你是在外网通过域名访问内网服务器，则第二条同样适用；但安全起见，建议改为 true 并把值设置为你的域名。</li>
+<li>如果你并未配置 HTTPS 证书，或未安装相关组件，则需查看<code>qbittorrent.conf</code>中，是否设置了<code>WebUI\HTTPS\Enabled=true</code>参数，如有，请改为 false。</li>
+<li>如果你设置了 Nginx 反向代理，则需要根据官方 Wiki 设置以下参数（请删除其他所有参数）：</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">proxy_pass         http://127.0.0.1:30000/; # 根据你的 IP 地址和端口号修改</span><br><span class="line">proxy_http_version 1.1;</span><br><span class="line"> </span><br><span class="line">proxy_set_header   Host               127.0.0.1:30000; # 根据你的 IP 地址和端口号修改</span><br><span class="line">proxy_set_header   X-Forwarded-Host   $http_host;</span><br><span class="line">proxy_set_header   X-Forwarded-For    $remote_addr;</span><br><span class="line"> </span><br><span class="line"># 以下参数不适用于 qBittorrent！请务必移除（若有）</span><br><span class="line"># proxy_set_header   X-Forwarded-Proto  $scheme;</span><br><span class="line"># proxy_set_header   X-Real-IP          $remote_addr;</span><br><span class="line"> </span><br><span class="line"># 可选，设置后可一次性添加 100M 的种子</span><br><span class="line"># client_max_body_size 100M;</span><br><span class="line"> </span><br><span class="line"># 从 4.2.2 版本起，若你在 qBittorrent 内部设置了 HTTPS，则不需要设置以下参数。否则，必须设置以下参数用以保证 Cookie 的安全性</span><br><span class="line">proxy_cookie_path  /                  &quot;/; Secure&quot;;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么我的-可连接-是-否-？"><a class="header-anchor" href="#为什么我的-可连接-是-否-？"></a>为什么我的“可连接”是“否”？</h2>
+<p>根据 NexusHD 的常见问题板块，我们需要开启 UPnP 与端口映射 / 端口转发功能。</p>
+<p><img src="NAS-10/image_J06DjyBiY7.png" alt=""></p>
+<p>在 OpenWrt 中开启 UPnP 的方法：在<code>服务 - UPnP</code>页面中勾选对应选项。</p>
+<p><img src="NAS-10/image_ngO5ZOLM5U.png" alt=""></p>
+<p>接着在 qBitTorrent 当中勾选<code>使用我的路由器的 UPnP / NAT-PMP 端口转发</code>项。</p>
+<p><img src="NAS-10/image_yxAJ2jHGMr.png" alt=""></p>
+<p>但是当我们查看路由器的 UPnP 转发情况，会发现并没有成功转发。</p>
+<p>查看 qBitTorrent 日志：</p>
+<p><img src="NAS-10/f383da6db00ebc98e4c556c161afa29b_UMWxQ3kCWo.png" alt=""></p>
+<p>查询后得知，我们需要将容器的网络模式由 Bridge 更改为 Host。注意端口不要冲突。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker network <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<p><img src="NAS-10/image_8L-WeHDKZ0.png" alt=""></p>
+<p>我们进入 qBitTorrent 的部署文件夹，编辑<code>docker-compose.yaml</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim docker-compose.yaml</span><br></pre></td></tr></table></figure>
+<p><img src="NAS-10/image_gX-8O940XW.png" alt=""></p>
+<p>加入一行<code>network_mode: host</code>即可。</p>
+<p>重新部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker compose up -d</span><br></pre></td></tr></table></figure>
+<p>在路由器的 UPnP 管理界面可以看到已经成功转发了。</p>
+<p><img src="NAS-10/image_xipLiOHALF.png" alt=""></p>
+<br/>
+<a href="/NAS-11" title="NAS（11）—— HTPC">下一章节：HTPC</a></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site">Dean Ma</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://blog.dawnocean.site/NAS-10">https://blog.dawnocean.site/NAS-10</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://blog.dawnocean.site" target="_blank">Dean's Blog</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/assets/img/kirby_cover14.JPG" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/NAS-11" title="NAS（11）—— HTPC"><img class="cover" src="/assets/img/kirby_cover11.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">NAS（11）—— HTPC</div></div><div class="info-2"><div class="info-item-1">回到目录  概述 HTPC（Home Theater Personal Computer，家庭影院电脑），简单地说就是可以组建家庭影院的电脑，与功放、大屏幕电视或投影仪连接，以欣赏高清视频和音乐。 在这个部分，我们配置的机器并不能严格地称为一台 HTPC，但已经能完成媒体库的建立、管理，服务器端硬解播放，刮削等功能了，和 PT 下载配合起来，足够满足日常的影音需求。 Jellyfin Jellyfin 是一个自由软件媒体系统，可让您控制管理和流式传输媒体。它是专有的 Emby 和 Plex 的替代方案（如：这二者的硬解功能都需付费，而 Jellyfin 是免费的），通过多个应用程序将媒体从专用服务器提供给终端用户设备。Jellyfin 衍生于 Emby 的 3.5.2 版本，并移植到 .NET Core 框架以实现完整的跨平台支持。没有附加条件，没有高级许可证或功能。  通过 Docker 部署 使用 Docker Compose： 1234567891011121314version: &#x27;3.5&#x27;services:  jellyfin:    image: ...</div></div></div></a><a class="pagination-related" href="/NAS-9" title="NAS（9）—— Homepage 导航页"><img class="cover" src="/assets/img/kirby_cover2.JPG" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">NAS（9）—— Homepage 导航页</div></div><div class="info-2"><div class="info-item-1">回到目录  介绍 Homepage 是一个开源的、现代的、安全的、高度可自定制的应用程序仪表板（Home­page），或者，大家更习惯称这类应用为「导航页」。 如果我们在内网部署了 NAS，一般来说我们需要记住 IP 地址和各种服务的端口才能访问到各种应用，比较麻烦。但是如果将这些地址写入 Homepage 的配置当中，我们就可以直接通过 Homepage 导航页一键直达我们想要访问的服务。 Homepage 导航页的布局和背景等还能手动配置，自定义打造一个自己喜欢的主页。  通过 Docker 部署 使用 Docker Compose： 12345678910111213141516version: &quot;3.3&quot;services:  homepage:    image: ghcr.io/gethomepage/homepage:latest    container_name: homepage    ports:      - 3000:3000    volumes:      - ./homepage/config:/app/config      -...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Dean Ma</div><div class="author-info-description">晓洋的博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Dawn1Ocean" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github" style="color: #000000;"></i></a><a class="social-icon" href="mailto:dawn_ocean@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #000000;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pt-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">PT 是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#bt"><span class="toc-number">1.1.</span> <span class="toc-text">BT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">种子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#peer"><span class="toc-number">1.3.</span> <span class="toc-text">Peer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swarm"><span class="toc-number">1.4.</span> <span class="toc-text">Swarm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tracker"><span class="toc-number">1.5.</span> <span class="toc-text">Tracker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dht"><span class="toc-number">1.6.</span> <span class="toc-text">DHT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pxe"><span class="toc-number">1.7.</span> <span class="toc-text">PXE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E5%8A%9B%E9%93%BE%E6%8E%A5"><span class="toc-number">1.8.</span> <span class="toc-text">磁力链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pt"><span class="toc-number">1.9.</span> <span class="toc-text">PT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pt-%E7%AB%99%E7%82%B9"><span class="toc-number">1.10.</span> <span class="toc-text">PT 站点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pt-%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7-%E4%BB%A5-qbittorrent-%E4%B8%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">PT 下载工具 —— 以 qBittorrent 为例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#qbittorrent-%E4%BD%BF%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">qBittorrent 使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87-docker-%E9%83%A8%E7%BD%B2-qbittorrent"><span class="toc-number">2.2.</span> <span class="toc-text">通过 Docker 部署 qBittorrent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#qbittorrent-%E4%B8%8E-https"><span class="toc-number">2.3.</span> <span class="toc-text">qBittorrent 与 HTTPS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E7%9A%84-%E5%8F%AF%E8%BF%9E%E6%8E%A5-%E6%98%AF-%E5%90%A6-%EF%BC%9F"><span class="toc-number">2.4.</span> <span class="toc-text">为什么我的“可连接”是“否”？</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）"><img src="/assets/img/default.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NAS（1-1）—— 成品 NAS 配置（QNAP）"/></a><div class="content"><a class="title" href="/NAS-1-1" title="NAS（1-1）—— 成品 NAS 配置（QNAP）">NAS（1-1）—— 成品 NAS 配置（QNAP）</a><time datetime="2025-08-17T14:46:10.000Z" title="发表于 2025-08-17 22:46:10">2025-08-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/uv" title="uv：新一代 Python 虚拟环境管理工具"><img src="/assets/img/default_cover4.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="uv：新一代 Python 虚拟环境管理工具"/></a><div class="content"><a class="title" href="/uv" title="uv：新一代 Python 虚拟环境管理工具">uv：新一代 Python 虚拟环境管理工具</a><time datetime="2025-07-15T08:04:27.000Z" title="发表于 2025-07-15 16:04:27">2025-07-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数"><img src="/assets/img/default_cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（3）—— 激活函数"/></a><div class="content"><a class="title" href="/nn-3" title="神经网络学习笔记（3）—— 激活函数">神经网络学习笔记（3）—— 激活函数</a><time datetime="2025-06-28T16:28:47.000Z" title="发表于 2025-06-29 00:28:47">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"><img src="/assets/img/kirby_cover16.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导"/></a><div class="content"><a class="title" href="/nn-2" title="神经网络学习笔记（2）—— 前向传播与反向传播的数学推导">神经网络学习笔记（2）—— 前向传播与反向传播的数学推导</a><time datetime="2025-06-28T16:26:13.000Z" title="发表于 2025-06-29 00:26:13">2025-06-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/nn-1" title="神经网络学习笔记（1）—— MLP"><img src="/assets/img/kirby_cover19.JPG" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神经网络学习笔记（1）—— MLP"/></a><div class="content"><a class="title" href="/nn-1" title="神经网络学习笔记（1）—— MLP">神经网络学习笔记（1）—— MLP</a><time datetime="2025-06-28T16:24:47.000Z" title="发表于 2025-06-29 00:24:47">2025-06-29</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2025 By Dean Ma</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getGiscusTheme = theme => theme === 'dark' ? 'dark' : 'light'
+
+  const createScriptElement = config => {
+    const ele = document.createElement('script')
+    Object.entries(config).forEach(([key, value]) => {
+      ele.setAttribute(key, value)
+    })
+    return ele
+  }
+
+  const loadGiscus = (el = document, key) => {
+    const mappingConfig = isShuoshuo
+      ? { 'data-mapping': 'specific', 'data-term': key }
+      : { 'data-mapping': (option && option['data-mapping']) || 'pathname' }
+
+    const giscusConfig = {
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'Dawn1Ocean/giscus',
+      'data-repo-id': 'R_kgDOLniK6Q',
+      'data-category-id': 'DIC_kwDOLniK6c4CeVy2',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true,
+      ...option,
+      ...mappingConfig
+    }
+
+    const scriptElement = createScriptElement(giscusConfig)
+
+    el.querySelector('#giscus-wrap').appendChild(scriptElement)
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyGiscus = () => {
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const changeGiscusTheme = theme => {
+    const iframe = document.querySelector('#giscus-wrap iframe')
+    if (iframe) {
+      const message = {
+        giscus: {
+          setConfig: {
+            theme: getGiscusTheme(theme)
+          }
+        }
+      }
+      iframe.contentWindow.postMessage(message, 'https://giscus.app')
+    }
+  }
+
+  btf.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if (isShuoshuo) {
+    'Giscus' === 'Giscus'
+      ? window.shuoshuoComment = { loadComment: loadGiscus }
+      : window.loadOtherComment = loadGiscus
+    return
+  }
+
+  if ('Giscus' === 'Giscus' || !true) {
+    if (true) btf.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
