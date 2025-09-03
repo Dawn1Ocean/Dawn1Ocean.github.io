@@ -12,8 +12,8 @@
     "version": "7.3.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.0.0",
-    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.0.1",
     "@vscode/markdown-it-katex": "^1.1.2",
     "hexo": "^7.3.0",
     "hexo-cli": "^4.3.2",
