@@ -6,6 +6,7 @@ categories:
 - Debian
 tags:
 - Cockpit
+description: 关于 Debian 系统上 Cockpit 的安装配置以及 Linux 系统的调优配置。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

@@ -3,6 +3,7 @@ title: NAS（10）—— PT
 date: 2024-08-26 02:43:51
 categories:
 - PT
+description: BT / PT 简介与 qBitTorrent 下载工具的配置与使用介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

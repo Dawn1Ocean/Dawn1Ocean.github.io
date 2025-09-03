@@ -7,6 +7,7 @@ categories:
 tags:
 - Windows
 - 24H2
+description: 关于笔者配置网络过程当中的一些问题归档，以及校园网环境下组网图景的介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

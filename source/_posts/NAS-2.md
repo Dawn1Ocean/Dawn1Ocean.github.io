@@ -4,6 +4,7 @@ date: 2024-08-26 02:34:31
 categories:
 - NAS
 - Debian
+description: Debian 最小化安装介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

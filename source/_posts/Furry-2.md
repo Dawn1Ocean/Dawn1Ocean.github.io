@@ -1,11 +1,12 @@
 ---
-title: Furry 杂谈（2） - 序言介绍
+title: Furry 杂谈（2）—— 序言介绍
 date: 2023-10-13 20:05:56
 categories:
 - Furry
 tags:
 - 福瑞
 - 杂谈
+description: Furry 是什么？
 ---
 
 {% post_link 'Furry-1' '回到目录' %}

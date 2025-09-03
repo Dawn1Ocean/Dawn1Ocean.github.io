@@ -8,6 +8,7 @@ categories:
 tags:
 - LuCi
 - odhcpd
+description: IPv6 基础知识与浙江大学校园网 IPv6 分析、配置介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

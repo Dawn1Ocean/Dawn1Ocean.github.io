@@ -6,6 +6,7 @@ categories:
 - OpenWrt
 tags:
 - LuCi
+description: 安装 OpenWrt 后的路由器配置以及局域网基础组网设置。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

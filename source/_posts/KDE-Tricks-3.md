@@ -6,6 +6,7 @@ categories:
 tags:
 - 人脸识别
 - 自动登录
+description: Linux 人脸识别工具 Howdy 的安装、配置与使用。
 ---
 
 # 需求

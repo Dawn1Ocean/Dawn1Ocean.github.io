@@ -317,9 +317,9 @@ preloader:
   # source
   # 1. fullpage-loading
   # 2. pace (progress bar)
-  source: 1
+  source: 2
   # pace theme (see https://codebyzach.github.io/pace/)
-  pace_css_url:
+  pace_css_url: /assets/pace/flat-top.css
 
 nofollow:
   enable: true

@@ -6,6 +6,7 @@ categories:
 tags: 
 - 神经网络
 - MLP
+description: MLP 的原理介绍、优化手段以及 Numpy 实现。
 ---
 
 # 神经网络学习笔记

@@ -7,6 +7,7 @@ categories:
 tags:
 - Jellyfin
 - 刮削
+description: Jellyfin 的配置、刮削、视频解码与使用介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

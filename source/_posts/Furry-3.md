@@ -1,11 +1,12 @@
 ---
-title: Furry 杂谈（3） - 相关名词介绍
+title: Furry 杂谈（3）—— 相关名词介绍
 date: 2023-10-13 20:13:06
 categories:
 - Furry
 tags:
 - 福瑞
 - 杂谈
+description: 兽设、兽装、兽展 / 兽聚、兽化、兽游
 ---
 
 {% post_link 'Furry-1' '回到目录' %}

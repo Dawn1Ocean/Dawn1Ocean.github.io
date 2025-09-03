@@ -5,6 +5,7 @@ categories:
 - 博客
 tags: 
 - DNS
+description: 自 2025 年 6 月 22 日起，本博客已迁移至 dawnocean.site 域名下。原域名 deans.fun 在 7 月 27 日到期前可继续访问。
 ---
 
 # 迁移原因

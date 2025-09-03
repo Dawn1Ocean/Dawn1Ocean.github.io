@@ -6,6 +6,7 @@ categories:
 - OpenWrt
 tags:
 - 概述
+description: 硬路由概述以及如何安装 OpenWrt 的介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

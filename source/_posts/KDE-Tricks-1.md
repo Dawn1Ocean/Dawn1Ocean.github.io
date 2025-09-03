@@ -7,6 +7,7 @@ categories:
 tags:
 - KDE
 - Shell
+description: 使用脚本调用 QDBus 的方法实现 KDE 的下一张壁纸切换，并且可绑定快捷键。
 ---
 
 # 需求

@@ -6,6 +6,7 @@ categories:
 - OpenWrt
 tags:
 - 编译
+description: 从零开始挑选 Package，编译官方主线 OpenWrt。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

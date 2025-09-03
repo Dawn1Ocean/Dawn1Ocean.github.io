@@ -5,6 +5,7 @@ categories:
 - 博客
 tags: 
 - DNS
+description: 自 2024 年 8 月 11 日起，本博客已迁移至 deans.fun 域名下。
 ---
 
 # 迁移原因

@@ -5,6 +5,7 @@ categories:
 - Linux 配置
 tags:
 - KDE
+description: KDE 对于不同应用 Locale 针对调整心得一二。
 ---
 
 # 需求

@@ -1,11 +1,12 @@
 ---
-title: Furry 杂谈（4） - 现状及问题
+title: Furry 杂谈（4）—— 现状及问题
 date: 2023-10-13 20:13:27
 categories:
 - Furry
 tags:
 - 福瑞
 - 杂谈
+description: 污名化、低龄化、商品化、中心化
 ---
 
 {% post_link 'Furry-1' '回到目录' %}

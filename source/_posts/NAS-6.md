@@ -6,6 +6,7 @@ categories:
 tags:
 - SMB
 - WebDAV
+description: SMB 与 WebDAV 的应用场景、配置以及使用介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

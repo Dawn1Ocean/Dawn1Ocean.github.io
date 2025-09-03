@@ -6,6 +6,7 @@ categories:
 tags: 
 - 尝试
 - 学习
+description: 想试试搭建一篇 Blog 需要多长时间，于是就有了这个网站。同时作测试用。
 ---
 
 ## 起因

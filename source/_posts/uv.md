@@ -6,6 +6,7 @@ categories:
 tags:
 - uv
 - 包管理
+description: uv 是由 Astral 团队开发的一款超高速 Python 包管理器，旨在替代传统的 pip 和 virtualenv。它聚焦于三个关键点：性能、安全性、以及现代化开发流程的兼容性。
 ---
 
 以下内容整理自 [uv 中文文档](https://uv.doczh.com/)。

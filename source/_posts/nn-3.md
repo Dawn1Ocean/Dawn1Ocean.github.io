@@ -6,6 +6,7 @@ categories:
 tags: 
 - 神经网络
 - 激活函数
+description: 各类激活函数表达式、特性以及图像展示。
 ---
 
 # Sigmoid

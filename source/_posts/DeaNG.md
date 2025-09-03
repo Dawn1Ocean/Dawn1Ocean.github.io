@@ -1,7 +1,11 @@
 ---
 title: DeaNG —— Dean 的纯主观游戏评价合集
 date: 2024-11-14 20:31:46
+description: Dean's Network for Games，是 Dean 对于他游玩过的游戏的纯主观评价合集。
+categories:
+- 游戏
 tags:
+- 评分
 ---
 
 # 概述

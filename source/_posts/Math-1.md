@@ -6,6 +6,7 @@ categories:
 tags:
 - 射影几何
 - 透视
+description: 这是我为自己高中的数学探索过程补上的拼图。
 ---
 
 # 写在前面

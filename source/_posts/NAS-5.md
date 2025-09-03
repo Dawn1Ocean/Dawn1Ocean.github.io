@@ -4,6 +4,7 @@ date: 2024-08-26 02:43:31
 categories:
 - NAS
 - RAID
+description: 硬盘 SMART、RAID、Btrfs / ZFS 介绍、系统备份配置以及灾难恢复的介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

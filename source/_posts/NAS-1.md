@@ -5,6 +5,7 @@ categories:
 - NAS
 tags:
 - 硬件
+description: 关于为什么需要一台 NAS，以及成品 NAS 与 DIY NAS 之间的对比与选择。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

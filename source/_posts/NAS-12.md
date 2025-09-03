@@ -3,6 +3,7 @@ title: NAS（12）—— Immich 照片管理
 date: 2024-08-26 02:44:00
 categories:
 - Immich
+description: Immich 照片管理服务的配置与使用介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

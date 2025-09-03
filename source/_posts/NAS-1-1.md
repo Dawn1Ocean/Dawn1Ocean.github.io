@@ -6,6 +6,7 @@ categories:
 tags:
 - 硬件
 - QNAP
+description: 以 QNAP TS-464C2 为例介绍成品 NAS 的配置。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}

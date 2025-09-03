@@ -7,6 +7,7 @@ categories:
 tags:
 - LuCi
 - Tailscale
+description: Tailscale 虚拟局域网搭建与配置，自建 Tailscale 中继服务器的配置介绍。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}
@@ -293,7 +294,7 @@ vim /etc/systemd/system/derper.service
 输入以下内容：
 
 ```text
-Description=derper服务
+description=derper服务
 After=network.target
  
 [Service]

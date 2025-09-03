@@ -6,6 +6,7 @@ categories:
 - 校园网
 tags:
 - L2TP
+description: 关于浙江大学校园网环境的静态路由配置，无线中继 / L2TP / 有线认证等方案的介绍与配置。
 ---
 
 {% post_link 'NAS-Router-0' '回到目录' %}
