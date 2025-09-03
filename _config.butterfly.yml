@@ -46,9 +46,15 @@ avatar:
 
 favicon: /assets/img/avatar.jpg
 
+# A simple 404 page
+error_404:
+  enable: true
+  subtitle: '页面没有找到'
+  background:
+
 post_meta:
   page:
-    date_type: both # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
+    date_type: created # created or updated or both 主頁文章日期是創建日或者更新日或都顯示
     date_format: relative # date/relative 顯示日期還是相對日期
     categories: true # true or false 主頁是否顯示分類
     tags: true # true or false 主頁是否顯示標籤
@@ -90,6 +96,12 @@ darkmode:
   start: # 8
   end: # 19
 
+# Choose: fancybox / medium_zoom
+# https://github.com/francoischalifour/medium-zoom
+# https://fancyapps.com/fancybox/
+# Leave it empty if you don't need lightbox
+lightbox:
+
 # https://github.com/vinta/pangu.js
 # Insert a space between Chinese character and English character (中英文之間添加空格)
 pangu:
@@ -99,6 +111,7 @@ pangu:
 # top_img
 index_img: /assets/img/index.png
 default_top_img: /assets/img/default.png
+index_layout: 6
 
 # https://instant.page/
 # prefetch (预加载)
@@ -210,6 +223,16 @@ canvas_ribbon:
   click_to_change: true  #設置是否每次點擊都更換綵帶
   mobile: false # false 手機端不顯示 true 手機端顯示
 
+# Display the article introduction on homepage
+# 1: description
+# 2: both (if the description exists, it will show description, or show the auto_excerpt)
+# 3: auto_excerpt (default)
+# false: do not show the article introduction
+index_post_content:
+  method: 2
+  # If you set method to 2 or 3, the length need to config
+  length: 500
+
 cover:
   # 是否顯示文章封面
   index_enable: true
@@ -305,4 +328,4 @@ nofollow:
 
 site_verification:
   - name: baidu-site-verification
-    content: codeva-GQcRECGqLJ
+    content: codeva-03efZy3mgV
