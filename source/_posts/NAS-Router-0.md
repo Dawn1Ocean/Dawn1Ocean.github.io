@@ -14,6 +14,35 @@ description: 对于 NAS / 硬路由涉及到的知识与配置的总览简介，
 - 计算机网络
 - Docker
 
+2025/9/? 第四次更新内容：
+
+- Mac 双网卡分流配置
+- 无线组网
+    - Wi-Fi 标准：信道、空间流与安全认证
+    - 无线漫游：802.11 k/v/r
+    - 组网方案：AC + AP、Mesh
+
+- 光纤入户
+    - PPPoE 简介，路由器路由模式配置
+    - 光信号与电信号，光猫（ONT）
+    - 无源光网络（PON）简介与协议介绍
+    - FTTB / FTTH，FTTR 及其问题
+
+- 旁路由配置
+- 家庭组网一例与远程访问
+- 成品 NAS 配置（基于威联通 QNAP）
+- SMB 安全说明
+- WebDAV 补充配置
+    - Caddy 配置 WebDAV
+
+- X.509 证书类型及扩展名
+    - Cockpit SSL 证书配置
+
+- Caddy 与反向代理
+- 基于 Home Assistant 的智能家居方案
+    - 设备接入几例
+    - 与 Node-RED 联动
+
 2025/3/29 第三次更新内容：
 
 - OpenWrt 编译
@@ -79,6 +108,10 @@ NAS 除了可以完成它的名字中包含的网络存储功能，还能作为�
 {% post_link 'Router-5' '硬路由（5）—— 校园网 & 远程访问（IPv6）' %}
 <br/>
 {% post_link 'Router-6' '硬路由（6）—— Tricks & 组网图景' %}
+<br/>
+{% post_link 'Router-7' '硬路由（7）—— 无线组网' %}
+<br/>
+{% post_link 'Router-8' '硬路由（8）—— 光纤入户 & 家庭组网' %}
 <br/>
 <br/>
 {% post_link 'NAS-1' 'NAS（1）—— 概述 & 硬件' %}
