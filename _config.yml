@@ -146,7 +146,7 @@ feed:
   enable: true
   type: atom
   path: atom.xml
-  limit: 20
+  limit: 0
   hub:
   content:
   content_limit: 140

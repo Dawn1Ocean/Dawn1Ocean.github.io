@@ -267,3 +267,6 @@ networksetup -setadditionalroutes Ethernet 192.168.1.0 255.255.255.0 192.168.1.1
 - 在局域网内能够实现设备间稳定的传输速度以及对外网较快速度的访问
 - 在校园网内能够通过 IPv6 连接到 NAS，避免 Tailscale 中继不稳定
 - 在校外能够通过 Tailscale 连接到局域网实现简单的访问与配置
+
+<br/>
+{% post_link 'Router-7' '下一章节：无线组网' %}
