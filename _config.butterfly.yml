@@ -91,7 +91,7 @@ darkmode:
   enable: true
   # dark mode和 light mode切換按鈕
   button: true
-  autoChangeMode: true
+  autoChangeMode: 1
   # Set the light mode time. The value is between 0 and 24. If not set, the default value is 6 and 18
   start: # 8
   end: # 19
