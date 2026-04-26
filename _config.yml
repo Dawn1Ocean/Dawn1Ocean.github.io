@@ -131,6 +131,9 @@ markdown:
 
 # plugins:
 #   - hexo-reference
+aplayer:
+  asset_inject: false
+  meting: true
 
 marked:
   prependRoot: true
